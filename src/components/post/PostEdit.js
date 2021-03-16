@@ -6,6 +6,7 @@ import { postSave } from '../../_actions/post_action';
 import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+
 let uploadedImg = [];
 function PostEdit(props) {
   const dispatch = useDispatch();
@@ -14,9 +15,11 @@ function PostEdit(props) {
     window.onunload = function () {
       // 취소 시 발생되는 function = 올려둔 이미지 url 전체 보내기
       axios.delete('post/delete', uploadedImg);
+
     };
   });
   const [value, setvalue] = useState({ title: '', content: '' });
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -162,6 +165,7 @@ function imageHandler() {
           console.log(error);
           this.quill.enable(true);
         });
+
     });
     this.container.appendChild(fileInput);
   }
@@ -176,3 +180,4 @@ function getUnused(uploadedImg, submittedImg) {
   console.log(`unused : ${unused}`);
   return unused;
 }
+

@@ -37,6 +37,7 @@ function PostUpdate({ match, history }) {
   //   console.log(beforeEdit);
   // }, [beforeEdit]);
 
+
   const onUpdate = () => {
     // 처음 이미지 url과 최종 제출 url 비교해서 삭제해야 할 이미지 url 찾기
     let afterEdit = Array.from(
