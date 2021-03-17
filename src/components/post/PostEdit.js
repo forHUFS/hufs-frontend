@@ -140,6 +140,7 @@ function imageHandler() {
 
       // this.quill.enable(false);
 
+
       await axios
         .post('/api/image', formData)
         .then((response) => {

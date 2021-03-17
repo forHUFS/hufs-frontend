@@ -33,6 +33,9 @@ function PostUpdate({ match, history }) {
     ).map((img) => img.getAttribute('src'));
     wholeImg = wholeImg.concat(firstImg);
   }, []);
+  // useEffect(() => {
+  //   console.log(beforeEdit);
+  // }, [beforeEdit]);
 
 
   const onUpdate = () => {
@@ -58,6 +61,9 @@ function PostUpdate({ match, history }) {
       axios.delete('post/delete', uploadedImg).then(history.goBack());
     }
   };
+  useEffect(() => {
+    console.log(updated);
+  }, [updated]);
 
   return (
     <div>
