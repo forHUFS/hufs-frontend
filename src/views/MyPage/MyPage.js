@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Layout, Menu } from 'antd';
 import UserScrap from '../../components/user/UserScrap';
@@ -6,8 +6,15 @@ import UserComment from '../../components/user/UserComment';
 import UserInfo from '../../components/user/UserInfo';
 import UserPost from '../../components/user/UserPost';
 import UserWithdrawl from '../../components/user/UserWithdrawl';
+import { useDispatch } from 'react-redux';
+import { getUserInfo } from '../../_actions/user_action';
 function MyPage(props) {
   const { Header, Content, Footer } = Layout;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserInfo()).then(console.log('cool'));
+  }, []);
+  // dispatch(getUserInfo()) 마이페이지 접근시 유저관련 정보를 리듀서에 넣자.
   const [click, setClick] = useState('1');
   const onWithdraw = () => {
     axios.get('/api/users/withdraw').then((response) => {
@@ -18,8 +25,8 @@ function MyPage(props) {
       }
     });
   };
-  const onClick = (e) => {
-    setClick(e.key);
+  const onClick = (event) => {
+    setClick(event.key);
   };
   const selectedMenu = () => {
     console.log('project');
@@ -41,7 +48,6 @@ function MyPage(props) {
     }
   };
 
-  console.log(click);
   return (
     <Layout className="layout">
       <Header>
