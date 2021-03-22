@@ -29,6 +29,7 @@ function UserScrap() {
       </table>
     </div>
   );
+
 }
 
 export default UserScrap;

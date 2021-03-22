@@ -16,6 +16,7 @@ function UserInfo() {
   return (
     <div>
       <div style={{ margin: '8px 0' }}>
+
         {' '}
         <label>아이디</label>
       </div>

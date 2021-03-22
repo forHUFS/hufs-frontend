@@ -30,6 +30,7 @@ const initialState = {
   scraps: [
     { postId: 4, content: 'asfsdf' },
     { postId: 11, content: '123491' },
+
   ],
 };
 // userscrap 필요
