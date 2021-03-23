@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../../hooks/useInput';
 import { updateNickName } from '../../_actions/user_action';
+
 function UserInfo() {
   const { id, nickName } = useSelector((state) => state.user); //  유저 리듀서에 있는 유저 정보 가져오기?
   const [nick, onChange, setNick] = useInput(nickName);
