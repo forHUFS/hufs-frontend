@@ -1,10 +1,19 @@
 // login, logout, register, auth
-import { INFO_USER, AUTH_USER } from '../_actions/types';
+import { INFO_USER, AUTH_USER, UPDATE_NICKNAME_USER } from '../_actions/types';
 export default function user(state = initialState, action) {
   switch (action.type) {
     case INFO_USER:
       return {
+        id: action.payload.id,
+        nickName: action.payload.nickName,
+        posts: action.payload.posts,
+        comments: action.payload.comments,
+        scraps: action.payload.scraps,
+      };
+    case UPDATE_NICKNAME_USER:
+      return {
         ...state,
+        nickName: action.payload,
       };
 
     default:
@@ -30,7 +39,6 @@ const initialState = {
   scraps: [
     { postId: 4, content: 'asfsdf' },
     { postId: 11, content: '123491' },
-
   ],
 };
 // userscrap 필요
