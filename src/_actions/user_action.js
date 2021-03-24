@@ -1,14 +1,14 @@
 // login, logout, register, auth
 
 import axios from 'axios';
-import { INFO_USER, AUTH_USER, UPDATE_NICKNAME_USER } from './types';
-export const updateNickName = async (nickName) => {
+import { INFO_USER, AUTH_USER, UPDATE_USER } from './types';
+export const updateUser = async (updatedData) => {
   const request = await axios
-    .put('user/nickname', nickName)
+    .put('user/nickname', updatedData)
     .then((response) => response.data);
 
   return {
-    type: UPDATE_NICKNAME_USER,
+    type: UPDATE_USER,
     payload: request,
     success: true,
   };
@@ -20,10 +20,10 @@ export const getUserInfo = async () => {
     axios.get('user/comment'),
     axios.get('user/scrap'),
   ]);
-
   const response = {
-    id: request[0].data.id,
     nickName: request[0].data.nickName,
+    major: request[0].data.major,
+    secondMajor: request[0].data.secondMajor,
     posts: request[1].data,
     comments: request[2].data,
     scraps: request[3].data,
@@ -34,7 +34,7 @@ export const getUserInfo = async () => {
   };
 };
 export function auth() {
-  const request = axios.get('authApi').then((response) => response.data);
+  const request = axios.get('user/auth').then((response) => response.data);
 
   return {
     type: AUTH_USER,
