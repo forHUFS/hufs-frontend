@@ -1,15 +1,15 @@
-import axios from 'axios';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
-
 function UserWithdrawl(props) {
+  const dispatch = useDispatch();
   const check = () => {
     const answer = window.confirm('정말 탈퇴하시겠습니까?');
     return answer;
   };
-  const onWithdrawl = () => {
+  const onWithdraw = () => {
     if (check()) {
-      axios.delete('user/withdrawl').then((resposne) => {
+      dispatch().then((resposne) => {
         if (resposne.data.withdrawlSuccess) {
           alert('회원 탈퇴 완료');
           props.history.push('/');
@@ -22,7 +22,7 @@ function UserWithdrawl(props) {
   return (
     <>
       <div>회원 탈퇴 이후 복구 불가, </div>
-      <button onClick={onWithdrawl}>
+      <button onClick={onWithdraw}>
         <div>회원탈퇴</div>
       </button>{' '}
     </>

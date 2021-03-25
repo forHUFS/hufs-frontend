@@ -25,3 +25,4 @@ export const COMMENT_REPORT_FAIL = 'comment_report_fail';
 export const AUTH_USER = 'auth_user';
 export const INFO_USER = 'info_user';
 export const UPDATE_USER = 'update_user';
+export const WITHDRAW_USER = 'withdraw_user';

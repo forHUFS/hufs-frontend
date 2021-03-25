@@ -13,8 +13,6 @@ import {
   POST_UPDATE_FAIL,
 } from './types';
 
-// redux-promise returns promise and can use async/await here
-// reudx-chunk returns function
 export const postList = async () => {
   const request = await axios
     .get('post/list')

@@ -1,7 +1,17 @@
 // login, logout, register, auth
 
 import axios from 'axios';
-import { INFO_USER, AUTH_USER, UPDATE_USER } from './types';
+import { INFO_USER, AUTH_USER, UPDATE_USER, WITHDRAW_USER } from './types';
+export const withdrawUser = async () => {
+  const request = await axios
+    .delete('user/withdrawl')
+    .then((response) => response.data);
+
+  return {
+    type: WITHDRAW_USER,
+    payload: request,
+  };
+};
 export const updateUser = async (updatedData) => {
   const request = await axios
     .put('user/nickname', updatedData)

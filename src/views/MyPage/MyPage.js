@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Layout, Menu } from 'antd';
 import UserScrap from '../../components/user/UserScrap';
 import UserComment from '../../components/user/UserComment';
 import UserInfo from '../../components/user/UserInfo';
 import UserPost from '../../components/user/UserPost';
-import UserWithdrawl from '../../components/user/UserWithdrawl';
+import UserWithdrawal from '../../components/user/UserWithdrawal';
 import { useDispatch } from 'react-redux';
 import { getUserInfo } from '../../_actions/user_action';
 function MyPage(props) {
@@ -32,7 +31,7 @@ function MyPage(props) {
       case '4':
         return <UserComment />;
       case '5':
-        return <UserWithdrawl />;
+        return <UserWithdrawal />;
       default:
         return <div>error 404</div>;
       // return <NoResultsFound />;
