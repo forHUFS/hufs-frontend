@@ -1,10 +1,14 @@
 // login, logout, register, auth
+<<<<<<< HEAD
+import { INFO_USER, AUTH_USER, UPDATE_USER } from '../_actions/types';
+=======
 import {
   INFO_USER,
   AUTH_USER,
   UPDATE_USER,
   WITHDRAW_USER,
 } from '../_actions/types';
+>>>>>>> feature/mypage
 export default function user(state = initialState, action) {
   switch (action.type) {
     case INFO_USER:
@@ -16,7 +20,17 @@ export default function user(state = initialState, action) {
       };
     case WITHDRAW_USER:
       return {
+        major: action.payload.major,
+        secondMajor: action.payload.secondMajor,
+        nickName: action.payload.nickName,
+        posts: action.payload.posts,
+        comments: action.payload.comments,
+        scraps: action.payload.scraps,
+      };
+    case UPDATE_USER:
+      return {
         ...state,
+        nickName: action.payload,
       };
     default:
       return {

@@ -1,6 +1,35 @@
 // login, logout, register, auth
 
 import axios from 'axios';
+<<<<<<< HEAD
+import { INFO_USER, AUTH_USER, UPDATE_USER } from './types';
+export const updateUser = async (updatedData) => {
+  const request = await axios
+    .put('user/nickname', updatedData)
+    .then((response) => response.data);
+
+  return {
+    type: UPDATE_USER,
+    payload: request,
+    success: true,
+  };
+};
+export const getUserInfo = async () => {
+  const request = await axios.all([
+    axios.get('user/info'),
+    axios.get('user/post'),
+    axios.get('user/comment'),
+    axios.get('user/scrap'),
+  ]);
+  const response = {
+    nickName: request[0].data.nickName,
+    major: request[0].data.major,
+    secondMajor: request[0].data.secondMajor,
+    posts: request[1].data,
+    comments: request[2].data,
+    scraps: request[3].data,
+  };
+=======
 import { INFO_USER, AUTH_USER, UPDATE_USER, WITHDRAW_USER } from './types';
 export const withdrawUser = async () => {
   const request = await axios
@@ -17,6 +46,7 @@ export const updateUser = async (updatedData) => {
     .put('user/nickname', updatedData)
     .then((response) => response.data);
 
+>>>>>>> feature/mypage
   return {
     type: UPDATE_USER,
     payload: request,
