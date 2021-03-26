@@ -1,5 +1,6 @@
 // login, logout, register, auth
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { INFO_USER, AUTH_USER, UPDATE_USER } from '../_actions/types';
 =======
 import {
@@ -9,14 +10,27 @@ import {
   WITHDRAW_USER,
 } from '../_actions/types';
 >>>>>>> feature/mypage
+=======
+import { INFO_USER, AUTH_USER, UPDATE_USER } from '../_actions/types';
+>>>>>>> main
 export default function user(state = initialState, action) {
   switch (action.type) {
     case INFO_USER:
       return action.payload; // action.payload, ...state만 떠도 될 것 같은데?
     case UPDATE_USER:
       return {
+        major: action.payload.major,
+        secondMajor: action.payload.secondMajor,
+        nickName: action.payload.nickName,
+        posts: action.payload.posts,
+        comments: action.payload.comments,
+        scraps: action.payload.scraps,
+      };
+    case UPDATE_USER:
+      return {
         ...state,
         nickName: action.payload,
+<<<<<<< HEAD
       };
     case WITHDRAW_USER:
       return {
@@ -31,6 +45,8 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         nickName: action.payload,
+=======
+>>>>>>> main
       };
     default:
       return {

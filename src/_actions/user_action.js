@@ -2,6 +2,9 @@
 
 import axios from 'axios';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 import { INFO_USER, AUTH_USER, UPDATE_USER } from './types';
 export const updateUser = async (updatedData) => {
   const request = await axios
@@ -29,6 +32,7 @@ export const getUserInfo = async () => {
     comments: request[2].data,
     scraps: request[3].data,
   };
+<<<<<<< HEAD
 =======
 import { INFO_USER, AUTH_USER, UPDATE_USER, WITHDRAW_USER } from './types';
 export const withdrawUser = async () => {
@@ -68,6 +72,8 @@ export const getUserInfo = async () => {
     comments: request[2].data,
     scraps: request[3].data,
   };
+=======
+>>>>>>> main
   return {
     type: INFO_USER,
     payload: response,

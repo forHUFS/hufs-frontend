@@ -26,8 +26,13 @@ export const AUTH_USER = 'auth_user';
 export const INFO_USER = 'info_user';
 export const UPDATE_USER = 'update_user';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export const GET_SCHOLAR = 'get_scholar';
 =======
 export const WITHDRAW_USER = 'withdraw_user';
 >>>>>>> feature/mypage
+=======
+
+export const GET_SCHOLAR = 'get_scholar';
+>>>>>>> main
