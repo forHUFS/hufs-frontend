@@ -8,6 +8,8 @@ const inforPage = loadable(() => import('../MapInforPage/MapInforPage'));
 const ReviewPage = loadable(() => import('../ReviewPage/ReviewPage'));
 function MapPage({ match }) {
   return (
+    <>
+     <Header /><Quick />
     /* jshint ignore:start */
     <BrowserRouter>
       <Switch>
@@ -25,7 +27,10 @@ function MapPage({ match }) {
         />
       </Switch>
     </BrowserRouter>
+ <Footer />
+</>
     /* jshint ignore:end */
+
   );
 }
 

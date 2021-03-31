@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, Button, Typography } from 'antd';
+
+import { Card, Button, Typography, Col, Row } from 'antd';
 import { useHistory, withRouter, useLocation } from 'react-router-dom';
 
 import './Card.css';
@@ -27,12 +28,13 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
   // 변수 초기값
 
   useEffect(() => {
-    // 지도에 마커를 표시하는 함수입니다
+
   }, []);
   var map = state;
   var markers = [];
 
   function displayMarker() {
+
     //hideMarkers(markers);
 
     const container = document.getElementById('map');
@@ -46,6 +48,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
     if (map.getLevel() >= 3) {
       map.setLevel(3);
       map.panTo(new kakao.maps.LatLng(lat + 0.001, long));
+
     } else if (map.getLevel() === 2) {
       map.panTo(new kakao.maps.LatLng(lat + 0.0005, long));
     } else {
@@ -58,8 +61,6 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
       content: content,
       yAnchor: 1,
     });
-
-    //customOverlay1.setMap(null);
 
     /*
     var content = '<div class="wrap">' +// 
@@ -116,6 +117,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
     content11.width = '73';
     content11.height = '70';
 
+
     content5.appendChild(content11);
     content4.appendChild(content5);
 
@@ -144,11 +146,19 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
           name: name,
           numAddress: numAddress,
           roadAddress: roadAddress,
-        },
-      });
-      // history.pushState(query, '', `${match.path}/info/${name}`);
+
+        }
+
+      }
+      );
+      // history.pushState(query, '', `${match.path}/info/${name}`);  
+
     };
     content9.appendChild(content10);
+
+    content6.appendChild(content8);
+
+    content6.appendChild(content9);
 
     content6.appendChild(content8);
 
@@ -160,6 +170,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
     content.appendChild(content1);
 
     customOverlay1.setContent(content);
+
 
     /*
 
@@ -219,16 +230,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
       });
     }*/
 
-    // 커스텀 오버레이를 생성합니다
-    /*
-   var customOverlay = new kakao.maps.CustomOverlay({
-      map: null,
-      position: new kakao.maps.LatLng(lat, lng),
-      content: content,
-      yAnchor: 1
-    });
 
-*/
 
     // 마커 이미지의 이미지 크기 입니다
     //var imageSize = new kakao.maps.Size(30, 35);
@@ -242,12 +244,17 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
       //image: markerImage // 마커 이미지
     });
 
+
+
+
+
     // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function () {
+    kakao.maps.event.addListener(marker, "click", function () {
       // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+      console.log(map.getLevel())
       if (map.getLevel() >= 3) {
         map.setLevel(3);
-        map.panTo(new kakao.maps.LatLng(lat + 0.001, long));
+        map.panTo(new kakao.maps.LatLng(lat + 0.0010, long));
       } else if (map.getLevel() === 2) {
         map.panTo(new kakao.maps.LatLng(lat + 0.0005, long));
       } else {
@@ -256,6 +263,23 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
       customOverlay1.setMap(map);
     });
 
+
+
+    markers.push(marker);
+    marker.setMap(map);
+  };
+
+  function hideMarkers(markers) {
+    markers.forEach(marker => marker.setMap(null));
+  }
+
+
+  const style = {
+    height: '80px',
+    width: '100px',
+  };
+
+
     markers.push(marker);
     marker.setMap(map);
   }
@@ -263,6 +287,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
   function hideMarkers(markers) {
     markers.forEach((marker) => marker.setMap(null));
   }
+
 
   const style = {
     height: '80px',
@@ -284,6 +309,7 @@ const Rstrn = ({ id, name, numAddress, roadAddress, lat, long, match }) => {
         }
       </div>
       <div id="map" style={style}></div>
+
     </>
     /* jshint ignore:end */
   );
