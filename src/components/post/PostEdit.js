@@ -21,7 +21,6 @@ function PostEdit(props) {
       axios.delete(`${PUBLIC_URL}/post/back`, uploadedImg);
     };
   });
-  console.log(props.location.state.detail.substring(1));
   const [value, setvalue] = useState({ title: '', content: '' });
   const onSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +33,6 @@ function PostEdit(props) {
 
     const needDelete = getUnused(uploadedImg, submittedImg); // return : 삭제해야 할 이미지 url
     let boardId = props.location.state.detail;
-    console.log(boardId);
     let body = {
       title: value.title,
       content: value.content,
@@ -79,7 +77,6 @@ function PostEdit(props) {
           placeholder="제목"
           value={value.title}
           onChange={(e) => {
-            console.log(value);
             setvalue({ ...value, title: e.target.value });
           }}
         />
@@ -87,7 +84,6 @@ function PostEdit(props) {
           placeholder="하이"
           theme="snow"
           onChange={(content, delta, source, editor) => {
-            console.log(value);
             setvalue({ ...value, content: editor.getHTML() });
           }}
           modules={modules}
@@ -172,7 +168,6 @@ function imageHandler() {
           fileInput.value = '';
         })
         .catch((error) => {
-          console.log('업로드 실패');
           console.log(error);
           this.quill.enable(true);
         });
@@ -187,6 +182,5 @@ function getUnused(uploadedImg, submittedImg) {
   for (let i = 0; i < submittedImg.length; i++) {
     unused.splice(unused.indexOf(submittedImg[i]), 1);
   }
-  console.log(`unused : ${unused}`);
   return unused;
 }

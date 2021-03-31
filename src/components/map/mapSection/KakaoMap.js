@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 const { kakao } = window;
 
@@ -7,7 +7,7 @@ const KakaoMap = () => {
   const dispatcher = useDispatch();
 
   useEffect(() => {
-    const container = document.getElementById("map");
+    const container = document.getElementById('map');
     const options = {
       center: new kakao.maps.LatLng(37.59732049638715, 127.05882833955489), // 한국외대 설캠
       level: 3,
@@ -40,18 +40,17 @@ function placesSearchCB (data, status, pagination) {
     } 
 }
 */
-  
   }, []);
 
-  const style1={
-    height:'400px',
-    width:'800px',
+  const style1 = {
+    height: '400px',
+    width: '800px',
   };
 
-  return( 
-  <div >
-   <div id="map" style={style1}></div>
-   </div>
+  return (
+    <div>
+      <div id="map" style={style1}></div>
+    </div>
   );
 };
 
