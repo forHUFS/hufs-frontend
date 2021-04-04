@@ -1,5 +1,5 @@
-import ReviewPage from "../ItemRegisterForm"
-import axios from "axios"
+import ReviewPage from '../ItemRegisterForm';
+import axios from 'axios';
 //import {useHistory,withRouter,useLocation } from 'react-router-dom';
 
 /*
@@ -7,7 +7,7 @@ withRouter 함수는 High-order component이다.
 라우트로 사용된 컴포넌트가 아니어도 match, location, history 객체에 접근할 수 있게 한다.
 컴포넌트 속성값으로 match, location, history 객체를 전달받는다.
 */
-import { withRouter,useHistory,useLocation } from 'react-router-dom';
+import { withRouter, useHistory, useLocation } from 'react-router-dom';
 
 const ItemRegisterContainer = ({ history,match }) => {
     const location = useLocation();
@@ -37,7 +37,7 @@ const ItemRegisterContainer = ({ history,match }) => {
     
     }
 
-    return <ReviewPage onRegister={onRegister} match={match}/>
-}
+  return <ReviewPage onRegister={onRegister} match={match} />;
+};
 
-export default withRouter(ItemRegisterContainer)
+export default withRouter(ItemRegisterContainer);

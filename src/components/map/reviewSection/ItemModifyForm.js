@@ -1,55 +1,50 @@
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 import { Rate,Button,Input } from 'antd';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 
 const { TextArea } = Input;
 
 // 이미지 표시 URL 생성
-const pictureUrl = id => {
-    return (
-        `/items/display?id=${id}&timestamp=${new Date().getTime()}`
-    )
-}
+const pictureUrl = (id) => {
+  return `/items/display?id=${id}&timestamp=${new Date().getTime()}`;
+};
 
 export default function ItemModifyFrom({ item, isLoading, onModify, match }) {
-    const history = useHistory();
-    
+  const history = useHistory();
 
+  const [title, setTitle] = useState('');
+  const [score, setScore] = useState(0);
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
 
-    const [title, setTitle] = useState("")
-    const [score, setScore] = useState(0)
-    const [content, setContent] = useState("")
-    const [file, setFile] = useState(null)
-
-    useEffect(() => {
-        if(item) {
-            setTitle(item.title)
-            setScore(item.score)
-            setContent(item.content)
-        }
-    }, [item])
-
-    const handleChangeTitle = e => {
-        setTitle(e.target.value)
+  useEffect(() => {
+    if (item) {
+      setTitle(item.title);
+      setScore(item.score);
+      setContent(item.content);
     }
+  }, [item]);
 
-    const handleChangeContent = useCallback(e => {
-        setContent(e.target.value)
-    }, [])
+  const handleChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
 
-    const handleChangeScore = e => {
-        setScore(e.target.value)
-    }
+  const handleChangeContent = useCallback((e) => {
+    setContent(e.target.value);
+  }, []);
 
-    const handleChangeFile = useCallback(e => {
-        setFile(e.target.files[0])
-    }, [])
+  const handleChangeScore = (e) => {
+    setScore(e.target.value);
+  };
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        console.log(title, score, content, file)
-        onModify(title, score, content, file)
-    }
+  const handleChangeFile = useCallback((e) => {
+    setFile(e.target.files[0]);
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onModify(title, score, content, file);
+  };
 
     return (
         <div style={{width: "800px", margin: "0 auto", paddingTop:"150px"}}>
@@ -86,8 +81,6 @@ export default function ItemModifyFrom({ item, isLoading, onModify, match }) {
                     
                 </form>
             )}
-
-        </div>
-
-    )
+    </div>
+  );
 }

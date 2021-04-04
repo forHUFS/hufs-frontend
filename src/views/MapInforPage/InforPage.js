@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as 
    useLocation
@@ -8,14 +8,12 @@ const InforPage = ({ history }) => {
   const [state, setState] = useState('');
 
   useEffect(() => {
-    console.log(history.location.state);
     fetch(`../../components/mapSection/store-seoul.json`)
       .then((res) => res.json)
       .then((res) => setState({ state: res }));
   }, []);
 
   const location = useLocation();
-
 
   return (
     <>
@@ -24,11 +22,10 @@ const InforPage = ({ history }) => {
       </div>
       <div>
         <h4>지번주소 : {location.state.numAddress}</h4>
-        
+
         <h5>도로명주소 : {location.state.roadAddress}</h5>
-        </div>
-        <div>
-        <h1>{location.state.StoreSubCategory}</h1>
+      </div>
+      <div>
       </div>
       <div>
         {/*

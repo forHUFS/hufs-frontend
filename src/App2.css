@@ -1,11 +1,14 @@
+@import '~antd/dist/antd.css';
 .Map {
-  top: 20px;
+  top: 1%;
+  right: 15%;
+
   display: flex;
 }
 .Map-left {
   /* Title */
   position: relative;
-  width: 250px;
+  width: 10%;
   height: 907px;
   left: 15%;
   top: 20px;
@@ -14,26 +17,25 @@
 }
 .Map-left > .navi {
   position: absolute;
-  width: 144px;
-  height: 46px;
-  left: 23%;
-  top: 20px;
-  background-color: red;
+  width: 80%;
+  height: 3%;
+  left: 10%;
+  top: 3%;
 }
 .Map-left > .content {
   position: absolute;
-  width: 219px;
+  width: 80%;
   height: 447px;
-  left: 17px;
+  left: 10%;
   top: 10%;
   background-color: navajowhite;
 }
 #seoul {
   position: absolute;
-  width: 201px;
-  height: 196px;
-  left: 8px;
-  top: 18px;
+  width: 80%;
+  height: 45%;
+  left: 10%;
+  top: 3%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,10 +50,10 @@
   justify-content: center;
 
   position: absolute;
-  width: 201px;
-  height: 196px;
-  left: 7px;
-  top: 230px;
+  width: 80%;
+  height: 45%;
+  left: 10%;
+  bottom: 3%;
 
   background: #ffffff;
 }
@@ -66,34 +68,22 @@
 }
 
 .Map-main {
+  position: absolute;
+  width: 48%;
+  height: 90%;
+  left: 27%;
+  top: 15%;
+}
+/* Map Content */
+/* .Map-main > .Map-board {
   position: relative;
-  width: 823px;
-  height: 907px;
-  left: 17%;
-  top: 20px;
-
-  background: #fde6e6;
-}
-.Map-main > .Mini-map {
-  position: absolute;
-  width: 750px;
-  height: 398px;
-  left: 25px;
-  top: 25px;
-
-  background: #4e3a3a;
-}
-.Map-main > .Map-board {
-  /* Map Content */
-
-  position: absolute;
-  width: 750px;
-  height: 420px;
-  left: 25px;
-  top: 451px;
+  width: 100%;
+  height: 45%;
+  left: 0%;
+  top: 500px;
 
   background: #ce7d7d;
-}
+} */
 /* 이까지 Board  */
 
 .community-main {
@@ -105,7 +95,6 @@
   left: 15%;
   top: 20px;
   border: solid 1px black;
-  border-radius: ;
   /* background: #afa1a1; */
 }
 .row {
@@ -177,4 +166,40 @@
   > div
   > div.ant-picker-panel {
   border-top: none;
+}
+#community-main {
+  position: relative;
+  width: 1100px;
+  height: 470px;
+  left: 15%;
+  top: 20ox;
+  border: solid 1px black;
+}
+.title-bar {
+  width: 100%;
+  height: 5%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px #969393;
+}
+.ql-toolbar.ql-snow {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.ql-container.ql-snow {
+  height: 300px;
+  max-height: 500px;
+}
+
+#button-bar {
+  float: right;
+  justify-content: space-between;
+}
+
+#button-head {
+  font-size: 25px;
+  top: 0%;
+}
+.Map .content Button {
+  margin: 3%;
 }
