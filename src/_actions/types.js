@@ -8,7 +8,9 @@ export const POST_SCRAP = 'post_scrap';
 export const POST_SCRAP_REMOVE = 'post_scrap_remove';
 export const POST_DELLIKE = 'post_dellike';
 export const POST_VIEW = 'post_view';
+export const POST_SEARCH = 'post_search';
 
+export const POST_SEARCH_FAIL = 'post_search_fail';
 export const POST_VIEW_FAIL = 'post_view_fail';
 export const POST_LIST_FAIL = 'post_list_fail';
 export const POST_SCRAP_REMOVE_FAIL = 'post_scrap_remove_fail';
@@ -45,3 +47,6 @@ export const WITHDRAW_USER_FAIL = 'withdraw_user_fail';
 
 export const AUTH_EMAIL = 'auth_email';
 export const AUTH_EMAIL_FAIL = 'auth_eamil_fail';
+
+export const SEARCH_ALL = 'search_all';
+export const SEARCH_ALL_FAIL = 'search_all_fail';

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { PUBLIC_IP } from '../config';
 import {
+  POST_SEARCH,
+  POST_SEARCH_FAIL,
   POST_REPORT,
   POST_LIST,
   POST_LIST_FAIL,
@@ -21,6 +23,8 @@ import {
   POST_DELLIKE_FAIL,
   POST_VIEW_FAIL,
   POST_VIEW,
+  SEARCH_ALL,
+  SEARCH_ALL_FAIL,
 } from './types';
 // 완료
 export const postView = async (postId) => {
@@ -190,3 +194,44 @@ export const deleteScrap = async (postId) => {
     };
   }
 };
+
+export const postSearch = async (boardId, keyword, option) => {
+  const request = axios.get(`${PUBLIC_IP}/board/${boardId}/search`, null, {
+    params: { keyword: keyword, option: option }, // option = titleAndContent, title, content, nick
+  });
+
+  if (request.data) {
+    return {
+      type: POST_SEARCH,
+      status: request.status,
+      payload: request.data.data,
+    };
+  } else {
+    return {
+      type: POST_SEARCH_FAIL,
+      status: request.status,
+      // payload: request.error,
+    };
+  }
+};
+
+export const searchAll = async (keyword, option) => {
+  const request = axios.get(`${PUBLIC_IP}/search`, null, {
+    params: { keyword: keyword, option: option }, // option = titleAndContent, title, content, nick
+  });
+
+  if (request.data) {
+    return {
+      type: SEARCH_ALL,
+      status: request.status,
+      payload: request.data.data,
+    };
+  } else {
+    return {
+      type: SEARCH_ALL_FAIL,
+      status: request.status,
+      // payload: request.error,
+    };
+  }
+};
+
