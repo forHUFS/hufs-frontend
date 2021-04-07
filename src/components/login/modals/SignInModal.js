@@ -22,7 +22,6 @@ function SignInModal() {
     //}
     Kakao.Auth.authorize({
       redirectUri: `${PUBLIC_IP}/user/sign-in/kakao`,
-      
     });
 
     // setEmailInfo({ ... emailInfo, email: e.target})
