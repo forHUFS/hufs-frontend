@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import Header from '../../../views/Header/Header';
 import Cookies from 'js-cookie';
 import { PUBLIC_IP } from '../../../config';
+import { getDefaultNormalizer } from '@testing-library/dom';
 
 const SignUpModal = (props) => {
   const { Option } = Select;
@@ -38,9 +39,11 @@ const SignUpModal = (props) => {
   useEffect(() => console.log(submit), [submit]);
 
   const onSubmit = async (e) => {
+    console.log(submit);
     e.preventDefault();
     const request = await axios
       .post(`${PUBLIC_IP}/user/sign-up`, submit)
+      //.post(`http://localhost:80/user/sign-up`, submit)
       .then((response) => {
         message.success('회원가입이 성공적으로 완료되었습니다 :)');
         message.success(
@@ -52,8 +55,10 @@ const SignUpModal = (props) => {
         switch (error.response?.status) {
           case 401:
             alert('개인 정보 수집 동의를 하지 않으셨습니다');
+            break;
           case 409:
             alert('이미 존재하는 닉네임입니다');
+            break;
         }
       });
   };
@@ -175,6 +180,7 @@ const SignUpModal = (props) => {
                 setSubmit({ ...submit, isAgreed: event.target.checked })
               }
             >
+              
               동의합니다
             </Checkbox>
           </Form.Item>

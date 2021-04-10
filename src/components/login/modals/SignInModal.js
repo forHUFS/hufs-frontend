@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PUBLIC_IP } from '../../../config';
 import axios from 'axios';
 import { message, Modal, Button } from 'antd';
@@ -8,10 +8,12 @@ import GoogleSignIn from '../social/GoogleSignIn';
 import { useHistory } from 'react-router-dom';
 import ReactGoogle from '../social/ReactGoogle';
 function SignInModal() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [emailInfo, setEmailInfo] = useState({ email: ' ' });
+
+  const [ modalVisible, setModalVisible ] = useState(false);
+  const [ emailInfo, setEmailInfo ] = useState({ email: '', provider: '', });
   const { Kakao } = window;
   const history = useHistory();
+  
 
   const signInKakao = async (e) => {
     console.log(e);
@@ -21,28 +23,27 @@ function SignInModal() {
     console.log(Kakao.isInitialized());
     //}
     Kakao.Auth.authorize({
-      redirectUri: `${PUBLIC_IP}/user/sign-in/kakao`,
+      redirectUri: `${PUBLIC_IP}/user/sign-in`,
     });
 
     // setEmailInfo({ ... emailInfo, email: e.target})
     // console.log(emailInfo);
 
     const request = await axios
-      .post(`${PUBLIC_IP}/user/sign-in/kakao`, emailInfo)
-      .then((response) => {
-        message.success('로그인이 정상 완료 되었습니다.');
-        history.push('/');
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 404:
-            message.error(
-              '회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.',
-            );
-            history.push('/redirect');
-        }
-      });
-  };
+
+    .get(`${PUBLIC_IP}/user/sign-in`, emailInfo)
+    .then((response) => {
+      message.success("로그인이 정상 완료 되었습니다.")
+      history.push('/');
+    })
+    .catch((error) => {
+      switch (error.response?.status) {
+        case 404:
+          message.error("회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.")
+          history.push('/redirect');
+      }
+    })
+  }
 
   //  const authorization = async (e) => {
   //    console.log("here");
@@ -61,6 +62,7 @@ function SignInModal() {
   //      }
   //    })
   // }
+  
 
   return (
     <>

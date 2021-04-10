@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import './PostList.css';
 import { message, Skeleton } from 'antd';
 import { postList } from '../../_actions/post_action';
-import { PageHeader, Button, Table } from 'antd';
+import { PageHeader, Button, Table, Pagination } from 'antd';
 import PostSearch from './PostSearch';
 const { Column } = Table;
 function PostList({ match, history }) {
@@ -89,23 +88,35 @@ function PostList({ match, history }) {
             match={match}
             loading={loading}
           />
+          <div className="bottom">
+            <ReactPaginate
+              pageCount={Math.ceil(posts.length / 10)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={0}
+              breakLabel={''}
+              previousLabel={'이전'}
+              nextLabel={'다음'}
+              onPageChange={(event) => setCurrentPage(event.selected + 1)}
+              containerClassName={'pagination-ul'}
+              activeClassName={'currentPage'}
+              previousClassName={'pageLabel-btn'}
+              nextClassName={'pageLabel-btn'}
+            />
+          </div>
         </div>
       </table>
-      <div className="bottom">
-        <ReactPaginate
-          pageCount={Math.ceil(posts.length / 10)}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={0}
-          breakLabel={''}
-          previousLabel={'이전'}
-          nextLabel={'다음'}
-          onPageChange={(event) => setCurrentPage(event.selected + 1)}
-          containerClassName={'pagination-ul'}
-          activeClassName={'currentPage'}
-          previousClassName={'pageLabel-btn'}
-          nextClassName={'pageLabel-btn'}
+
+
+
+    /*  <div className="bottom">
+       
+        <Pagination
+          defaultCurrent={1}
+          onChange={(event) => setCurrentPage(event.selected + 1)}
+          total={posts.length}
         />
-      </div>
+      </div> */
+
     </>
   );
 }
