@@ -11,15 +11,15 @@ const SignUpModal = (props) => {
   const { Option } = Select;
   const [major, setMajor] = useState(false);
   const [doubleMajor, setDoubleMajor] = useState(false);
-
   const [submit, setSubmit] = useState({
     // email: Cookies.get('email'),
-    email: props.location.search.substring(7),
+    email: props.location.state.email,
     nickname: '',
     webMail: '',
     mainMajorId: 1,
     doubleMajorId: 2,
     isAgreed: false,
+    provider: props.location.state.provider,
   });
 
   useEffect(async () => {
@@ -43,6 +43,9 @@ const SignUpModal = (props) => {
       .post(`${PUBLIC_IP}/user/sign-up`, submit)
       .then((response) => {
         message.success('회원가입이 성공적으로 완료되었습니다 :)');
+        message.success(
+          '웹메일을 확인해주세요. 웹메일 인증이 완료되면 HUFSpace의 모든 기능을 사용하실 수 있습니다.',
+        );
         props.history.push('/');
       })
       .catch((error) => {
