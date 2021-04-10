@@ -22,7 +22,7 @@ const SignUpModal = (props) => {
     isAgreed: false,
   });
 
-  useEffect( async () => {
+  useEffect(async () => {
     const request1 = await axios
       .get(`${PUBLIC_IP}/major/main-major`) //1전공
       .then((response) => response.data.data) // 배열 [id, name ]
@@ -35,7 +35,7 @@ const SignUpModal = (props) => {
       .catch((e) => {}); // 배열 [id, name ]
     setDoubleMajor(request2);
   }, []);
-  useEffect(() => {}, [submit]);
+  useEffect(() => console.log(submit), [submit]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -76,7 +76,9 @@ const SignUpModal = (props) => {
         }}
       >
         <Form
-          onValuesChange={(e) => setSubmit({ ...submit, [e[0]]: e })}
+          onValuesChange={(e) =>
+            setSubmit({ ...submit, [Object.keys(e)[0]]: e[Object.keys(e)[0]] })
+          }
           name="basic"
           initialValues={{ remember: true }}
           style={{
@@ -105,7 +107,7 @@ const SignUpModal = (props) => {
             name="webMail"
             rules={[{ required: true, message: 'put your password!' }]}
             onChange={(event) =>
-              setSubmit({ ...submit, webmail: event.target.value })
+              setSubmit({ ...submit, webMail: event.target.value })
             }
             style={{ width: '91%' }}
           >
@@ -154,7 +156,7 @@ const SignUpModal = (props) => {
           </Form.Item>
           <Form.Item
             {...tailLayout}
-            name="agreement"
+            name="isAgreed"
             valuePropName="checked"
             rules={[
               {
@@ -167,7 +169,7 @@ const SignUpModal = (props) => {
           >
             <Checkbox
               onClick={(event) =>
-                setSubmit({ ...submit, isAgrred: event.target.checked })
+                setSubmit({ ...submit, isAgreed: event.target.checked })
               }
             >
               동의합니다
