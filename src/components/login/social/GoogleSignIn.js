@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import { message } from 'antd';
 
+
 function GoogleSignIn({ setModalVisible, setLogin }) {
   const history = useHistory();
+  const [ modalState, setModalState ] = useState(true);
+ 
+  console.log("Where are you", setModalVisible);
+  console.log("work?", modalState);
+
   return (
     <>
       <GoogleLogin
@@ -27,9 +33,12 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
                 history.push('/');
                 setLogin(true);
                 setModalVisible(false);
+                //console.log("::",modalState)
+                //console.log(":::", setModalVisible(false))
               }
             })
             .catch((error) => {
+              //setModalState(true);
               if (error.response?.status === 404) {
                 history.push('/register', {
                   email: googleData.profileObj.email,
