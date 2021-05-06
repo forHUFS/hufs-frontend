@@ -24,7 +24,7 @@ function UserScrap() {
           setScraps(response.data.data); // [스크랩 id, 포스트 Post.id, 포스트 Post.title]
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
     // }
   }, []);
   const onRemove = (e) => {
