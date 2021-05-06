@@ -3,21 +3,30 @@ import { useDispatch } from 'react-redux';
 import { commentSave } from '../../_actions/comment_action';
 import useInput from '../../hooks/useInput';
 import { withRouter } from 'react-router';
-import { Button, Input } from 'antd';
-function CommentEdit({ history, match }) {
+import { Button, Input, message } from 'antd';
+import { postView } from '../../_actions/post_action';
+function CommentEdit({ history, match, setPost }) {
   const { TextArea } = Input;
 
   const dispatch = useDispatch();
   const [content, onChange, setContent] = useInput('');
   const onSubmit = (e) => {
     e.preventDefault();
+    if (content.trim().length === 0) {
+      message.info('댓글을 입력하세요');
+      return;
+    }
+
     let body = {
       postId: +match.params.id,
       content: content,
     };
     dispatch(commentSave(body)) //error 옮겨야함
-      .then((response) => {
-        window.location.reload();
+      .then(async (response) => {
+        message.success('댓글 작성 성공!');
+        await postView(+match.params.id).then((response) =>
+          setPost(response.payload),
+        );
       })
       .catch((error) => {
         switch (error.response?.status) {
@@ -38,7 +47,7 @@ function CommentEdit({ history, match }) {
   return (
     <div
       className="comment-input"
-    // style={{ width: '900px' }}
+      // style={{ width: '900px' }}
     >
       <TextArea
         className="comment-textarea"

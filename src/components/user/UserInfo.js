@@ -80,7 +80,7 @@ function UserInfo(props) {
   }, [change]);
   const onAuth = async () => {
     await axios
-      .post(`${PUBLIC_IP}/user/email`)
+      .post(`${PUBLIC_IP}/user/email`, webMailInput)
       .then((response) => {
         message.success(
           '이메일이 성공적으로 전송되었습니다. 웹메일을 확인해주세요',
@@ -157,7 +157,7 @@ function UserInfo(props) {
                   placeholder={nickName}
                   value={change.nickname}
                   onChange={(e) =>
-                    setChange({ ...change, nickName: e.target.value })
+                    setChange({ ...change, nickname: e.target.value })
                   }
                 />
               </div>
