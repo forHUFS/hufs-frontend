@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Quick from '../Quick/Quick';
 function CalendarPage(props) {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getScholar())
       .then((response) => { })
@@ -28,7 +29,7 @@ function CalendarPage(props) {
     <div>
       <Header />
 
-      <CalendarComponent />
+      <CalendarComponent match={props.match} />
     </div>
   );
 }
