@@ -53,21 +53,6 @@ function Header(props) {
 
   return (
     <div className="Head">
-      <button
-        onClick={async (e) => {
-          await axios.post(`${PUBLIC_IP}/user/sign-up`, {
-            email: 'xoopp5818@gmail.com',
-            provider: 'google',
-            nickname: '닉네임123123',
-            webMail: 'xoopp5818',
-            mainMajorId: 1,
-            doubleMajorId: 2,
-            isAgreed: true,
-          });
-        }}
-      >
-        sdfsfd
-      </button>
       <div className="Pagename">
         <Link to="/">
           <img src={logo} />
