@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import ReactPaginate from 'react-paginate';
 import { message, Skeleton, Pagination } from 'antd';
 import { postList } from '../../_actions/post_action';
 import { Button, Table } from 'antd';
@@ -51,7 +50,7 @@ function PostList({ match, history }) {
 
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
-
+  // console.log(posts);
   return (
     <>
       {' '}
@@ -77,20 +76,17 @@ function PostList({ match, history }) {
             글 작성
           </Button>
           <div className="bottom">
-
             <Pagination
               className="postpagination"
               defaultCurrent={1}
               total={posts.length} //전체 게시물 개수 받음
-              onChange={e => setCurrentPage(e)}
-              pageSize={10} //페이지당 10개 
+              onChange={(e) => setCurrentPage(e)}
+              pageSize={10} //페이지당 10개
               showSizeChanger={false}
-
             />
           </div>
         </div>
       </table>
-
     </>
   );
 }
@@ -108,8 +104,8 @@ export function TableBody({ currentList, match, loading }) {
             key="title"
             render={(text, record) => (
               <Link to={`${match.path}/${record.id}`}>
-                {record.title.length > 29
-                  ? record.title.slice(0, 29)
+                {record.title.length > 25
+                  ? record.title.slice(0, 25)
                   : record.title}
                 {/* {true ? record.Replies[0].count : null} */}
                 {record.repliesCount ? (
@@ -123,10 +119,70 @@ export function TableBody({ currentList, match, loading }) {
           <Column
             title="작성자"
             render={(text, record) =>
-              record.userNickname === null ? (
+              record.nickname === null ? (
                 <>탈퇴한 사용자</>
               ) : (
-                <>{record.userNickname}</>
+                <>{record.nickname}</>
+              )
+            }
+            key="User"
+          />
+          <Column
+            title="작성일"
+            render={(text, record) =>
+              record.createdAt ? record.createdAt.slice(0, 10) : 'none'
+            }
+            key="createdAt"
+          />
+          <Column title="추천수" dataIndex="like" key="like" />
+        </Table>
+      ) : (
+        <>
+          <Skeleton />
+        </>
+      )}
+    </>
+  );
+}
+
+// 검색 결과용 , 게시판 명 , 유저 이름 받아오도록 변경 .
+export function TableBody2({ currentList, match, loading }) {
+  return (
+    <>
+      {loading ? (
+        <Table pagination={false} dataSource={currentList}>
+          <Column
+            title="카테고리"
+            dataIndex="key"
+            key="key"
+            render={(text, record) =>
+              record.Board?.title ? record.Board.title : null
+            }
+          />
+          <Column
+            title="제목"
+            key="title"
+            render={(text, record) => (
+              <Link to={`${match.path}/${record.id}`}>
+                {record.title.length > 25
+                  ? record.title.slice(0, 25)
+                  : record.title}
+                {/* {true ? record.Replies[0].count : null} */}
+                {record.Replies.length ? (
+                  <span style={{ color: 'black' }}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;({record.Replies.length})
+                  </span>
+                ) : null}
+              </Link>
+            )}
+          />{' '}
+          <Column
+            title="작성자"
+            render={(text, record) =>
+              record?.User === null ? (
+                <>탈퇴한 사용자</>
+              ) : (
+                <>{record.User.nickname}</>
               )
             }
             key="User"

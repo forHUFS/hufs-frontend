@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import ReactPaginate from 'react-paginate';
 import { message, Skeleton } from 'antd';
 import { postList,postRemove, reviewDetail } from '../../../../_actions/reviewPost_action';
 import { PageHeader, Button, Table, Pagination, List, Avatar, Space, Rate, Layout } from 'antd';
@@ -10,7 +9,7 @@ import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 const { Column } = Table;
-function ReviewList ({ match, history }) {
+function ReviewList({ match, history }) {
   console.log(history.location.state.id);
   const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
@@ -133,7 +132,7 @@ function ReviewList ({ match, history }) {
     }
 
   }
-  
+
   return (
     <>  
     <Content style={{ padding: '0 100px'}}>
@@ -283,10 +282,10 @@ function ReviewList ({ match, history }) {
       </table>
           */}
 
-</Content>
+      </Content>
 
     </>
-    
+
   );
 }
 
