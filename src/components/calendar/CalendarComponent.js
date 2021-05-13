@@ -128,10 +128,8 @@ function CalendarComponent({ match }) {
         dataSource={dataList}
         renderItem={(item) => (
           <List.Item>
+            <Typography.Text>[{item.Campus.name}]</Typography.Text>{' '}
             <Typography.Text>[{item.ScholarshipOption.name}]</Typography.Text>{' '}
-            <Typography.Text>
-              [{item.ScholarshipSchoolOption.name}]
-            </Typography.Text>{' '}
             {item.title}{' '}
             <h4
               onClick={(e) => window.open(item.link)}
