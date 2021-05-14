@@ -13,6 +13,8 @@ import {
 import { withRouter } from 'react-router';
 import Header from '../../../views/Header/Header';
 import { PUBLIC_IP } from '../../../config';
+import { InformationModal2 } from '../../rule/InformationModal'
+import { UseModal2 } from '../../rule/UseModal'
 
 const SignUpModal = (props) => {
   const { Option } = Select;
@@ -33,13 +35,13 @@ const SignUpModal = (props) => {
     const request1 = await axios
       .get(`${PUBLIC_IP}/major/main-major`) //1전공
       .then((response) => response.data.data) // 배열 [id, name ]
-      .catch((e) => {});
+      .catch((e) => { });
     setMajor(request1);
     const request2 = await axios
       .get(`${PUBLIC_IP}/major/double-major`) //이중전공
       .then((response) => response.data.data)
 
-      .catch((e) => {}); // 배열 [id, name ]
+      .catch((e) => { }); // 배열 [id, name ]
     setDoubleMajor(request2);
   }, []);
   useEffect(() => console.log(submit), [submit]);
@@ -60,10 +62,15 @@ const SignUpModal = (props) => {
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('개인 정보 수집 동의를 하지 않으셨습니다');
+            message.info('개인 정보 수집 동의를 하지 않으셨습니다');
             break;
           case 409:
-            alert('이미 존재하는 닉네임입니다');
+            if (error.response.data.message === 'CONFLICT_NICKNAME') {
+              message.info('이미 존재하는 닉네임입니다');
+            } else {
+              message.info('이미 가입된 사용자입니다.');
+            }
+          default:
             break;
         }
       });
@@ -128,7 +135,7 @@ const SignUpModal = (props) => {
             <Input style={{ textAlign: 'center' }} suffix="@hufs.ac.kr"></Input>
           </Form.Item>
 
-          <Form.Item label="1전공" name="majorId">
+          <Form.Item label="주전공" name="majorId">
             <Select
               style={{ width: '90%' }}
               onChange={(event) =>
@@ -148,7 +155,7 @@ const SignUpModal = (props) => {
               )}
             </Select>
           </Form.Item>
-          <Form.Item label="이중전공 / 부전공" name="doubleMajorId">
+          <Form.Item label="이중/부전공" name="doubleMajorId">
             <Select
               style={{ width: '89%' }}
               onChange={(event) =>
@@ -168,6 +175,8 @@ const SignUpModal = (props) => {
               )}
             </Select>
           </Form.Item>
+          {/* 개인정보 */}
+          <InformationModal2 />
           <Form.Item
             {...tailLayout}
             name="isAgreed"
@@ -181,6 +190,33 @@ const SignUpModal = (props) => {
               },
             ]}
           >
+
+            <Checkbox
+              onChange={(event) => {
+                setSubmit({ ...submit, isAgreed: event.target.checked });
+                console.log(event.target.checked, submit.isAgreed);
+              }}
+            >
+              동의합니다
+            </Checkbox>
+
+          </Form.Item>
+          {/* 이용약관 */}
+          <UseModal2 />
+          <Form.Item
+            {...tailLayout}
+            name="isAgreed"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error('필수 항목입니다.')),
+              },
+            ]}
+          >
+
             <Checkbox
               onChange={(event) => {
                 setSubmit({ ...submit, isAgreed: event.target.checked });

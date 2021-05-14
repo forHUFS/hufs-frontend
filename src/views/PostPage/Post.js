@@ -9,11 +9,10 @@ const PostView = loadable(() => import('../../components/post/PostView'));
 const PostList = loadable(() => import('../../components/post/PostList'));
 const PostUpdate = loadable(() => import('../../components/post/PostUpdate'));
 function Post({ match }) {
-
   return (
     <>
       <Header />
-
+      <Quick />
       <Switch>
         <Route exact path={`${match.path}/edit`} component={PostEdit} />
         <Route exact path={`${match.path}/:id`} component={PostView} />

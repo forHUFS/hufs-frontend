@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from './hoc/auth';
 import loadable from '@loadable/component';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './css/App.css';
@@ -8,8 +9,10 @@ import './css/Post.css';
 import './css/Media.css';
 import './css/Scholar.css';
 import './css/SignInModal.css';
-import './css/User.css'
+import './css/User.css';
 import './css/Slide.css';
+import './css/Quick.css';
+import './css/Rule.css';
 const Post = loadable(() => import('./views/PostPage/Post'));
 const LandingPage = loadable(() => import('./views/LandingPage/LandingPage'));
 const MyPage = loadable(() => import('./views/MyPage/MyPage'));

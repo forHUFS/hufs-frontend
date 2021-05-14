@@ -39,18 +39,22 @@ function UserScrap() {
       }
     });
   };
+
   return (
     <div>
-      <Table pagination={false} dataSource={scraps}>
+      <Table pagination={true} dataSource={scraps}>
         <Column
-          title="글 번호"
+          title="카테고리"
           dataIndex="id"
           key="id"
           style={{ textAlign: 'center' }}
+          render={(text, record) => (
+            record.Post.Board.title
+          )}
         />
         <Column
           style={{ textAlign: 'center' }}
-          title="스크랩한 글"
+          title="제목"
           key="content"
           render={(text, record) => (
             <Link to={`1/${record?.Post?.id}`}>
@@ -58,7 +62,7 @@ function UserScrap() {
                 ? record.Post?.title.slice(0, 29)
                 : record.Post.title} */}
               {record.Post ? (
-                record.Post?.title.slice(0, 29)
+                record.Post?.title.slice(0, 25)
               ) : (
                 <> 삭제된 게시글입니다</>
               )}
@@ -66,7 +70,7 @@ function UserScrap() {
           )}
         />{' '}
         <Column
-          title="내가 쓴 댓글"
+          title="삭제하기"
           key="content"
           render={(text, record) => (
             <button value={record.id} onClick={onRemove}>

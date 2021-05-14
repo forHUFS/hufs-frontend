@@ -1,11 +1,21 @@
-import { Avatar, Comment, List } from 'antd';
+import { Avatar, Button, Comment, List, message } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
-import { commentLike, commentRemove } from '../../_actions/comment_action';
+import {
+  commentLike,
+  commentRemove,
+  commentReply,
+} from '../../_actions/comment_action';
 import ReportModal from '../post/ReportModal';
 import { UserOutlined } from '@ant-design/icons';
 import { postView } from '../../_actions/post_action';
+import styles from '../../css/Comment.module.css';
+import like from '../../image/recommend.png';
+import TextArea from 'antd/lib/input/TextArea';
+import { PUBLIC_IP } from '../../config';
+import axios from 'axios';
+import Form from 'antd/lib/form/Form';
 function CommentList({ comments, history, setPost, match }) {
   const dispatch = useDispatch();
   const onLike = (event) => {
@@ -37,9 +47,9 @@ function CommentList({ comments, history, setPost, match }) {
     const answer = window.confirm('이 댓글을 삭제하시겠습니까?');
     if (answer) {
       dispatch(commentRemove(+event.target.value))
-        .then(async (response) => {
+        .then((response) => {
           alert('삭제 완료');
-          await postView(+match.params.id).then((response) =>
+          dispatch(postView(+match.params.id)).then((response) =>
             setPost(response.payload),
           );
         })
@@ -68,34 +78,163 @@ function CommentList({ comments, history, setPost, match }) {
   //     </>
   //   );
   // };
+
+  // const [reply, setReply] = useState({
+  //   content: '',
+  //   parentId: null,
+  //   postId: +match.params.id,
+  // });
+  const onReply = async (content, parentId) => {
+    if (content.trim().length === 0) {
+      message.info('댓글을 입력하세요');
+      return;
+    }
+    const reply = {
+      content: content,
+      parentId: parentId,
+      postId: +match.params.id,
+    };
+    console.log(reply);
+    dispatch(commentReply(reply)).then((response) => {
+      dispatch(postView(+match.params.id)).then((response) => {
+        setPost(response.payload);
+        let textArray = document.getElementsByTagName('textarea');
+        for (let i = 0; i < textArray.length - 1; i++) {
+          console.log(textArray[i].value);
+          textArray[i].value = ''; // 수정 필요... 한번 대댓글 사용한 textarea는 초기화 후 다시 원래 value가 생성됨
+        }
+      });
+    });
+  };
+  // const typeReply = (event) => {
+  //   console.log(reply);
+  //   setReply({
+  //     ...reply,
+  //     content: event.target.value,
+  //     parentId: +event.target.id,
+  //   });
+  // };
   return (
     <div className="comment-body">
-      <List
+      {/* <List
         className="comment-list"
         header={`${comments.length} replies`}
         itemLayout="horizontal"
         dataSource={comments ? comments : null}
         renderItem={(item) => (
-          <li>
+          <li> */}
+      {/* single comment and reply comment? */}
+      {comments.map((item) => {
+        return (
+          item.parentId === null && (
             <Comment
               actions={item.actions}
               author={item.User === null ? '탈퇴한 사용자' : item.User.nickname}
               avatar={<Avatar icon={<UserOutlined />} />}
-              content={item.content}
+              content={
+                <>
+                  {item.content}
+                  {/* <span> 추천: {item.like} </span> */}
+                  {/* <span> 신고 수: {item.report} </span> */}
+                  <div className={styles.commentset}>
+                    <button
+                      className={styles.delete}
+                      value={item.id}
+                      onClick={onDelete}
+                    >
+                      삭제
+                    </button>
+                    <ReportModal
+                      type="comment"
+                      id={item.id}
+                      history={history}
+                    />
+                    <img src={like} />
+                    <button
+                      className={styles.like}
+                      value={item.id}
+                      onClick={onLike}
+                    >
+                      {item.like}
+                    </button>
+                  </div>
+                </>
+              }
               datetime={item.createAt ? item.createAt.slice(0, 10) : null}
-            />
-          </li>
+              // 현재 안나타남
+            >
+              {comments.map((e) => {
+                return (
+                  e.parentId === item.id && (
+                    <Comment
+                      actions={e.actions}
+                      author={
+                        e.User === null ? '탈퇴한 사용자' : e.User.nickname
+                      }
+                      avatar={<Avatar icon={<UserOutlined />} />}
+                      content={
+                        <>
+                          {e.content}
+                          {/* <span> 추천: {e.like} </span> */}
+                          {/* <span> 신고 수: {e.report} </span> */}
+                          <div className={styles.commentset}>
+                            <button
+                              className={styles.delete}
+                              value={e.id}
+                              onClick={onDelete}
+                            >
+                              삭제
+                            </button>
+                            <ReportModal
+                              type="comment"
+                              id={e.id}
+                              history={history}
+                            />
+                            <img src={like} />
+                            <button
+                              className={styles.like}
+                              value={e.id}
+                              onClick={onLike}
+                            >
+                              {e.like}
+                            </button>
+                          </div>
+                        </>
+                      }
+                      datetime={e.createAt ? e.createAt.slice(0, 10) : null}
+                      // 현재 안나타남
+                    ></Comment>
+                  )
+                );
+              })}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  console.log('text', e.target[0].value);
+                  console.log('parentid', item.id);
+                  onReply(e.target[0].value, item.id);
+                }}
+              >
+                <TextArea
+                  className="comment-textarea"
+                  size={'small'}
+                  rows={4}
+                  autoSize={{ minRows: 4, maxRows: 4 }}
+                  showCount
+                  maxLength={100}
+                  type="text"
+                  id={item.id}
+                  placeholder="댓글을 입력하세요"
+                />
+                <input type="submit" value="댓글 입력" />
+              </form>
+            </Comment>
+          )
+        );
+      })}
+      {/* </li>
         )}
-      />
-      {/* <span> 추천 수: {comment.like} </span>
-      <span> 신고 수: {comment.report} </span>
-      <button value={comment.id} onClick={onLike}>
-        추천하기
-      </button>
-      <button value={comment.id} onClick={onDelete}>
-        삭제하기
-      </button>
-      <ReportModal type="comment" id={comment.id} history={history} /> */}
+      /> */}
     </div>
   );
 }

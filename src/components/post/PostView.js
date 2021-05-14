@@ -80,8 +80,11 @@ function PostView({ match, history }) {
   };
   const onLike = () => {
     dispatch(postLike(post.id))
-      .then((response) => {
-        window.location.reload();
+      .then(async (response) => {
+        await postView(+match.params.id).then((response) => {
+          message.success('성공');
+          setPost(response.payload);
+        });
       })
       .catch((error) => {
         switch (error.response?.status) {
@@ -99,30 +102,30 @@ function PostView({ match, history }) {
             break;
         }
       });
-    // 새로고침 필요한지
+    // 새로고침 필요한지 -> 아니요
   };
-  const onDellike = () => {
-    dispatch(postDellike(post.id))
-      .then((response) => {
-        window.location.reload();
-      })
-      .catch((error) => {
-        switch (error.response.status) {
-          case 401:
-            alert('로그인이 필요합니다.');
-            history.push('/');
-            break;
-          case 403:
-            alert('접근 권한이 없습니다');
-            break;
-          case 409:
-            alert('좋아요한 기록이 없습니다.');
-            break;
-          default:
-            break;
-        }
-      });
-  };
+  // const onDellike = () => {
+  //   dispatch(postDellike(post.id))
+  //     .then((response) => {
+  //       window.location.reload();
+  //     })
+  //     .catch((error) => {
+  //       switch (error.response.status) {
+  //         case 401:
+  //           alert('로그인이 필요합니다.');
+  //           history.push('/');
+  //           break;
+  //         case 403:
+  //           alert('접근 권한이 없습니다');
+  //           break;
+  //         case 409:
+  //           alert('좋아요한 기록이 없습니다.');
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     });
+  // };
   const onScrap = () => {
     dispatch(postScrap(post.id))
       .then((response) => {
@@ -147,24 +150,7 @@ function PostView({ match, history }) {
         }
       });
   };
-  function findBoardName(boardId) {
-    switch (boardId) {
-      case 1:
-        return '1 게시판';
-      case 2:
-        return '2 게시판';
-      case 3:
-        return '3 게시판';
-      case 4:
-        return '4 게시판';
-      case 5:
-        return '5 게시판';
-      case 6:
-        return '6 게시판';
-      default:
-        break;
-    }
-  }
+
   return (
     <div className={styles.communitymain}>
       {/* <PageHeader
@@ -184,24 +170,26 @@ function PostView({ match, history }) {
                 <span className={styles.like}>
                   <img src={like} />
                   <span className={styles.recommend} onClick={onLike}>
-                    추천 : {post.like}
+                    {post.like}
                   </span>
                 </span>
-                {post.User === null ? (
-                  <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
-                ) : (
-                  <span style={{ fontSize: '8px' }}>
+                <div className={styles.postinfo}>
+                  {post.User === null ? (
+                    <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
+                  ) : (
+                    <span style={{ fontSize: '13px' }}>
+                      {' '}
+                      {post.User.nickname}{' '}
+                    </span>
+                  )}
+                  <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+                    {post.createdAt?.slice(0, 10)}
+                  </span>
+                  <span style={{ marginLeft: '24px', fontSize: '12px' }}>
                     {' '}
-                    {post.User.nickname}{' '}
+                    글 번호 {post.id}
                   </span>
-                )}
-                <span style={{ marginLeft: '24px', fontSize: '5px' }}>
-                  {post.createdAt?.slice(0, 10)}
-                </span>
-                <span style={{ marginLeft: '24px', fontSize: '5px' }}>
-                  {' '}
-                  글 번호 {post.id}
-                </span>
+                </div>
               </>
             }
             // extra={<span>글 번호 {post.id}</span>}
@@ -223,6 +211,16 @@ function PostView({ match, history }) {
                 <ReportModal type="post" id={post.id} history={history} />{' '}
                 <div>
                   <span
+                    onClick={onDelete}
+                    style={{
+                      cursor: 'pointer',
+                      float: 'left',
+                      marginRight: '12px',
+                    }}
+                  >
+                    삭제
+                  </span>
+                  <span
                     onClick={onScrap}
                     style={{
                       cursor: 'pointer',
@@ -231,18 +229,6 @@ function PostView({ match, history }) {
                     }}
                   >
                     스크랩
-                  </span>
-                </div>
-                <div>
-                  <span
-                    onClick={onDelete}
-                    style={{
-                      cursor: 'pointer',
-                      float: 'right',
-                      marginLeft: '12px',
-                    }}
-                  >
-                    삭제
                   </span>
                 </div>{' '}
                 <Link to={`${post.id}/update`}>

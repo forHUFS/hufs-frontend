@@ -10,7 +10,7 @@ function CalendarPage(props) {
 
   useEffect(() => {
     dispatch(getScholar())
-      .then((response) => { })
+      .then((response) => {})
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
@@ -28,8 +28,9 @@ function CalendarPage(props) {
   return (
     <div>
       <Header />
+      <Quick />
 
-      <CalendarComponent />
+      <CalendarComponent match={props.match} />
     </div>
   );
 }

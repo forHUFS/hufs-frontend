@@ -27,7 +27,7 @@ export const COMMENT_SAVE = 'comment_save';
 export const COMMENT_LIKE = 'comment_like';
 export const COMMENT_REMOVE = 'comment_remove';
 export const COMMENT_REPORT = 'comment_report';
-
+export const COMMENT_REPLY = 'comment_reply';
 export const COMMENT_SAVE_FAIL = 'comment_save_fail';
 export const COMMENT_LIKE_FAIL = 'comment_like_fail';
 export const COMMENT_REMOVE_FAIL = 'comment_remove_fail';
@@ -50,3 +50,6 @@ export const AUTH_EMAIL_FAIL = 'auth_eamil_fail';
 
 export const SEARCH_ALL = 'search_all';
 export const SEARCH_ALL_FAIL = 'search_all_fail';
+
+export const REVIEW_DETAIL = 'review_detail';
+export const REVIEW_DETAIL_FAIL = 'review_detail_fail';
