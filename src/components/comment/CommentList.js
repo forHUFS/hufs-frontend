@@ -98,6 +98,7 @@ function CommentList({ comments, history, setPost, match }) {
         }
       });
     });
+
   };
   const typeReply = (event) => {
     console.log(reply);
@@ -107,6 +108,7 @@ function CommentList({ comments, history, setPost, match }) {
       parentId: +event.target.id,
     });
   };
+      console.log(reply);
   return (
     <div className="comment-body">
       {/* <List
