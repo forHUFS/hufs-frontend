@@ -9,7 +9,7 @@ import numIcon from './mapData/icon1.png';
 import roadIcon from './mapData/icon2.png';
 import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
-import {reviewDetail} from '../../../_actions/reviewPost_action';
+import { reviewDetail } from '../../../_actions/reviewPost_action';
 
 const { kakao } = window;
 const { Text, Title } = Typography;
@@ -29,32 +29,33 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [detail, setDetail] = useState([]);
-    useEffect(()=>{
-      dispatch(reviewDetail(id))
-  .then((response) => {
-    if (response.status === 200) {
-      console.log(response.payload)
-      setDetail({average : response.payload.average,
-        count : response.payload.count
+  useEffect(() => {
+    dispatch(reviewDetail(id))
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.payload)
+          setDetail({
+            average: response.payload.average,
+            count: response.payload.count
 
+          })
+        }
       })
-    }
-  })
-  .catch((error) => {
-    switch (error.response?.status) {
-      case 401:
-        history.push('/');
-        break;
-      case 403:
-        history.push('/');
-        break;
-      default:
-        break;
-    }
-  });
+      .catch((error) => {
+        switch (error.response?.status) {
+          case 401:
+            history.push('/');
+            break;
+          case 403:
+            history.push('/');
+            break;
+          default:
+            break;
+        }
+      });
 
-    }, [])
-   
+  }, [])
+
 
   const data = [
     {
@@ -86,8 +87,8 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
 
   function displayMarker() {
     //hideMarkers(markers);
-  
-      
+
+
 
     const container = document.getElementById('map');
     const options = {
@@ -196,7 +197,7 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
     content12.width = '15';
     content12.height = '15';
 
-    var content13 = document.createTextNode(' ' +detail.average + ' ('+detail.count + ') ');
+    var content13 = document.createTextNode(' ' + detail.average + ' (' + detail.count + ') ');
 
     content9.appendChild(content12);
     content9.appendChild(content13);
