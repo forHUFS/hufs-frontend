@@ -42,7 +42,7 @@
   }
 
   .community-main {
-    left: 2%;
+    left: 5%;
     width: 950px;
   }
 
@@ -101,7 +101,7 @@
     left: 2%;
   }
 }
-@media (max-width: 1150px) {
+@media (max-width: 1200px) {
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
     display: none;
   }
