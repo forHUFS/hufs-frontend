@@ -9,14 +9,25 @@ import numIcon from './mapData/icon1.png';
 import roadIcon from './mapData/icon2.png';
 import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
-import {reviewDetail} from '../../../_actions/reviewPost_action';
+import { reviewDetail } from '../../../_actions/reviewPost_action';
+
+import axios from 'axios';
+import { PUBLIC_IP } from '../../../config';
+
 
 const { kakao } = window;
 const { Text, Title } = Typography;
 
-
-const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long, match }) => {
-
+const Rstrn = ({
+  id,
+  name,
+  numAddress,
+  StoreSubCategory,
+  roadAddress,
+  lat,
+  long,
+  match,
+}) => {
   //const history = useHistory();
 
   //const [markerPositions, setMarkerPositions] = useState();
@@ -29,50 +40,82 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [detail, setDetail] = useState([]);
-    useEffect(()=>{
-      dispatch(reviewDetail(id))
-  .then((response) => {
-    if (response.status === 200) {
-      console.log(response.payload)
-      setDetail({average : response.payload.average,
-        count : response.payload.count
 
+  const getMarker = async () => {
+    dispatch(reviewDetail(id))
+      .then((response) => {
+        // if (response.status === 200) {
+        //   setDetail({
+        //     average: response.payload.average,
+        //     count: response.payload.count,
+        //   });
+        // }
+        if (response.payload.average === null) {
+          displayMarker(parseFloat(0).toFixed(1), response.payload.count);
+        }
+        else {
+          displayMarker(response.payload.average, response.payload.count);
+
+        }
       })
-    }
-  })
-  .catch((error) => {
-    switch (error.response?.status) {
-      case 401:
-        history.push('/');
-        break;
-      case 403:
-        history.push('/');
-        break;
-      default:
-        break;
-    }
-  });
+      .catch(((error) => {
+        switch (error.response?.status) {
+          case 401:
+            alert('로그인을 하시면 서비스 이용이 가능합니다.')
+            break;
+          case 403:
+            alert('접근 권한 오류')
+            break;
+          default:
+            break;
+        }
+      }));
+  };
+  // useEffect(() => {
+  //   displayMarker();
+  // }, [detail]);
+  //   useEffect(()=>{
+  //     dispatch(reviewDetail(id))
+  // .then((response) => {
+  //   if (response.status === 200) {
+  //     setDetail({average : response.payload.average,
+  //       count : response.payload.count
 
-    }, [])
-   
+  //     })
+  //   }
+  // })
+  // .catch((error) => {
+  //   switch (error.response?.status) {
+  //     case 401:
+  //       history.push('/');
+  //       break;
+  //     case 403:
+  //       history.push('/');
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // });
+
+  //   }, [])
+
 
   const data = [
     {
-      title: "카테고리",
+      title: '카테고리',
       description: StoreSubCategory.name,
       img: cateIcon2,
     },
     {
-      title: "지번주소",
+      title: '지번주소',
       description: numAddress,
-      img: numIcon
+      img: numIcon,
     },
     {
-      title: "도로명주소",
+      title: '도로명주소',
       description: roadAddress,
       img: roadIcon,
     },
-
   ];
 
   //const {map} = useSelector(state => state.map,[]);
@@ -84,10 +127,8 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
   var map = state;
   var markers = [];
 
-  function displayMarker() {
+  function displayMarker(average, count) {
     //hideMarkers(markers);
-  
-      
 
     const container = document.getElementById('map');
     const options = {
@@ -174,14 +215,14 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
     var content6 = document.createElement('div');
     content6.className = 'desc';
 
-    var content7 = document.createElement("div");
-    content7.className = "ellipsis";
+    var content7 = document.createElement('div');
+    content7.className = 'ellipsis';
     content7.appendChild(document.createTextNode(name));
 
     content6.appendChild(content7);
 
-    var content8 = document.createElement("div");
-    content8.className = "jibun ellipsis";
+    var content8 = document.createElement('div');
+    content8.className = 'jibun ellipsis';
     //content8.appendChild(document.createTextNode(roadAddress));
 
     var content9 = document.createElement('div');
@@ -190,13 +231,17 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
     content10.appendChild(document.createTextNode('상세 보기'));
     content10.onclick = function () {
       setIsModalVisible(true);
-    }
+    };
     var content12 = document.createElement('img');
     content12.src = star;
     content12.width = '15';
     content12.height = '15';
 
-    var content13 = document.createTextNode(' ' +detail.average + ' ('+detail.count + ') ');
+
+    var content13 = document.createTextNode(
+      ' ' + average + ' (' + count + ') ',
+    );
+
 
     content9.appendChild(content12);
     content9.appendChild(content13);
@@ -291,7 +336,6 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
       // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-      console.log(map.getLevel());
       if (map.getLevel() >= 3) {
         map.setLevel(3);
         map.panTo(new kakao.maps.LatLng(lat + 0.001, long));
@@ -318,7 +362,6 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
     setIsModalVisible(false);
   };
 
-
   return (
     /* jshint ignore:start */
     <div>
@@ -327,18 +370,23 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
           <Card size="small" style={{ width: 300, height: 40 }}>
             <Title level={5}>{name}</Title>
             <h5>{roadAddress}</h5>
-            <Button type="primary" onClick={displayMarker}>
+            <Button type="primary" onClick={getMarker}>
               위치 확인
-        </Button>
-          </Card>}
+            </Button>
+          </Card>
+        }
       </div>
       <div id="map" style={style}></div>
-      <Modal title={<Title level={3}>{name}</Title>} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-
+      <Modal
+        title={<Title level={3}>{name}</Title>}
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <List
           itemLayout="horizontal"
           dataSource={data}
-          renderItem={item => (
+          renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar size={83} src={item.img} />}
@@ -346,26 +394,28 @@ const Rstrn = ({ id, name, numAddress, StoreSubCategory, roadAddress, lat, long,
                 description={item.description}
               />
             </List.Item>
-          )} />
+          )}
+        />
         <div>
-          <Button onClick={(e) => {
-            console.log(match)
-            // map/info -> map/info/:name 24시해장국
-            history.push({ // map/info/:name/24시해장국/reviewpage
-              pathname: `${match.path}/info/${name}/${id}/ReviewPage`,
-              state: {
-                id: id,
-                name: name,
-              }
-            }
-            );
-          }}>
-            리뷰 보러가기</Button>
+          <Button
+            style={{ width: '30%' }}
+            onClick={(e) => {
+              // map/info -> map/info/:name 24시해장국
+              history.push({
+                // map/info/:name/24시해장국/reviewpage
+                pathname: `${match.path}/info/${name}/${id}/ReviewPage`,
+                state: {
+                  id: id,
+                  name: name,
+                },
+              });
+            }}
+          >
+            리뷰 보러가기
+          </Button>
           {/*<ItemListContainer/>*/}
-
         </div>
       </Modal>
-
     </div>
 
     /* jshint ignore:end */

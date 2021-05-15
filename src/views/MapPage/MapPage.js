@@ -8,7 +8,7 @@ const MapContainer = loadable(() =>
   import('../../components/map/mapSection/MapContainer'),
 );
 const ReviewEdit = loadable(() => import('../../components/map/reviewSection/newReviewSection/ReviewEdit'));
-const inforPage = loadable(() => import('../MapInforPage/MapInforPage'));
+
 const ReviewPage = loadable(() => import('../ReviewPage/ReviewPage'));
 const ReviewUpdate = loadable(() => import('../../components/map/reviewSection/newReviewSection/ReviewUpdate'));
 function MapPage({ match }) {
@@ -17,10 +17,8 @@ function MapPage({ match }) {
     <>
       <Header />
       <Quick />
-      <BrowserRouter>
         <Switch>
           <Route exact path={`${match.path}`} component={MapContainer} />
-          {/* <Route exact path={`${match.path}/info`} component = {inforPage}/> */}
           <Route
             exact
             path={`${match.path}/info/:name/:id/ReviewPage`}
@@ -29,13 +27,7 @@ function MapPage({ match }) {
           <Route path={`${match.path}/register`} component={ReviewEdit} />
           <Route exact path={`${match.path}/edit`} component={ReviewUpdate} />
 
-          {/*<Route
-            exact
-            path={`${match.path}/info/:name/:id`}
-            component={inforPage}
-          />*/}
         </Switch>
-      </BrowserRouter>
       <Footer />
     </>
     /* jshint ignore:end */

@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../../config';
 import imageCompression from 'browser-image-compression';
-import { Button, Rate, message,Input } from 'antd';
+import { Button, Rate, message, Input } from 'antd';
 
 let uploadedImg = [];
 function ReviewEdit(props) {
@@ -39,7 +39,7 @@ function ReviewEdit(props) {
     let body = {
       title: value.title,
       content: value.content,
-      score: value.score
+      score: value.score,
     };
     dispatch(postSave(body, needDelete, rstrnId))
       .then((response) => {
@@ -50,10 +50,10 @@ function ReviewEdit(props) {
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('로그인이 필요합니다.');
+            message.error('로그인이 필요합니다.');
             props.history.push('/');
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             props.history.push('/');
             break;
           default:
@@ -85,16 +85,20 @@ function ReviewEdit(props) {
             setvalue({ ...value, title: e.target.value });
           }}
         />
-        <label>평점 </label>
-        <Rate allowHalf value={value.score} onChange={(e) => {
-          console.log(e);
+        <div style={{ padding: '5px 5px' }}>
+          <label style={{ fontWeight: 'bold' }}>평점 </label>
+          <Rate allowHalf value={value.score} onChange={(e) => {
             setvalue({ ...value, score: e });
           }} />
-        <hr></hr>
+        </div>
+
         <ReactQuill
           id="quill-editor"
           placeholder="하이"
           theme="snow"
+          style={{
+            height: '77%',
+          }}
           onChange={(content, delta, source, editor) => {
             setvalue({ ...value, content: editor.getHTML() });
           }}
@@ -105,14 +109,13 @@ function ReviewEdit(props) {
           formats={formats}
         ></ReactQuill>
         <hr />
-        <div id="button-bar">
-          <Button
-            type="primary"
-            onClick={onSubmit}
-            style={{
-              marginLeft: '10px',
-            }}
-          >
+        <div
+          id="button-bar"
+          style={{
+            top: '-5%',
+          }}
+        >
+          <Button type="primary" onClick={onSubmit}>
             등록
           </Button>
           <Button
@@ -181,7 +184,7 @@ function imageHandler() {
 
       const options = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 400,
+        maxWidthOrHeight: 200,
         useWebWorker: true,
       };
       const compressedFile = await imageCompression(files[0], options);
@@ -190,7 +193,6 @@ function imageHandler() {
       const range = this.quill.getSelection(true);
 
       if (!files || !files.length) {
-        console.log('No files selected');
         return;
       }
 
@@ -212,7 +214,6 @@ function imageHandler() {
           fileInput.value = '';
         })
         .catch((error) => {
-          console.log(error);
           fileInput.value = '';
           this.quill.enable(true);
         });

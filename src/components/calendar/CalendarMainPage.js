@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Calendar, Badge } from 'antd';
+import { Calendar, Badge, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { Button, List, Typography } from 'antd';
 import { getScholar } from '../../_actions/calender_action';
 import { withRouter } from 'react-router';
+import { dDayCheck } from './CalendarComponent';
+import moment from 'moment';
 function CalendarMainPage(props) {
   const dispatch = useDispatch();
   const [dataList, setDataList] = useState([]);
@@ -12,24 +14,36 @@ function CalendarMainPage(props) {
     dispatch(getScholar())
       .then((response) => {
         setscholar(response.payload.data);
+        const selectedMatchedData = response.payload.data.filter((e) => {
+          if (e.ScholarshipDate === null) {
+            return null;
+          } else {
+            let x = moment(e.ScholarshipDate.date);
+            let today = moment();
+            return (
+              x.date() === today.day() &&
+              x.month() + 1 === today.date() &&
+              x.year() === today.year()
+            );
+          }
+        });
+        setDataList(selectedMatchedData);
       })
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('로그인하지 않은 사용자');
+            message.error('로그인하지 않은 사용자');
             props.history.push('/');
             break;
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             break;
           default:
             break;
         }
       });
   }, []);
-  useEffect(() => {
-    setDataList(scholar);
-  }, [scholar]);
+
   function getListData(value) {
     let day = value._d.getUTCDate();
     let month = value._d.getUTCMonth() + 1; //months from 1-12
@@ -125,6 +139,11 @@ function CalendarMainPage(props) {
               >
                 {item.title}
               </span>{' '}
+              <span style={{ display: 'inline-block', fontWeight: 'bold' }}>
+                {item.ScholarshipDate === null
+                  ? null
+                  : `D ${dDayCheck(item.ScholarshipDate.date)}`}
+              </span>
               {/* <h4
                 onClick={(e) => window.open(item.link)}
                 style={{

@@ -6,15 +6,13 @@ import PostSub from '../post/PostSub';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
 import { getScholar } from '../../_actions/calender_action';
+import moment from 'moment';
 function CalendarComponent({ match }) {
   const { CheckableTag } = Tag;
   const dispatch = useDispatch();
   const { scholar } = useSelector((state) => state.calendar);
-  const [selectedTag, setSelectedTag] = useState({
-    optionId: [],
-    // dateId: [],
-    campusId: [],
-  });
+  const [selectedOptionTag, setSelectedOptionTag] = useState({ optionId: [] });
+  const [selectedCampusTag, setSelectedCampusTag] = useState({ campusId: [] });
   const [dataList, setDataList] = useState([]);
   const [optionTagDatas, setOptionTagDatas] = useState([]);
   const [campusTagDatas, setCampusTagDatas] = useState([]);
@@ -22,22 +20,38 @@ function CalendarComponent({ match }) {
   //   setDataList(scholar);
   // }, [scholar]);
   useEffect(() => {
-    // await axios
-    //   .post(`${PUBLIC_IP}/scholarship`, selectedTag)
-    dispatch(getScholar(selectedTag)).then((response) => {
+    const a =
+      selectedCampusTag.campusId.length !== 0 ? selectedCampusTag : null;
+    const b =
+      selectedOptionTag.optionId.length !== 0 ? selectedOptionTag : null;
+    const selectedTags = { ...a, ...b };
+    dispatch(getScholar(selectedTags)).then((response) => {
       setDataList(response.payload.data);
+      if (Object.keys(selectedTags).length === 0) {
+        const selectedMatchedData = response.payload.data.filter((e) => {
+          if (e.ScholarshipDate === null) {
+            return null;
+          } else {
+            let x = moment(e.ScholarshipDate.date);
+            let today = moment();
+            return (
+              x.date() === today.day() &&
+              x.month() + 1 === today.date() &&
+              x.year() === today.year()
+            );
+          }
+        });
+
+        setDataList(selectedMatchedData);
+      }
     });
-    console.log(selectedTag);
-  }, [selectedTag]);
+  }, [selectedCampusTag, selectedOptionTag]);
   useEffect(async () => {
     await axios.get(`${PUBLIC_IP}/scholarship/option`).then((response) => {
       setOptionTagDatas(response.data.data);
     });
     await axios.get(`${PUBLIC_IP}/scholarship/campus`).then((response) => {
       setCampusTagDatas(response.data.data);
-      // await axios
-      //   .get(`${PUBLIC_IP}/scholarship/date`)
-      //   .then((response) => console.log(response.data));
     });
   }, []);
   function getListData(value) {
@@ -99,29 +113,33 @@ function CalendarComponent({ match }) {
   };
   const onOptionTag = (event, tag) => {
     if (event) {
-      setSelectedTag({
-        ...selectedTag,
-        optionId: [...selectedTag.optionId, tag],
+      setSelectedOptionTag({
+        optionId: [...selectedOptionTag.optionId, tag],
       });
     } else {
-      setSelectedTag({
-        ...selectedTag,
-        optionId: [...selectedTag.optionId.filter((t) => t !== tag)],
+      setSelectedOptionTag({
+        optionId: [...selectedOptionTag.optionId.filter((t) => t !== tag)],
       });
     }
   };
   const onCampusTag = (event, tag) => {
     if (event) {
-      setSelectedTag({
-        ...selectedTag,
-        campusId: [...selectedTag.campusId, tag],
+      setSelectedCampusTag({
+        campusId: [...selectedCampusTag.campusId, tag],
       });
     } else {
-      setSelectedTag({
-        ...selectedTag,
-        campusId: [...selectedTag.campusId.filter((t) => t !== tag)],
+      setSelectedCampusTag({
+        campusId: [...selectedCampusTag.campusId.filter((t) => t !== tag)],
       });
     }
+  };
+
+  const onViewAll = () => {
+    // setSelectedOptionTag({ optionId: [] });
+    // setSelectedCampusTag({ campusId: [] });
+    dispatch(getScholar()).then((response) => {
+      setDataList(response.payload.data);
+    });
   };
   return (
     <div className="community-main">
@@ -133,48 +151,74 @@ function CalendarComponent({ match }) {
         fullscreen={false}
         onSelect={scholar ? onSelect : null}
       />
-      <div>
-        캠퍼스 :
-        {campusTagDatas.map((tag) => (
-          <CheckableTag
-            key={tag.id}
-            checked={selectedTag.campusId.indexOf(tag.id) > -1}
-            // onChange={(event) => onOptionTag(event, tag)}
-            onChange={(event) => onCampusTag(event, tag.id)}
-          >
-            {tag.name}
-          </CheckableTag>
-        ))}
+      <div className="scholar-search">
+        <div className="scholar-search-type">
+
+          <div
+            className="scholar-search-head">
+            캠퍼스
+            {campusTagDatas.map((tag) => (
+              <CheckableTag
+                key={tag.id}
+                checked={selectedCampusTag.campusId.indexOf(tag.id) > -1}
+                // onChange={(event) => onOptionTag(event, tag)}
+                onChange={(event) => onCampusTag(event, tag.id)}
+              >
+                {tag.name}
+              </CheckableTag>
+            ))}
+          </div>
+          <div
+            className="scholar-search-head">
+            유형
+            {optionTagDatas.map((tag) => (
+              <CheckableTag
+                style={{
+                  marginLeft: '12px',
+                  marginRight: '0px'
+                }}
+                key={tag.id}
+                checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
+                // onChange={(event) => onOptionTag(event, tag)}
+                onChange={(event) => onOptionTag(event, tag.id)}
+              >
+                {tag.name}
+              </CheckableTag>
+            ))}
+          </div>
+        </div>
+        <span
+          className="scholar-search-all"
+
+          onClick={onViewAll}
+        >
+          전체 보기
+      </span>
       </div>
-      <div>
-        유형 :
-        {optionTagDatas.map((tag) => (
-          <CheckableTag
-            key={tag.id}
-            checked={selectedTag.optionId.indexOf(tag.id) > -1}
-            // onChange={(event) => onOptionTag(event, tag)}
-            onChange={(event) => onOptionTag(event, tag.id)}
-          >
-            {tag.name}
-          </CheckableTag>
-        ))}
-      </div>
+
       <List
         header={
           <div className="scholarhead">
-            <div className="s1">주관</div>
-            <div className="s2">캠퍼스</div>
-            <div className="s3">제목</div>
-            <div className="s4">링크</div>
+            <div className="s1">디데이</div>
+            <div className="s2">주관</div>
+            <div className="s3">캠퍼스</div>
+            <div className="s4">제목</div>
+            <div className="s5">링크</div>
           </div>
         }
         bordered
         dataSource={dataList}
         renderItem={(item) => (
           <List.Item>
+            <span style={{ display: 'inline-block', fontWeight: 'bold' }}>
+              {item.ScholarshipDate === null
+                ? null
+                : `D ${dDayCheck(item.ScholarshipDate.date)} `}
+            </span>{' '}
             <Typography.Text>[{item.Campus.name}]</Typography.Text>{' '}
             <Typography.Text>[{item.ScholarshipOption.name}]</Typography.Text>{' '}
             {item.title}{' '}
+
             <h4
               onClick={(e) => window.open(item.link)}
               style={{
@@ -192,3 +236,12 @@ function CalendarComponent({ match }) {
   );
 }
 export default CalendarComponent;
+
+export function dDayCheck(date) {
+  const today = moment();
+  const dDay =
+    today.diff(date, 'days') > 0
+      ? `+ ${today.diff(date, 'days')}`
+      : `- ${-today.diff(date, 'days')}`;
+  return dDay;
+}

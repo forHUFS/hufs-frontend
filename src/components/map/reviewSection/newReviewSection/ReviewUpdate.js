@@ -8,14 +8,13 @@ import { withRouter } from 'react-router-dom';
 import { postUpdate, postView } from '../../../../_actions/reviewPost_action';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../../config';
-import { Skeleton, Button, Rate, message } from 'antd';
+import { Skeleton, Button, Rate, message,Input } from 'antd';
 
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
 function ReviewUpdate({ match, history }) {
-  console.log(history.state)
   const dispatch = useDispatch();
   const [updated, setUpdated] = useState(false);
   useBeforeunload((e) => {
@@ -25,7 +24,7 @@ function ReviewUpdate({ match, history }) {
     };
   });
   useEffect(() => {
-    dispatch(postView(+match.params.id))
+    dispatch(postView(history.location.state.id))
       .then((response) => {
         if (response.status === 200) {
           const firstImg = Array.from(
@@ -36,6 +35,7 @@ function ReviewUpdate({ match, history }) {
           setUpdated({
             title: response.payload.title,
             content: response.payload.content,
+            score: response.payload.score,
           });
           wholeImg = wholeImg.concat(firstImg);
         }
@@ -43,14 +43,14 @@ function ReviewUpdate({ match, history }) {
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('로그인하지 않은 사용자');
+            message.error('로그인하지 않은 사용자');
             history.push('/');
             break;
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             break;
           case 404:
-            alert('존재하지 않는 게시글입니다');
+            message.error('존재하지 않는 게시글입니다');
             break;
           default:
             break;
@@ -73,7 +73,7 @@ function ReviewUpdate({ match, history }) {
 
     const needDelete = getUnused(wholeImg, afterEdit); // return : 삭제해야 할 이미지 url
 
-    dispatch(postUpdate(updated, needDelete, history.state.id))
+    dispatch(postUpdate(updated, needDelete, history.location.state.id))
       .then((response) => {
         if (response.status === 200) {
           history.goBack();
@@ -84,11 +84,11 @@ function ReviewUpdate({ match, history }) {
           case 200:
             break;
           case 401:
-            alert('로그인하지 않은 사용자');
+            message.error('로그인하지 않은 사용자');
             history.push('/');
             break;
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             break;
           default:
             break;
@@ -100,7 +100,7 @@ function ReviewUpdate({ match, history }) {
     if (answer) {
       axios
         .post(`${PUBLIC_IP}/post/back`, { url: uploadedImg })
-        .then(history.goBack())
+        
         .catch(history.goBack());
     }
   };
@@ -112,8 +112,7 @@ function ReviewUpdate({ match, history }) {
       <div id="community-main">
         {updated ? (
           <div>
-            <p>글 번호: {updated.id}</p>
-            <input
+            <Input
               className="title-bar"
               type="text"
               placeholder="제목"
@@ -122,16 +121,19 @@ function ReviewUpdate({ match, history }) {
                 setUpdated({ ...updated, title: e.target.value })
               }
             />
-                        <label>평점 </label>
+
+            <div style={{ padding: '5px 5px' }}>
+                        <label style={{ fontWeight: 'bold' }}>평점 </label>
         <Rate allowHalf value={updated.score} onChange={(e) => {
-            setUpdated({ ...updated, score: e.target.value });
+            setUpdated({ ...updated, score: e });
           }} />
-        <hr></hr>
+        </div>
+
             <ReactQuill
-              className="1"
+              className="11"
               placeholder="하이"
               theme="snow"
-              value={updated.content}
+              defaultValue={updated.content}
               onChange={(content, delta, source, editor) => {
                 setUpdated({ ...updated, content: editor.getHTML() });
               }}
@@ -141,25 +143,24 @@ function ReviewUpdate({ match, history }) {
               modules={modules}
               formats={formats}
             ></ReactQuill>
+            <hr />
 
-            <div id="button-bar">
+            <div id="button-bar"
+            >
               <Button
                 type="primary"
                 onClick={onUpdate}
-                style={{
-                  margin: '10px',
-                }}
               >
-                수정하기
+                수정
               </Button>
               <Button
                 type="primary"
                 onClick={onExit}
                 style={{
-                  margin: '10px',
+                  marginLeft: '10px',
                 }}
               >
-                취소하기
+                취소
               </Button>
             </div>
           </div>
@@ -215,7 +216,7 @@ function imageHandler() {
       const files = fileInput.files;
       const options = {
         maxSizeMB: 1,
-        maxWidthOrHeight: 400,
+        maxWidthOrHeight: 200,
         useWebWorker: true,
       };
       const compressedFile = await imageCompression(files[0], options);
@@ -223,7 +224,6 @@ function imageHandler() {
       formData.append('img', compressedFile);
       const range = this.quill.getSelection(true);
       if (!files || !files.length) {
-        console.log('No files selected');
         return;
       }
 
@@ -257,7 +257,6 @@ function imageHandler() {
           fileInput.value = '';
         })
         .catch((error) => {
-          console.log(error);
           fileInput.value = '';
           this.quill.enable(true);
         });
@@ -272,7 +271,5 @@ function getUnused(wholeImg, submittedImg) {
   for (let i = 0; i < submittedImg.length; i++) {
     unused.splice(unused.indexOf(submittedImg[i]), 1);
   }
-  console.log(`need to delete: ${unused}`);
   return unused;
 }
-
