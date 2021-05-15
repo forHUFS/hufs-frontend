@@ -158,7 +158,7 @@ function CalendarComponent({ match }) {
 
           <div
             className="scholar-search-head">
-            {/* 캠퍼스 */}
+            캠퍼스
             {campusTagDatas.map((tag) => (
               <CheckableTag
                 key={tag.id}
@@ -172,7 +172,7 @@ function CalendarComponent({ match }) {
           </div>
           <div
             className="scholar-search-head">
-            {/* 유형 */}
+            유형
             {optionTagDatas.map((tag) => (
               <CheckableTag
                 key={tag.id}
