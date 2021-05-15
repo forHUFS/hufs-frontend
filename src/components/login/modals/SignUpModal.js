@@ -15,6 +15,7 @@ import { PUBLIC_IP } from '../../../config';
 import { InformationModal2 } from '../../rule/InformationModal'
 import { UseModal2 } from '../../rule/UseModal'
 
+
 const SignUpModal = (props) => {
   const { Option } = Select;
   const [major, setMajor] = useState(false);
@@ -96,11 +97,14 @@ const SignUpModal = (props) => {
     <>
       <Header />
       <div
+        className="ant-modal-body-revise"
         style={{
           display: 'inline-block',
           position: 'relative',
           width: '1100px',
-          left: '15%',
+          left: '0%',
+          // justifyContent: 'center',
+          // alignItems: 'center',
         }}
       >
         <Form
@@ -109,7 +113,6 @@ const SignUpModal = (props) => {
           style={{
             border: '3px solid #8897cb',
             borderRadius: '8px',
-
             margin: '15%',
             padding: '5%',
           }}
@@ -127,8 +130,7 @@ const SignUpModal = (props) => {
 
           <Form.Item
             label="웹메일"
-            extra="@hufs.ac.kr 앞 부분까지만 입력해주세요.
-            위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다."
+            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다. 웹메일 인증은 가입 후 별도로 My page에서도 가능합니다."
             name="webMail"
             onChange={(event) => {
               console.log(submit);
@@ -136,7 +138,7 @@ const SignUpModal = (props) => {
             }}
             style={{ width: '100%' }}
           >
-            <Input style={{ textAlign: 'center' }} suffix="@hufs.ac.kr"></Input>
+            <Input style={{ textAlign: 'center' }} placeholder='@hufs.ac.kr 앞 부분까지만 입력해주세요' suffix="@hufs.ac.kr"></Input>
           </Form.Item>
 
           <Form.Item label="주전공" name="majorId" rules={[{ required: true, message: '' }]}>
