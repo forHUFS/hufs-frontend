@@ -4,17 +4,19 @@
   }
 }
 @media (max-width: 1500px) {
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
+    left: 81%;
+  }
+}
+@media (max-width: 1400px) {
   .Head,
   .Footer,
   .community-main,
   #community-main {
-    left: 3%;
+    left: 4%;
   }
   .Main {
     left: 1%;
-  }
-  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    left: 81%;
   }
 
   /* .Map {
@@ -24,7 +26,7 @@
 }
 @media (max-width: 1280px) {
   .Head {
-    left: 2%;
+    left: 6%;
     width: 90%;
     max-width: 1280px;
   }
@@ -47,7 +49,7 @@
   }
   /* 달력부분 조절 */
   .Main {
-    left: 2%;
+    left: 4%;
   }
   .Main > .MainCalendar {
     width: 90%;
