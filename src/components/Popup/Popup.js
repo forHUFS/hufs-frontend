@@ -1,55 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import note from '../../image/note.png'
+import Cookies from 'js-cookie'
 
 
 function Popup() {
-    const [yes, setYes] = useState(false);
-    const Show = localStorage.getItem("time")
+    const [yes, setYes] = useState(true);
+
+    // time 값 받아와서 저장
 
 
-    useEffect(() => {
-        const handleShowModal = () => {
-            if (Show && Show > new Date())
-                return;
 
-            else {
-                setYes(true)
-                let fin = new Date();
-                fin = fin.setHours(fin.getHours() + 24)
-                localStorage.setItem("time", fin)
-            }
-        }
-
-    }, [Show])
-    const handleButton = () => {
+    const handleCancelButton = () => {
         setYes(false)
 
+
+    }
+    const handleOKButton = () => {
+        setYes(false)
+        Cookies.set('taehun', 'Hi', { expires: 7 })
     }
 
     return (
         <div>
-
-            <Modal
-                className="temp"
-                style={{
-                    width: '550px',
-                    height: '750px'
-                }}
-                title="공지"
-                visible={yes}
-                onCancel={handleButton}
-                maskClosable="true"
-            >
-                <img style={{
-                    width: '500px',
-                    height: '700px'
-                }}
-                    src={note} />
+            {Cookies.expires <= 0 ?
+                (<Modal
+                    id="temp"
+                    title="공지"
+                    visible={yes}
+                    onOk={handleOKButton}
+                    okText="일주일 동안 보지 않기 "
+                    onCancel={handleCancelButton}
+                    maskClosable="false"
+                >
+                    <img style={{
+                        width: '480px',
+                        height: '700px'
+                    }}
+                        src={note} />
 
 
 
-            </Modal>
+                </Modal>)
+                : null}
 
         </div>
     )
