@@ -18,15 +18,19 @@ function Popup() {
     }
     const handleOKButton = () => {
         setYes(false)
-        Cookies.set('taehun', 'Hi', { expires: 7 })
+        Cookies.set('CookieCheck', 'confirm', { expires: 7 })
     }
+
 
     return (
         <div>
-            {Cookies.expires <= 0 ?
+
+            {!Cookies.get('CookieCheck') ?
+
                 (<Modal
                     id="temp"
                     title="공지"
+                    style={{ width: '520px' }}
                     visible={yes}
                     onOk={handleOKButton}
                     okText="일주일 동안 보지 않기 "
@@ -37,12 +41,15 @@ function Popup() {
                         width: '480px',
                         height: '700px'
                     }}
-                        src={note} />
+                        src={note} />)
+
+
 
 
 
                 </Modal>)
                 : null}
+
 
         </div>
     )

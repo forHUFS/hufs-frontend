@@ -5,7 +5,7 @@
 }
 @media (max-width: 1500px) {
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    left: 81%;
+    left: 85%;
   }
 }
 @media (max-width: 1400px) {
@@ -17,6 +17,9 @@
   }
   .Main {
     left: 1%;
+  }
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
+    left: 83%;
   }
 
   /* .Map {
@@ -39,7 +42,7 @@
   }
 
   .community-main {
-    left: 2%;
+    left: 5%;
     width: 950px;
   }
 
@@ -98,7 +101,7 @@
     left: 2%;
   }
 }
-@media (max-width: 1150px) {
+@media (max-width: 1200px) {
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
     display: none;
   }
