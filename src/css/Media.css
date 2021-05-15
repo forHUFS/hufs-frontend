@@ -1,6 +1,11 @@
 @media (max-width: 1600px) {
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    left: 85% !important;
+    right: 100px;
+  }
+}
+@media (max-width: 1500px) {
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
+    left: 85%;
   }
 }
 @media (max-width: 1400px) {
@@ -8,11 +13,15 @@
   .Footer,
   .community-main,
   #community-main {
-    left: 3%;
+    left: 4%;
   }
   .Main {
     left: 1%;
   }
+  .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
+    left: 83%;
+  }
+
   /* .Map {
     left: 2%;
     right: inherit;
@@ -20,18 +29,20 @@
 }
 @media (max-width: 1280px) {
   .Head {
-    left: 2%;
-    width: 80%;
+    left: 6%;
+    width: 90%;
     max-width: 1280px;
   }
   .Head > .loginbar {
     width: 20%;
+    right: 10%;
   }
   .ant-space.ant-space-vertical {
     left: 20%;
   }
+
   .community-main {
-    left: 2%;
+    left: 5%;
     width: 950px;
   }
 
@@ -41,7 +52,7 @@
   }
   /* 달력부분 조절 */
   .Main {
-    left: 2%;
+    left: 4%;
   }
   .Main > .MainCalendar {
     width: 90%;
@@ -68,7 +79,7 @@
   } */
   /* 퀵메뉴 */
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
-    left: 94.5%;
+    left: 85%;
   }
   #Searchbar {
     right: 7%;
@@ -90,12 +101,13 @@
     left: 2%;
   }
 }
-@media (max-width: 1150px) {
+@media (max-width: 1200px) {
   .ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline {
     display: none;
   }
   .Head .loginbar {
     width: 200px;
+    right: 0;
   }
 }
 @media (max-width: 768px) {
