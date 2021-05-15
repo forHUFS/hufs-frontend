@@ -73,7 +73,10 @@ function UserScrap() {
           title="삭제하기"
           key="content"
           render={(text, record) => (
-            <button value={record.id} onClick={onRemove}>
+            <button
+              style={{ marginRight: '35%;' }}
+              value={record.id}
+              onClick={onRemove}>
               삭제하기
             </button>
           )}
