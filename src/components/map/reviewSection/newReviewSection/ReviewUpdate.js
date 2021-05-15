@@ -15,7 +15,7 @@ import { Skeleton, Button, Rate, message } from 'antd';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
 function ReviewUpdate({ match, history }) {
-  console.log(history.location.state.id)
+  console.log(history.location.state.id);
   const dispatch = useDispatch();
   const [updated, setUpdated] = useState(false);
   useBeforeunload((e) => {
@@ -44,14 +44,14 @@ function ReviewUpdate({ match, history }) {
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('로그인하지 않은 사용자');
+            message.error('로그인하지 않은 사용자');
             history.push('/');
             break;
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             break;
           case 404:
-            alert('존재하지 않는 게시글입니다');
+            message.error('존재하지 않는 게시글입니다');
             break;
           default:
             break;
@@ -85,11 +85,11 @@ function ReviewUpdate({ match, history }) {
           case 200:
             break;
           case 401:
-            alert('로그인하지 않은 사용자');
+            message.error('로그인하지 않은 사용자');
             history.push('/');
             break;
           case 403:
-            alert('접근 권한 오류');
+            message.error('접근 권한 오류');
             break;
           default:
             break;
@@ -122,11 +122,15 @@ function ReviewUpdate({ match, history }) {
                 setUpdated({ ...updated, title: e.target.value })
               }
             />
-                        <label>평점 </label>
-        <Rate allowHalf value={updated.score} onChange={(e) => {
-            setUpdated({ ...updated, score: e });
-          }} />
-        <hr></hr>
+            <label>평점 </label>
+            <Rate
+              allowHalf
+              value={updated.score}
+              onChange={(e) => {
+                setUpdated({ ...updated, score: e });
+              }}
+            />
+            <hr></hr>
             <ReactQuill
               className="1"
               placeholder="하이"
@@ -275,4 +279,3 @@ function getUnused(wholeImg, submittedImg) {
   console.log(`need to delete: ${unused}`);
   return unused;
 }
-
