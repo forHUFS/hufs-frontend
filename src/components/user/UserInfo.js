@@ -39,7 +39,10 @@ function UserInfo(props) {
 
     if (answer) {
       const body = getChangedInfo();
-      console.log(body);
+      if (body == undefined) {
+        message.info('변경 사항이 없습니다.');
+        return;
+      }
       dispatch(updateUser(body))
         .then((response) => {
           message.success('정보 변경이 완료되었습니다.');
@@ -146,7 +149,8 @@ function UserInfo(props) {
                 ) : (
                   <>
                     <Input
-                      value={webMail}
+                      defaultValue={webMail}
+                      value={webMailInput}
                       onChange={(e) => setWebMailInput(e.target.value)}
                       style={{ width: '200px' }}
                       suffix={<>@hufs.ac.kr</>}
