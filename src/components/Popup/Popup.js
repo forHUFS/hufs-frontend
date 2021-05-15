@@ -24,7 +24,9 @@ function Popup() {
 
     return (
         <div>
+
             {!Cookies.get('CookieCheck') ?
+
                 (<Modal
                     id="temp"
                     title="공지"
@@ -39,7 +41,8 @@ function Popup() {
                         width: '480px',
                         height: '700px'
                     }}
-                        src={note} />
+                        src={note} />)
+
 
 
 

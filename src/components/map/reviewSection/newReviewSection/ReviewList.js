@@ -2,8 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { message, Skeleton } from 'antd';
-import { postList, postRemove, reviewDetail } from '../../../../_actions/reviewPost_action';
-import { PageHeader, Button, Table, Pagination, List, Avatar, Space, Rate, Layout } from 'antd';
+import {
+  postList,
+  postRemove,
+  reviewDetail,
+} from '../../../../_actions/reviewPost_action';
+import {
+  PageHeader,
+  Button,
+  Table,
+  Pagination,
+  List,
+  Avatar,
+  Space,
+  Rate,
+  Layout,
+} from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
@@ -17,8 +31,6 @@ function ReviewList({ match, history }) {
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
   const [detail, setDetail] = useState([]);
-
-
 
   useEffect(() => {
     dispatch(postList(history.location.state.id))
@@ -48,19 +60,19 @@ function ReviewList({ match, history }) {
       .then((response) => {
         if (response.status === 200) {
           if (response.payload.average === null) {
-
             setDetail({
               average: parseFloat(0).toFixed(1),
               count: response.payload.count,
+
             })
           }
           else {
 
+
             setDetail({
               average: response.payload.average,
               count: response.payload.count,
-            })
-
+            });
           }
         }
       })
@@ -81,9 +93,6 @@ function ReviewList({ match, history }) {
             break;
         }
       });
-
-
-
   }, [match.path]);
 
   const onDelete = (postId) => {
@@ -93,7 +102,7 @@ function ReviewList({ match, history }) {
       dispatch(postRemove(postId))
         .then((response) => {
           if (response.status === 200) {
-            alert('게시글 삭제가 완료되었습니다.');
+            message.success('게시글 삭제가 완료되었습니다.');
             window.location.reload();
             //history.goBack();
           }
@@ -101,14 +110,14 @@ function ReviewList({ match, history }) {
         .catch((error) => {
           switch (error.response.status) {
             case 401:
-              alert('로그인하지 않은 사용자');
+              message.error('로그인하지 않은 사용자');
               history.push('/');
               break;
             case 403:
-              alert('접근 권한 오류');
+              message.error('접근 권한 오류');
               break;
             case 404:
-              alert('존재하지 않는 게시글입니다');
+              message.error('존재하지 않는 게시글입니다');
               history.push('/');
               break;
             default:
@@ -136,17 +145,18 @@ function ReviewList({ match, history }) {
   const checkNull = (nickname) => {
     if (nickname == null) {
       return (
-        <><a>탈퇴한 사용자</a></>
-      )
-    }
-    else {
+        <>
+          <a>탈퇴한 사용자</a>
+        </>
+      );
+    } else {
       return nickname.nickname;
     }
-
-  }
+  };
 
   return (
     <>
+
       <Content style={{
         width: '1000px',
         margin: '0 15%'
@@ -157,44 +167,43 @@ function ReviewList({ match, history }) {
           <div
           // style={{ paddingTop: '10px' }}
           >
-
             <StarFilled
               style={{ color: '#fadb14', fontSize: '20px', float: 'left' }}
-            /> <h2 style={{ float: 'left' }}>{detail.average} </h2>
+            />{' '}
+            <h2 style={{ float: 'left' }}>{detail.average} </h2>
           </div>
           <div style={{ paddingtBottom: '10px' }}>
-            <font color='gray' size='5' style={{ paddingLeft: '5px' }}>({detail.count})</font>
+            <font color="gray" size="5" style={{ paddingLeft: '5px' }}>
+              ({detail.count})
+            </font>
           </div>
-
         </div>
+
         <div aling="left" style={{
           padding: '10px'
         }}>
           <Button
             style={{ border: '1px solid navy' }}
+
             onClick={(e) => {
               history.push({
                 pathname: '/3/register',
                 state: {
                   detail: match.path,
                   name: history.location.state.name,
+
                   id: history.location.state.id
                 },
               }
 
               )
 
-              //   history.push({
-              //     pathname: "map/register",
-              //     state: { detail: match.path,
-              //     name : history.location.state.name,
-              //   id : history.location.state.id },
-              //   }
-              // )
+
             }
             }
           >
             리뷰 작성하기</Button>
+
 
         </div>
         <hr ></hr>
@@ -203,14 +212,10 @@ function ReviewList({ match, history }) {
           itemLayout="vertical"
           size="small"
           pagination={{
-            onChange: page => {
-            },
-            //pageSize: 3
           }}
           dataSource={posts}
-
-          renderItem={item => (
-            item ?
+          renderItem={(item) =>
+            item ? (
               <List.Item
 
                 actions={[
@@ -225,11 +230,13 @@ function ReviewList({ match, history }) {
                       fontWeight: 'bold',
                       color: 'navy'
                     }}
+
                     onClick={(e) => {
                       history.push({
                         pathname: '/3/edit',
                         state: {
                           name: item.name,
+
                           id: item.id
                         },
                       })
@@ -246,6 +253,7 @@ function ReviewList({ match, history }) {
                       color: 'navy'
                     }}
                     onClick={() => { onDelete(item.id) }}>삭제 </Button>]}
+
                 key={item.title}
               >
                 <List.Item.Meta
@@ -254,21 +262,33 @@ function ReviewList({ match, history }) {
                   description={
                     <div>
                       <div>
-                        <div><p>{item.createdAt ? item.createdAt.slice(0, 10) : 'none'}</p></div>
-                        <Rate disabled allowHalf value={item.score}
-                        /> {item.score}
-
+                        <div>
+                          <p>
+                            {item.createdAt
+                              ? item.createdAt.slice(0, 10)
+                              : 'none'}
+                          </p>
+                        </div>
+                        <Rate disabled allowHalf value={item.score} />{' '}
+                        {item.score}
                       </div>
-
-                    </div>}
+                    </div>
+                  }
                 />
-                <div style={{ marginLeft: '50px' }}><strong>{item.title}</strong></div>
-                <div style={{ marginLeft: '50px', marginTop: '20px' }} dangerouslySetInnerHTML={{ __html: item.content }}>
+                <div style={{ marginLeft: '50px' }}>
+                  <strong>{item.title}</strong>
                 </div>
+                <div
+                  style={{ marginLeft: '50px', marginTop: '20px' }}
+                  dangerouslySetInnerHTML={{ __html: item.content }}
+                ></div>
               </List.Item>
-              : 'none'
-          )}
-        />{/* ,
+            ) : (
+              'none'
+            )
+          }
+        />
+        {/* ,
       {' '}
       <table className="community-main">
         <div className="community-box">
@@ -318,11 +338,8 @@ function ReviewList({ match, history }) {
         </div>
       </table>
           */}
-
       </Content>
-
     </>
-
   );
 }
 
