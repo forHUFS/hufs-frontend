@@ -103,8 +103,6 @@ const SignUpModal = (props) => {
           position: 'relative',
           width: '1100px',
           left: '0%',
-          // justifyContent: 'center',
-          // alignItems: 'center',
         }}
       >
         <Form
@@ -130,7 +128,7 @@ const SignUpModal = (props) => {
 
           <Form.Item
             label="웹메일"
-            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다. 웹메일 인증은 가입 후 별도로 My page에서도 가능합니다."
+            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다 )"
             name="webMail"
             onChange={(event) => {
               console.log(submit);
