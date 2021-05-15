@@ -175,6 +175,10 @@ function CalendarComponent({ match }) {
             유형
             {optionTagDatas.map((tag) => (
               <CheckableTag
+                style={{
+                  marginLeft: '12px',
+                  marginRight: '0px'
+                }}
                 key={tag.id}
                 checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
                 // onChange={(event) => onOptionTag(event, tag)}
