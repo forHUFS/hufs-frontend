@@ -8,6 +8,7 @@ import { updateUser } from '../../_actions/user_action';
 import MajorSelect from './MajorSelect';
 import SecondMajorSelect from './SecondMajorSelect';
 import styles from '../../css/UserInfo.module.css';
+import profile from '../../image/profile.png'
 function UserInfo(props) {
   const dispatch = useDispatch();
   const { Providers, webMail, nickName, MainMajor, DoubleMajor, Token } =
@@ -124,7 +125,9 @@ function UserInfo(props) {
         <h3>로딩 중...</h3>
       ) : (
         <div className={styles.card}>
-          <div className={styles.image}>이미지</div>
+          <div className={styles.image}>
+            <img src={profile} />
+          </div>
           <div className={styles.info}>
             <div className={styles.email}>
               <label>이메일</label>
@@ -157,7 +160,7 @@ function UserInfo(props) {
                     ></Input>
                     <Button
                       onClick={onAuth}
-                      // style={{ marginLeft: '8px' }}
+                    // style={{ marginLeft: '8px' }}
                     >
                       인증하기
                     </Button>
@@ -178,6 +181,7 @@ function UserInfo(props) {
                   placeholder={nickName}
                   onChange={(e) => {
                     setChange({ ...change, nickname: e.target.value });
+
                   }}
                 />
               </div>

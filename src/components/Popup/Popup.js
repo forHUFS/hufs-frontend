@@ -18,13 +18,15 @@ function Popup() {
     }
     const handleOKButton = () => {
         setYes(false)
-        Cookies.set('taehun', 'Hi', { expires: 7 })
+        Cookies.set('CookieCheck', 'confirm', { expires: 7 })
     }
 
 
     return (
         <div>
-            {!Cookies.get('taehun') ?
+
+            {!Cookies.get('CookieCheck') ?
+
                 (<Modal
                     id="temp"
                     title="공지"
@@ -39,7 +41,8 @@ function Popup() {
                         width: '480px',
                         height: '700px'
                     }}
-                        src={note} />)
+                        src={note} />
+
 
 
 
