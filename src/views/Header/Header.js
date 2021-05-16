@@ -67,7 +67,7 @@ function Header(props) {
           <img src={logo} />
         </Link>
       </div>
-      {/* <img src={mainboo} className="Image" alt="이미지 들어갈 곳" /> */}
+
       <span className="loginbar">
         {login ? (
           <Logout setLogin={setLogin} />
