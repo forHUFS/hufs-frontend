@@ -8,6 +8,7 @@ import { updateUser } from '../../_actions/user_action';
 import MajorSelect from './MajorSelect';
 import SecondMajorSelect from './SecondMajorSelect';
 import styles from '../../css/UserInfo.module.css';
+import profile from '../../image/profile.png';
 function UserInfo(props) {
   const dispatch = useDispatch();
   const { Providers, webMail, nickName, MainMajor, DoubleMajor, Token } =
@@ -39,15 +40,18 @@ function UserInfo(props) {
 
     if (answer) {
       const body = getChangedInfo();
-      console.log(body);
+      if (body == undefined) {
+        message.info('변경 사항이 없습니다.');
+        return;
+      }
       dispatch(updateUser(body))
         .then((response) => {
           message.success('정보 변경이 완료되었습니다.');
         })
         .catch((error) => {
-          switch (error.response?.message) {
+          switch (error.response.data.message) {
             case 'INVALID_NICKNAME_TIME':
-              message.error('닉네임을 변경한지 30일이 지나지 않았을 경우');
+              message.error('닉네임을 변경한지 30일이 지나지 않았습니다.');
               break;
             case 'UNAUTHORIZED':
               message.error('로그인하지 않은 사용자');
@@ -94,8 +98,9 @@ function UserInfo(props) {
     return toBeSubmitted;
   };
   const onAuth = async () => {
+    const body = webMailInput == undefined ? webMail : webMailInput;
     await axios
-      .post(`${PUBLIC_IP}/user/email`, webMailInput)
+      .post(`${PUBLIC_IP}/user/email`, { webMail: body })
       .then((response) => {
         message.success(
           '이메일이 성공적으로 전송되었습니다. 웹메일을 확인해주세요',
@@ -116,12 +121,13 @@ function UserInfo(props) {
   return (
     // google, kakao 연동 필요.
     <div>
-      <button onClick={getChangedInfo}>123123</button>
       {!nickName ? (
         <h3>로딩 중...</h3>
       ) : (
         <div className={styles.card}>
-          <div className={styles.image}>이미지</div>
+          <div className={styles.image}>
+            <img src={profile} />
+          </div>
           <div className={styles.info}>
             <div className={styles.email}>
               <label>이메일</label>
@@ -146,7 +152,8 @@ function UserInfo(props) {
                 ) : (
                   <>
                     <Input
-                      value={webMail}
+                      defaultValue={webMail}
+                      value={webMailInput}
                       onChange={(e) => setWebMailInput(e.target.value)}
                       style={{ width: '200px' }}
                       suffix={<>@hufs.ac.kr</>}
@@ -174,7 +181,6 @@ function UserInfo(props) {
                   placeholder={nickName}
                   onChange={(e) => {
                     setChange({ ...change, nickname: e.target.value });
-
                   }}
                 />
               </div>
@@ -195,7 +201,9 @@ function UserInfo(props) {
                 onChange={DoubleMajorChange}
               />
             </div>
-            <button onClick={onSubmit}> 수정하기 </button>{' '}
+            <Button style={{ height: '28px' }} onClick={onSubmit}>
+              수정하기
+            </Button>
           </div>
         </div>
       )}

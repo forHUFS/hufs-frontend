@@ -48,9 +48,6 @@ function Header(props) {
       .get(`${PUBLIC_IP}/user`)
       .then((response) => {
         setLogin(true);
-        if (response.data.data.Token.isEmailAuthenticated) {
-          setIsEmailAuthenticated(true); // 차후 이메일 인증 확인을 위함.
-        }
       })
       .catch((error) => {
         setLogin(false);
@@ -70,18 +67,22 @@ function Header(props) {
           <img src={logo} />
         </Link>
       </div>
-      {/* <img src={mainboo} className="Image" alt="이미지 들어갈 곳" /> */}
+
       <span className="loginbar">
-        {login ? (
-          <Logout setLogin={setLogin} />
-        ) : (
-          <SignUp setLogin={setLogin} />
-        )}
-        <Button type="text">
-          <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
-            My page
+        <span>
+          {login ? (
+            <Logout setLogin={setLogin} />
+          ) : (
+            <SignUp setLogin={setLogin} />
+          )}
+        </span>
+        <span>
+          <Button type="text">
+            <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
+              My page
           </Link>{' '}
-        </Button>
+          </Button>
+        </span>
         {/* <Button type="text">언어 선택</Button> */}
       </span>
 

@@ -41,12 +41,12 @@ function Popup() {
                         width: '480px',
                         height: '700px'
                     }}
-                        src={note} />)
+                        src={note} />
 
 
 
 
-
+            "모든 서비스는 현재, 회원가입과 웹메일 인증을 한 유저에 한해서 이용이 가능합니다."
                 </Modal>)
                 : null}
 
