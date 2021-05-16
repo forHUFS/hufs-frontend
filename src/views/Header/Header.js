@@ -69,16 +69,20 @@ function Header(props) {
       </div>
 
       <span className="loginbar">
-        {login ? (
-          <Logout setLogin={setLogin} />
-        ) : (
-          <SignUp setLogin={setLogin} />
-        )}
-        <Button type="text">
-          <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
-            My page
+        <span>
+          {login ? (
+            <Logout setLogin={setLogin} />
+          ) : (
+            <SignUp setLogin={setLogin} />
+          )}
+        </span>
+        <span>
+          <Button type="text">
+            <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
+              My page
           </Link>{' '}
-        </Button>
+          </Button>
+        </span>
         {/* <Button type="text">언어 선택</Button> */}
       </span>
 
