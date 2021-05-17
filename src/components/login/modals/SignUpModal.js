@@ -78,6 +78,15 @@ const SignUpModal = (props) => {
       });
   };
 
+  const isWebMail = (props) => {
+    var emailInfo = (submit.email).split('@');
+    if (emailInfo[1] === 'hufs.ac.kr') {
+      return emailInfo[0]
+    } else {
+      return ''
+    }
+  }
+
   const layout = {
     labelcol: { span: 8 },
     wrapperCol: { span: 16 },
@@ -128,7 +137,13 @@ const SignUpModal = (props) => {
             }}
             style={{ width: '100%' }}
           >
-            <Input style={{ textAlign: 'center' }} placeholder='@hufs.ac.kr 앞 부분까지만 입력해주세요' suffix="@hufs.ac.kr"></Input>
+            <Input 
+              style={{ textAlign: 'center' }}
+              placeholder='@hufs.ac.kr 앞 부분까지만 입력해주세요'
+              //prefix={isWebMail()}
+              suffix="@hufs.ac.kr"
+              defaultValue={isWebMail()}
+              ></Input>
           </Form.Item>
 
           <Form.Item
