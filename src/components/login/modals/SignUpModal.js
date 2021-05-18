@@ -78,14 +78,14 @@ const SignUpModal = (props) => {
       });
   };
 
-  // const isWebMail = (props) => {
-  //   var emailInfo = (submit.email).split('@');
-  //   if (emailInfo[1] === 'hufs.ac.kr') {
-  //     return emailInfo[0]
-  //   } else {
-  //     return ''
-  //   }
-  // }
+  const isWebMail = (props) => {
+    var emailInfo = (submit.email).split('@');
+    if (emailInfo[1] === 'hufs.ac.kr') {
+      return emailInfo[0]
+    } else {
+      return ''
+    }
+  }
 
   const layout = {
     labelcol: { span: 8 },
@@ -127,19 +127,37 @@ const SignUpModal = (props) => {
               placeholder="닉네임을 입력하세요"
             ></Input>
           </Form.Item>
-
-          {
+          <Form.Item
+            label="웹메일"
+            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
+            name="webMail"
+            onChange={(event) => {
+              setSubmit({ ...submit, webMail: event.target.value });
+              // console.log(((submit.email).split('@'))[1])
+            }}
+            style={{ width: '100%' }}
+            >
+              <Input 
+              style={{ textAlign: 'center' }}
+              placeholder='@hufs.ac.kr 앞 부분까지만 입력해주세요'
+              prefix={isWebMail()}
+              suffix="@hufs.ac.kr"
+              // defaultValue={isWebMail()}
+              ></Input>
+            </Form.Item>
+          {/* {
             ((submit.email).split('@'))[1] === 'hufs.ac.kr'
-            ? <p> &nbsp;&nbsp;웹메일 &nbsp;:&nbsp;&nbsp;{submit.email}</p>
-            : 
+            ? <p> &nbsp;&nbsp;웹메일 &nbsp;:&nbsp;&nbsp;{submit.webMail}</p>
+            :
             <Form.Item
-              label="웹메일"
-              extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다 )"
-              name="webMail"
-              onChange={(event) => {
-                setSubmit({ ...submit, webMail: event.target.value });
-              }}
-              style={{ width: '100%' }}
+            label="웹메일"
+            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
+            name="webMail"
+            onChange={(event) => {
+              setSubmit({ ...submit, webMail: event.target.value });
+              // console.log(((submit.email).split('@'))[1])
+            }}
+            style={{ width: '100%' }}
             >
               <Input 
               style={{ textAlign: 'center' }}
@@ -149,7 +167,7 @@ const SignUpModal = (props) => {
               // defaultValue={isWebMail()}
               ></Input>
             </Form.Item>
-            }
+            } */}
 
           <Form.Item
             label="주전공"
