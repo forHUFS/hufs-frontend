@@ -1,36 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import KaKaoMap from './KakaoMap';
-import storeSeoul from './mapData/store-seoul.json';
-import storeGlobal from './mapData/store-global.json'
 import Card from './Card.js';
 import SearchBar from './SearchBar.js';
 import mapboo from '../../../image/boo/mapboo.png';
-import { Button, Breadcrumb } from 'antd';
+import { Button } from 'antd';
+import axios from 'axios'
+import { PUBLIC_IP } from '../../../config';
 
 
 
 const MapContainer = ({ match }) => {
-  const [data, setData] = useState(storeSeoul);
+  const [data, setData] = useState();
   const [lat, setLat] = useState(37.59732049638715); // default 서울캠
   const [lng, setLng] = useState(127.0588283395548);
   const [keyword, setKeyword] = useState('');
-
+  const [seoul, setSeoul] = useState();
+  const [global, setGlobal] = useState();
   var check = true;
 
-  
-  const handleValueChange = (e) =>{
+
+  useEffect(async () => {
+    // const seoul = 
+    axios.get(`${PUBLIC_IP}/store/seoul`)
+      .then((res) => {
+        setData(res.data);
+        setSeoul(res.data)
+
+      })
+
+
+  }, [])
+  useEffect(async () => {
+    // const global = 
+    axios.get(`${PUBLIC_IP}/store/global`)
+      .then((res) => setGlobal(res.data))
+    // setGg(global)
+  }, [])
+  //  초기에 한번씩만 받기위해
+  // console.log(data)
+
+
+
+  const handleValueChange = (e) => {
     setKeyword(e.target.value);
   }
 
-  const searchData = (data) =>{
-    data = data.mydata.filter((c)=> {
+  const searchData = (data) => {
+    data = data?.data?.filter((c) => {
       return c.name.toLowerCase().indexOf(keyword) > -1;
     });
-    return data.map((d, index) => {
+    return data?.map((d, index) => {
       return <Card id="aa" {...d} key={index} match={match} />
     }
     );
-   
+
   }
 
   if (keyword == '') {
@@ -46,25 +69,14 @@ const MapContainer = ({ match }) => {
       document.getElementById('itemState').textContent = '보기';
     }
     else {
-      check = true;      
+      check = true;
       document.getElementById('itemContainer').style.display = 'block';
       document.getElementById('itemContainer').style.backgroundColor = 'white';
       document.getElementById('Food-list').style.overflowY = 'scroll'
       document.getElementById('itemState').textContent = '접기';
 
     }
-    /* if (document.getElementById('itemContainer').style.display === 'block') {
-      console.log('접기')
-      document.getElementById('itemContainer').style.display = 'none';
-      document.getElementById('itemContainer').style.backgroundColor = 'none';
-      document.getElementById('Food-list').style.overflowY = 'hidden';
-      document.getElementById('itemState').textContent = '보기';
-    } else {
-      document.getElementById('itemContainer').style.display = 'block';
-      document.getElementById('itemContainer').style.backgroundColor = 'white';
-      document.getElementById('Food-list').style.overflowY = 'scroll'
-      document.getElementById('itemState').textContent = '접기';
-    } */
+
   }
 
 
@@ -76,7 +88,8 @@ const MapContainer = ({ match }) => {
 
           <div id="seoul" defaultSelectedKeys={['1']}
             onClick={(e) => {
-              setData(storeSeoul);
+              setData(seoul);
+              setKeyword('')
               setLat(37.59732049638715);
               setLng(127.0588283395548)
             }}>
@@ -88,7 +101,8 @@ const MapContainer = ({ match }) => {
           <div id="global" defaultSelectedKeys={['2']}>
             <div type="text" id="button-head" key="2">Global</div>
             <Button type="text" onClick={(e) => {
-              setData(storeGlobal);
+              setData(global);
+              setKeyword('')
               setLat(37.336538181222245);
               setLng(127.25253858610613);
             }}>맛집 공간</Button>
@@ -107,9 +121,9 @@ const MapContainer = ({ match }) => {
         </div>
         <div id="Food-list">
           <div className="Food-head">
-          <SearchBar
+            <SearchBar
               placeholder="Search (영어는 소문자로)"
-              value = {keyword}
+              value={keyword}
               onChange={handleValueChange}
               style={{ width: '100 %' }}
 
@@ -123,10 +137,10 @@ const MapContainer = ({ match }) => {
             id="itemContainer"
 
           >
-            {data.mydata ? searchData(data) : 
-            data.mydata.map((d, index) => (
-              <Card id="aa" {...d} key={index} match={match} />
-            ))}
+            {data?.data ? searchData(data) :
+              data?.data?.map((d, index) => (
+                <Card id="aa" {...d} key={index} match={match} />
+              ))}
           </div>
         </div>
       </div>
