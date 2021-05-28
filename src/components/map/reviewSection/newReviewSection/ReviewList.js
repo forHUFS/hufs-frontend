@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Switch, withRouter } from 'react-router-dom';
+import React, { useEffect, useState,useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { message, Skeleton } from 'antd';
+import { message } from 'antd';
 import {
   postList,
   postRemove,
   reviewDetail,
 } from '../../../../_actions/reviewPost_action';
 import {
-  PageHeader,
   Button,
   Table,
-  Pagination,
   List,
   Avatar,
   Space,
@@ -19,25 +17,47 @@ import {
   Layout,
 } from 'antd';
 import { StarFilled } from '@ant-design/icons';
-import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
-const { Header, Content, Footer } = Layout;
+
+
+const { Content } = Layout;
 const { Column } = Table;
 function ReviewList({ match, history }) {
-  const [currentList, setCurrentList] = useState([]);
-  const [listPerPage, setListPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true)
   const dispatch = useDispatch();
-  const [posts, setPosts] = useState([]);
-  const [loading, setloading] = useState(false);
+  const [posts, setPosts] = useState([]); // result
   const [detail, setDetail] = useState([]);
+  const [items,setItems] = useState([]); // item
+  
 
+  const fetchMoreData = async() => {
+    setLoading(true);
+    setPosts(posts.concat(items.slice(0,5)))
+    setItems(items.slice(5))
+    setLoading(false)
+  }
+
+  const infiniteScroll = useCallback(() => {
+    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
+    let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let clientHeight = document.documentElement.clientHeight;
+    scrollHeight-=200;
+
+    if (scrollTop + clientHeight >= scrollHeight && loading ===false){
+      fetchMoreData();
+    }
+  },[loading]);
+  
   useEffect(() => {
     dispatch(postList(history.location.state.id))
       .then((response) => {
         if (response.status === 200) {
-          setPosts(response.payload.reverse());
-          setloading(true);
+          let result = response.payload.reverse();
+          setPosts(result.slice(0,5))
+          result = result.slice(5)
+          //setPosts(response.payload.reverse());
+          setItems(result)
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -55,6 +75,19 @@ function ReviewList({ match, history }) {
             break;
         }
       });
+
+  }, [])
+
+
+  // `getItems` 가 바뀔 때 마다 함수 실행
+  useEffect(() => {
+    window.addEventListener('scroll', infiniteScroll, true);
+    return() => window.removeEventListener('scroll',infiniteScroll,true)
+  }, [infiniteScroll])
+
+
+  useEffect(() => {
+    
 
     dispatch(reviewDetail(history.location.state.id))
       .then((response) => {
@@ -127,12 +160,7 @@ function ReviewList({ match, history }) {
     }
   };
 
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+ 
   /* 
   useEffect(() => {
     const sliced = posts.slice(firstIndex, lastIndex);
@@ -207,12 +235,10 @@ function ReviewList({ match, history }) {
 
         </div>
         <hr ></hr>
-
+<div>
         <List
           itemLayout="vertical"
           size="small"
-          pagination={{
-          }}
           dataSource={posts}
           renderItem={(item) =>
             item ? (
@@ -288,6 +314,7 @@ function ReviewList({ match, history }) {
             )
           }
         />
+        </div>
         {/* ,
       {' '}
       <table className="community-main">

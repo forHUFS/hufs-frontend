@@ -89,7 +89,7 @@ const SignUpModal = (props) => {
       return '@hufs.ac.kr 앞 부분까지만 입력해주세요'
     }
   }
-
+/* 
   const isWebMail = (props) => {
     var emailInfo = (submit.email).split('@');
     if (emailInfo[1] === 'hufs.ac.kr') {
@@ -97,7 +97,7 @@ const SignUpModal = (props) => {
     } else {
       return ''
     }
-  }
+  } */
 
   const layout = {
     labelcol: { span: 8 },
