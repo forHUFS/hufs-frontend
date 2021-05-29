@@ -2,7 +2,7 @@ import { message } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
-import CalendarComponent from '../../components/calendar/CalendarComponent';
+import CalendarP from '../../components/calendar/CalendarP';
 import { getScholar } from '../../_actions/calender_action';
 import Header from '../Header/Header';
 import Quick from '../Quick/Quick';
@@ -31,7 +31,7 @@ function CalendarPage(props) {
       <Header />
       <Quick />
 
-      <CalendarComponent match={props.match} />
+      <CalendarP match={props.match} />
     </div>
   );
 }
