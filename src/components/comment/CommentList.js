@@ -13,9 +13,6 @@ import { postView } from '../../_actions/post_action';
 import styles from '../../css/Comment.module.css';
 import like from '../../image/recommend.png';
 import TextArea from 'antd/lib/input/TextArea';
-import { PUBLIC_IP } from '../../config';
-import axios from 'axios';
-import Form from 'antd/lib/form/Form';
 function CommentList({ comments, history, setPost, match }) {
   const dispatch = useDispatch();
   const onLike = (event) => {
@@ -65,22 +62,7 @@ function CommentList({ comments, history, setPost, match }) {
         }
       });
   };
-  // const onUpdate = (event) => {
 
-  // };
-  // const toInput = () => {
-  //   return (
-  //     <>
-  //       <input></input>
-  //     </>
-  //   );
-  // };
-
-  // const [reply, setReply] = useState({
-  //   content: '',
-  //   parentId: null,
-  //   postId: +match.params.id,
-  // });
   const onReply = async (content, parentId) => {
     if (content.trim().length === 0) {
       message.info('댓글을 입력하세요');
@@ -96,30 +78,13 @@ function CommentList({ comments, history, setPost, match }) {
         setPost(response.payload);
         let textArray = document.getElementsByTagName('textarea');
         for (let i = 0; i < textArray.length - 1; i++) {
-          // console.log(textArray[i].value);
-          textArray[i].value = ''; // 수정 필요... 한번 대댓글 사용한 textarea는 초기화 후 다시 원래 value가 생성됨
+          textArray[i].value = '';
         }
       });
     });
   };
-  // const typeReply = (event) => {
-  //   console.log(reply);
-  //   setReply({
-  //     ...reply,
-  //     content: event.target.value,
-  //     parentId: +event.target.id,
-  //   });
-  // };
   return (
     <div className="comment-body">
-      {/* <List
-        className="comment-list"
-        header={`${comments.length} replies`}
-        itemLayout="horizontal"
-        dataSource={comments ? comments : null}
-        renderItem={(item) => (
-          <li> */}
-      {/* single comment and reply comment? */}
       {comments.map((item) => {
         return (
           item.parentId === null && (
@@ -130,8 +95,6 @@ function CommentList({ comments, history, setPost, match }) {
               content={
                 <>
                   {item.content}
-                  {/* <span> 추천: {item.like} </span> */}
-                  {/* <span> 신고 수: {item.report} </span> */}
                   <div className={styles.commentset}>
                     <Popconfirm
                       title="정말로 댓글을 삭제하시겠습니까?"
@@ -161,17 +124,16 @@ function CommentList({ comments, history, setPost, match }) {
                 </>
               }
               datetime={item.createAt ? item.createAt.slice(0, 10) : null}
-            // 현재 안나타남
             >
               <span
                 style={{ cursor: 'pointer', fontWeight: 'bolder' }}
                 onClick={(e) => {
-                  let x = document.getElementById(`reply-${item.id}`);
+                  let replyView = document.getElementById(`reply-${item.id}`);
 
-                  if (x.style.display === 'none') {
-                    x.style.display = 'block';
+                  if (replyView.style.display === 'none') {
+                    replyView.style.display = 'block';
                   } else {
-                    x.style.display = 'none';
+                    replyView.style.display = 'none';
                   }
                 }}
               >
@@ -179,50 +141,54 @@ function CommentList({ comments, history, setPost, match }) {
               </span>
 
               <div id={`reply-${item.id}`} style={{ display: 'none' }}>
-                {comments.map((e) => {
+                {comments.map((reply) => {
                   return (
-                    e.parentId === item.id && (
+                    reply.parentId === item.id && (
                       <Comment
-                        actions={e.actions}
+                        actions={reply.actions}
                         author={
-                          e.User === null ? '탈퇴한 사용자' : e.User.nickname
+                          reply.User === null
+                            ? '탈퇴한 사용자'
+                            : reply.User.nickname
                         }
                         avatar={<Avatar icon={<UserOutlined />} />}
                         content={
                           <>
-                            {e.content}
-                            {/* <span> 추천: {e.like} </span> */}
-                            {/* <span> 신고 수: {e.report} </span> */}
+                            {reply.content}
                             <div className={styles.commentset}>
                               <Popconfirm
                                 title="정말로 댓글을 삭제하시겠습니까?"
-                                onConfirm={(event) => onDelete(e.id)}
+                                onConfirm={(event) => onDelete(reply.id)}
                                 okText="Yes"
                                 cancelText="No"
-                                value={e.id}
+                                value={reply.id}
                               >
-                                <button className={styles.delete} value={e.id}>
+                                <button
+                                  className={styles.delete}
+                                  value={reply.id}
+                                >
                                   삭제
                                 </button>
                               </Popconfirm>
                               <ReportModal
                                 type="comment"
-                                id={e.id}
+                                id={reply.id}
                                 history={history}
                               />
                               <img src={like} />
                               <button
                                 className={styles.like}
-                                value={e.id}
+                                value={reply.id}
                                 onClick={onLike}
                               >
-                                {e.like}
+                                {reply.like}
                               </button>
                             </div>
                           </>
                         }
-                        datetime={e.createAt ? e.createAt.slice(0, 10) : null}
-                      // 현재 안나타남
+                        datetime={
+                          reply.createAt ? reply.createAt.slice(0, 10) : null
+                        }
                       ></Comment>
                     )
                   );
@@ -240,7 +206,6 @@ function CommentList({ comments, history, setPost, match }) {
                     size={'small'}
                     rows={4}
                     autoSize={{ minRows: 2, maxRows: 4 }}
-                    // showCount
                     maxLength={200}
                     type="text"
                     id={item.id}
