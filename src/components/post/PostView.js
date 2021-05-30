@@ -99,30 +99,7 @@ function PostView({ match, history }) {
             break;
         }
       });
-    // 새로고침 필요한지 -> 아니요
   };
-  // const onDellike = () => {
-  //   dispatch(postDellike(post.id))
-  //     .then((response) => {
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       switch (error.response.status) {
-  //         case 401:
-  //           message.error('로그인이 필요합니다.');
-  //           history.push('/');
-  //           break;
-  //         case 403:
-  //           message.error('접근 권한이 없습니다');
-  //           break;
-  //         case 409:
-  //           message.error('좋아요한 기록이 없습니다.');
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     });
-  // };
   const onScrap = () => {
     dispatch(postScrap(post.id))
       .then((response) => {
@@ -150,10 +127,6 @@ function PostView({ match, history }) {
 
   return (
     <div className={styles.communitymain}>
-      {/* <PageHeader
-        title={'1'}
-        subTitle="게시판 설명 적는 곳"
-      /> */}
       <div className={styles.communitybox}>
         {loading ? (
           <h1>loading</h1>

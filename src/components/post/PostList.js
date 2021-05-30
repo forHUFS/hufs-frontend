@@ -6,7 +6,7 @@ import { postList } from '../../_actions/post_action';
 import { Button, Table } from 'antd';
 import PostSearch from './PostSearch';
 import PostSub from './PostSub';
-import { findBoardName } from './PostSub'
+import { findBoardName } from './PostSub';
 
 const { Column } = Table;
 function PostList({ match, history }) {
@@ -16,7 +16,6 @@ function PostList({ match, history }) {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
-  // console.log(match.url.substring(1)); // 게시판 이름
   useEffect(() => {
     dispatch(postList(match))
       .then((response) => {
@@ -51,7 +50,6 @@ function PostList({ match, history }) {
 
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
-  // console.log(posts);
   return (
     <>
       {' '}
@@ -80,9 +78,9 @@ function PostList({ match, history }) {
             <Pagination
               className="postpagination"
               defaultCurrent={1}
-              total={posts.length} //전체 게시물 개수 받음
+              total={posts.length}
               onChange={(e) => setCurrentPage(e)}
-              pageSize={10} //페이지당 10개
+              pageSize={10}
               showSizeChanger={false}
             />
           </div>
@@ -148,31 +146,28 @@ export function TableBody({ currentList, match, loading }) {
 
 // 검색 결과용 , 게시판 명 , 유저 이름 받아오도록 변경 .
 export function TableBody2({ currentList, match, loading, BoardId }) {
-
   return (
     <>
       {loading ? (
         <Table pagination={false} dataSource={currentList}>
-          {BoardId === undefined ?
+          {BoardId === undefined ? (
             // 게시판 이름 숫자로 넘어올떄
-            (<Column
+            <Column
               title="카테고리"
               dataIndex="key"
               key="key"
               render={(text, record) =>
                 record.Board?.title ? record.Board.title : null
-
               }
-            />) : (<Column
+            />
+          ) : (
+            <Column
               title="카테고리"
               dataIndex="key"
               key="key"
-              render={(text, record) =>
-                findBoardName(record.boardId)
-              }
-
-            />)
-          }
+              render={(text, record) => findBoardName(record.boardId)}
+            />
+          )}
           <Column
             title="제목"
             key="title"
@@ -181,7 +176,6 @@ export function TableBody2({ currentList, match, loading, BoardId }) {
                 {record.title.length > 25
                   ? record.title.slice(0, 25)
                   : record.title}
-                {/* {true ? record.Replies[0].count : null} */}
                 {record.Replies.length ? (
                   <span style={{ color: 'black' }}>
                     &nbsp;&nbsp;&nbsp;&nbsp;({record.Replies.length})

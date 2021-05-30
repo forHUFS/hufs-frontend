@@ -5,7 +5,6 @@ import SearchBar from './SearchBar.js';
 import MapNavi from '../component/MapNavi';
 
 
-
 const MapContainer = ({ match }) => {
   const [data, setData] = useState();
   const [lat, setLat] = useState(37.59732049638715); // default 서울캠
