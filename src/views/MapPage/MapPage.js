@@ -11,23 +11,25 @@ const ReviewEdit = loadable(() => import('../../components/map/reviewSection/new
 
 const ReviewPage = loadable(() => import('../ReviewPage/ReviewPage'));
 const ReviewUpdate = loadable(() => import('../../components/map/reviewSection/newReviewSection/ReviewUpdate'));
+const House = loadable(() => import('../../components/map/house/House'))
 function MapPage({ match }) {
 
   return (
     <>
       <Header />
       <Quick />
-        <Switch>
-          <Route exact path={`${match.path}`} component={MapContainer} />
-          <Route
-            exact
-            path={`${match.path}/info/:id/ReviewPage`}
-            component={ReviewPage}
-          />
-          <Route path={`${match.path}/register`} component={ReviewEdit} />
-          <Route exact path={`${match.path}/edit`} component={ReviewUpdate} />
+      <Switch>
+        <Route exact path={`${match.path}`} component={MapContainer} />
+        <Route exact path={`${match.path}/house`} component={House} />
+        <Route
+          exact
+          path={`${match.path}/info/:id/ReviewPage`}
+          component={ReviewPage}
+        />
+        <Route path={`${match.path}/register`} component={ReviewEdit} />
+        <Route exact path={`${match.path}/edit`} component={ReviewUpdate} />
 
-        </Switch>
+      </Switch>
       <Footer />
     </>
     /* jshint ignore:end */
