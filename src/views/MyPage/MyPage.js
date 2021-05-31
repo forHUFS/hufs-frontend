@@ -12,34 +12,11 @@ import { withRouter } from 'react-router';
 import Page404 from '../Page404/Page404';
 import Header1 from '../Header/Header';
 import styles from '../../css/MyPage.module.css';
+import useUserInfo from '../../hooks/useUserInfo';
 function MyPage(props) {
   const { Header, Content, Footer } = Layout;
   const [userInfo, setUserInfo] = useState({});
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUserInfo())
-      .then((response) => {
-        setUserInfo({
-          nickname: response.payload.nickName,
-          mainMajorId: response.payload.MainMajor.id,
-          doubleMajorId: response.payload.DoubleMajor.id,
-        });
-      })
-      .catch((error) => {
-        switch (error?.response.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            props.history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            props.history.push('/');
-            break;
-          default:
-            break;
-        }
-      });
-  }, []);
+
   const [click, setClick] = useState('1');
 
   const onClick = (event) => {
@@ -67,7 +44,6 @@ function MyPage(props) {
       <Header1 />
       <div className={styles.main}>
         <div className={styles.communitymain}>
-          {/* <Card title="마이 페이지" /> */}
           <Layout className={styles.layout}>
             <UserInfo userInfo={userInfo} />
             <Header>
@@ -76,9 +52,6 @@ function MyPage(props) {
                 mode="horizontal"
                 defaultSelectedKeys={[click]}
               >
-                {/* <Menu.Item key="1" onClick={onClick}>
-                  회원정보관리
-              </Menu.Item> */}
                 <Menu.Item key="2" onClick={onClick}>
                   나의 스크랩
                 </Menu.Item>

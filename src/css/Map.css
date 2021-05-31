@@ -5,8 +5,11 @@
   --black-color: #0a0a0a;
 }
 .Map {
+  position: relative;
   top: 1%;
-  right: 15%;
+  left: 12%;
+  width: 1120px;
+  height: 900px;
 
   display: flex;
 }
@@ -14,22 +17,13 @@
 .Map-left {
   /* Title */
   position: relative;
-  width: 8%;
-  min-width: 8%;
-  height: 907px;
-  left: 15%;
-  top: 30px;
+  width: 10%;
 
+  height: 100%;
+  left: 2%;
   border: 1px solid var(--navy-color);
 }
 
-.Map-left > .navi {
-  position: absolute;
-  width: 80%;
-  height: 3%;
-  left: 10%;
-  top: 3%;
-}
 .Map-left > .content {
   position: absolute;
   width: 80%;
@@ -94,21 +88,19 @@
 } */
 
 .Map-main {
-  position: absolute;
-  width: 800px;
-  /* min-width: 48%; */
-  height: 907px;
-  left: 25%;
-  top: 170px;
+  position: relative;
+  width: 80%;
+  height: 60%;
+  left: 4%;
 }
 #KaKaoMap {
   width: 100%;
-  height: 907px;
+  height: 100%;
 }
 #map {
+  /* 이게본체 */
   width: 100%;
-  height: 907px;
-  overflow: hidden;
+  height: 100%;
 }
 #Food-list {
   position: absolute;
