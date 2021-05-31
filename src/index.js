@@ -16,6 +16,7 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 axios.defaults.withCredentials = true;
+// axios.defaults.baseURL = 'https://api.hufspace.com';
 // axios.interceptors.response.use(
 //   function (response) {
 //     return response;
