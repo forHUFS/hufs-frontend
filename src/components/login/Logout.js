@@ -1,14 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../_actions/user_action';
 import { message, Button } from 'antd';
 import { useHistory } from 'react-router';
+import { PUBLIC_IP } from '../../config';
 function Logout({ setLogin }) {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const onLogout = () => {
-    dispatch(logoutUser())
-      .then((response) => {
+  const onLogout = async () => {
+    await axios
+      .post(`${PUBLIC_IP}/user/sign-out`, null, {
+        withCredentials: true,
+      })
+      .then(() => {
         message.success('로그아웃 성공!');
         setLogin(false);
         history.push('/');
@@ -19,7 +20,6 @@ function Logout({ setLogin }) {
             message.error('로그인하지 않은 사용자입니다.');
           }
         } else if (error.request) {
-          // 요청은 o 응답은 x
           message.error(error.request);
         } else {
           message.error(error?.message);

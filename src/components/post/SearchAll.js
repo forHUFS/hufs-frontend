@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { message, Select, Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import useInput from '../../hooks/useInput';
-import { searchAll } from '../../_actions/post_action';
+import { postSearch } from '../../_actions/post_action';
 import { withRouter } from 'react-router-dom';
 const { Option } = Select;
 const { Search } = Input;
 function SearchAll(props) {
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useInput('');
-  const [searchType, setSearchType] = useState('titleAndContent');
 
   const onSearch = () => {
     if (keyword === '') {
       return message.warn('검색 키워드를 입력해주세요.');
     }
-    dispatch(searchAll(keyword, 'titleAndContent'))
+    const body = { keyword: keyword, option: 'titleAndContent' };
+    dispatch(postSearch(body))
       .then((response) => {
         if (response.status === 200) {
           props.history.push({

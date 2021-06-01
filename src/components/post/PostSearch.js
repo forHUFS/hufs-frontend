@@ -15,7 +15,12 @@ function PostSearch({ setPosts, match }) {
     if (toSearch === '') {
       return message.warn('검색 키워드를 입력해주세요.');
     }
-    dispatch(postSearch(match.path.substring(1), toSearch, searchType))
+    const body = {
+      keyword: toSearch,
+      option: searchType,
+      board: match.path.substring(1),
+    };
+    dispatch(postSearch(body))
       .then((response) => {
         if (response.status === 200) {
           // setPosts(response.payload.reverse());
@@ -23,7 +28,7 @@ function PostSearch({ setPosts, match }) {
           history.push({
             pathname: `/search`,
             state: { detail: response.payload.reverse() },
-            BoardId: match.path.substring(1)
+            BoardId: match.path.substring(1),
           });
         }
       })

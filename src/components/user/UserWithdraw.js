@@ -3,6 +3,8 @@ import { Modal, Button, Space, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withdrawUser } from '../../_actions/user_action';
+import axios from 'axios';
+import { PUBLIC_IP } from '../../config';
 function UserWithdraw(props) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
@@ -10,9 +12,7 @@ function UserWithdraw(props) {
   function confirm() {
     Modal.confirm({
       title: '정말로 회원을 탈퇴하시겠습니까? 😢',
-      // icon: <ExclamationCircleOutlined />,
       content: 'HUFSpace_',
-
       cancelText: '취소',
       okText: '탈퇴하기',
       onOk() {
@@ -20,8 +20,9 @@ function UserWithdraw(props) {
       },
     });
   }
-  const onWithdraw = () => {
-    dispatch(withdrawUser())
+  const onWithdraw = async () => {
+    await axios
+      .delete(`${PUBLIC_IP}/user`)
       .then((response) => {
         message.success('회원 탈퇴가 완료되었습니다.');
         props.history.push('/');
