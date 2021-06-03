@@ -6,8 +6,6 @@ import UserComment from '../../components/user/UserComment';
 import UserInfo from '../../components/user/UserInfo';
 import UserPost from '../../components/user/UserPost';
 import UserWithdraw from '../../components/user/UserWithdraw';
-import { useDispatch } from 'react-redux';
-import { getUserInfo } from '../../_actions/user_action';
 import { withRouter } from 'react-router';
 import Page404 from '../Page404/Page404';
 import Header1 from '../Header/Header';

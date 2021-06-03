@@ -1,5 +1,4 @@
 import React from 'react';
-import Auth from './hoc/auth';
 import loadable from '@loadable/component';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './css/App.css';
@@ -29,6 +28,10 @@ const EmailAuthPage = loadable(() =>
 );
 const MapPage = loadable(() => import('./views/MapPage/MapPage'));
 const SearchPage = loadable(() => import('./views/SearchPage/SearchPage'));
+const MajorPage = loadable(() => import('./views/MajorPage/MajorPage'));
+const DocumentPage = loadable(() =>
+  import('./views/DocumentPage/DocumentPage'),
+);
 function App() {
   return (
     <Router>
@@ -42,6 +45,8 @@ function App() {
         <Route path="/4" component={Post} />
         <Route path="/5" component={Post} />
         <Route path="/6" component={Post} />
+        <Route path="/major" component={MajorPage} />
+        <Route path="/document" component={DocumentPage} />
         {/* <Route path="/redirect" component={SignUpModal} /> */}
         <Route path="/mypage" component={MyPage} />
         <Route path="/email" component={EmailAuthPage} />

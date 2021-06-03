@@ -62,21 +62,7 @@ export const postList = async (match) => {
   }
 };
 //완료
-export const postReport = async (postId, body) => {
-  const request = await axios //body : postId, content, detail
-    .post(`${PUBLIC_IP}/post/${postId}/report`, body);
-  if (request.status === 200) {
-    return {
-      type: POST_REPORT,
-      status: request.status,
-    };
-  } else {
-    return {
-      type: POST_REPORT_FAIL,
-      status: request.status,
-    };
-  }
-};
+
 // 완료
 export const postSave = async (body, needDelete, boardId) => {
   const request = await axios.post(`${PUBLIC_IP}/board/${boardId}/post`, body);
@@ -115,21 +101,7 @@ export const postUpdate = async (updated, needDelete, postId) => {
     };
   }
 };
-// 완료
-export const postRemove = async (postId) => {
-  const request = await axios.delete(`${PUBLIC_IP}/post/${postId}`);
-  if (request.status === 200) {
-    return {
-      type: POST_REMOVE,
-      status: request.status,
-    };
-  } else {
-    return {
-      type: POST_REMOVE_FAIL,
-      status: request.status,
-    };
-  }
-};
+
 // 완료
 export const postLike = async (postId) => {
   const request = await axios.get(`${PUBLIC_IP}/post/${postId}/addlike`);
@@ -197,9 +169,9 @@ export const deleteScrap = async (scrapId) => {
   }
 };
 
-export const postSearch = async (boardId, keyword, option) => {
+export const postSearch = async (body) => {
   const request = await axios.get(`${PUBLIC_IP}/search`, {
-    params: { keyword: keyword, option: option, board: boardId }, // option = titleAndContent, title, content, nick
+    params: body, // option = titleAndContent, title, content, nick
   });
 
   if (request.data) {
@@ -212,27 +184,6 @@ export const postSearch = async (boardId, keyword, option) => {
     return {
       type: POST_SEARCH_FAIL,
       status: request.status,
-      // payload: request.error,
-    };
-  }
-};
-
-export const searchAll = async (keyword, option) => {
-  const request = await axios.get(`${PUBLIC_IP}/search`, {
-    params: { keyword: keyword, option: option }, // option = titleAndContent, title, content, nick
-  });
-
-  if (request.data) {
-    return {
-      type: SEARCH_ALL,
-      status: request.status,
-      payload: request.data.data,
-    };
-  } else {
-    return {
-      type: SEARCH_ALL_FAIL,
-      status: request.status,
-      payload: request,
       // payload: request.error,
     };
   }

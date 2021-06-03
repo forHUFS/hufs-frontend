@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { authEmail } from '../../_actions/user_action';
 import AuthSuccess from '../../components/webmail/AuthSuccess';
 import AuthAlready from '../../components/webmail/AuthAlready';
 import AuthUnauthorized from '../../components/webmail/AuthUnauthorized';
 import AuthExpired from '../../components/webmail/AuthExpired';
 import Page404 from '../Page404/Page404';
 import AuthUnavailable from '../../components/webmail/AuthUnavailable';
+import useEmailAuth from '../../hooks/useEmailAuth';
 function EmailAuthPage(props) {
-  // console.log(props);
-  const [loading, setloading] = useState(true);
-  const [status, setStatus] = useState(false);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const query = new URLSearchParams(props.location.search);
-    const token = query.get('token');
-    dispatch(authEmail(token))
-      .then((response) => {
-        setStatus(response.status);
-        setloading(false);
-      })
-      .catch((error) => {
-        setStatus(error.response?.status);
-        setloading(false);
-      });
-  }, []);
+  const [status, setStatus] = useState('');
+  const { emailAuth, isError, isLoading } = useEmailAuth(
+    new URLSearchParams(props.location.search).get('token'),
+  );
+  if (!isLoading && emailAuth) {
+    setStatus(emailAuth.status);
+  } else if (!isLoading) {
+    setStatus(isError.response?.status);
+  }
   function statusRender() {
     switch (status) {
       case 200:
@@ -42,7 +33,8 @@ function EmailAuthPage(props) {
         break;
     }
   }
-  return <div>{loading ? null : statusRender()}</div>;
+  if (isLoading) return <>isLoading...</>;
+  return <div>{statusRender()}</div>;
 }
 
 export default EmailAuthPage;

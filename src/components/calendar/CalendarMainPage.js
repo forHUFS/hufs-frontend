@@ -22,9 +22,10 @@ function CalendarMainPage(props) {
             let x = moment(e.ScholarshipDate.date);
             let today = moment();
             return (
-              x.date() === today.day() &&
-              x.month() + 1 === today.date() &&
-              x.year() === today.year()
+              // x.date() === today.day() &&
+              // x.month() + 1 === today.date() &&
+              // x.year() === today.year()
+              x.diff(today, 'days') >= 0
             );
           }
         });
@@ -85,16 +86,6 @@ function CalendarMainPage(props) {
                   ? null
                   : `D ${dDayCheck(item.ScholarshipDate.date)}`}
               </span>
-              {/* <h4
-                onClick={(e) => window.open(item.link)}
-                style={{
-                  display: 'inline-block',
-                  float: 'right',
-                  cursor: 'pointer',
-                }}
-              >
-                링크
-              </h4> */}
             </List.Item>
           )}
         />
