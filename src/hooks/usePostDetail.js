@@ -10,7 +10,7 @@ export default function usePostDetail(postId) {
 
   return {
     postDetail: data,
-    isLoading: !isError && !data,
+    isLoading: !error && !data,
     isError: error,
   };
 }

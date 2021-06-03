@@ -2,13 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Button, Space, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
-import { withdrawUser } from '../../_actions/user_action';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
 function UserWithdraw(props) {
-  const [visible, setVisible] = useState(false);
-  const dispatch = useDispatch();
-
   function confirm() {
     Modal.confirm({
       title: '정말로 회원을 탈퇴하시겠습니까? 😢',

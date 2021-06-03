@@ -2,6 +2,7 @@ import React from 'react';
 import { message, Button } from 'antd';
 import { useHistory } from 'react-router';
 import { PUBLIC_IP } from '../../config';
+import axios from 'axios';
 function Logout({ setLogin }) {
   const history = useHistory();
   const onLogout = async () => {

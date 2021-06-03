@@ -49,16 +49,6 @@ function SearchAll(props) {
   };
   return (
     <span id="Searchbar">
-      {/* <Select
-        defaultValue="제목"
-        style={{ width: 80 }}
-        onChange={(e) => setSearchType(e)}
-      >
-        <Option value="titleAndContent">제목&내용</Option>
-        <Option value="title">제목</Option>
-        <Option value="content">내용</Option>
-        <Option value="nick">닉네임</Option>
-      </Select> */}
       <Search
         allowClear
         value={keyword}

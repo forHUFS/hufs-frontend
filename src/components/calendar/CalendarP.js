@@ -34,9 +34,10 @@ function CalendarP({ match }) {
             let x = moment(e.ScholarshipDate.date);
             let today = moment();
             return (
-              x.date() === today.day() &&
-              x.month() + 1 === today.date() &&
-              x.year() === today.year()
+              // x.date() === today.day() &&
+              // x.month() + 1 === today.date() &&
+              // x.year() === today.year()
+              x.diff(today, 'days') >= 0
             );
           }
         });

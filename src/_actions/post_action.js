@@ -62,21 +62,7 @@ export const postList = async (match) => {
   }
 };
 //완료
-export const postReport = async (postId, body) => {
-  const request = await axios //body : postId, content, detail
-    .post(`${PUBLIC_IP}/post/${postId}/report`, body);
-  if (request.status === 200) {
-    return {
-      type: POST_REPORT,
-      status: request.status,
-    };
-  } else {
-    return {
-      type: POST_REPORT_FAIL,
-      status: request.status,
-    };
-  }
-};
+
 // 완료
 export const postSave = async (body, needDelete, boardId) => {
   const request = await axios.post(`${PUBLIC_IP}/board/${boardId}/post`, body);

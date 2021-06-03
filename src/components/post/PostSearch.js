@@ -8,15 +8,15 @@ const { Option } = Select;
 const { Search } = Input;
 function PostSearch({ setPosts, match }) {
   const dispatch = useDispatch();
-  const [toSearch, onChangeSearch] = useInput('');
+  const [keyword, setKeyword] = useInput('');
   const [searchType, setSearchType] = useState('titleAndContent');
   const history = useHistory();
   const onSearch = () => {
-    if (toSearch === '') {
+    if (keyword === '') {
       return message.warn('검색 키워드를 입력해주세요.');
     }
     const body = {
-      keyword: toSearch,
+      keyword: keyword,
       option: searchType,
       board: match.path.substring(1),
     };
@@ -69,8 +69,8 @@ function PostSearch({ setPosts, match }) {
       </Select>
       <Search
         allowClear
-        value={toSearch}
-        onChange={onChangeSearch}
+        value={keyword}
+        onChange={setKeyword}
         onSearch={onSearch}
         style={{
           marginBottom: '10px',
