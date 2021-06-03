@@ -24,6 +24,12 @@ function Header(props) {
       <Menu.Item>
         <Link to="/2">장학 공간</Link>
       </Menu.Item>
+      <Menu.Item>
+        <Link to="/major">과별 공간</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to="/document">서류 공간</Link>
+      </Menu.Item>
     </Menu>
   );
   const menu3 = (
@@ -88,7 +94,7 @@ function Header(props) {
           <Button type="text">
             <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
               My page
-          </Link>{' '}
+            </Link>{' '}
           </Button>
         </span>
         {/* <Button type="text">언어 선택</Button> */}

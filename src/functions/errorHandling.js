@@ -3,7 +3,6 @@ import { Redirect } from 'react-router';
 //CONFLICT, 404 정리 필요. +a
 
 export const errorMessage = (error) => {
-  console.log('여기');
   switch (error) {
     case 'INVALID_NICKNAME_TIME':
       message.error('닉네임을 변경한지 30일이 지나지 않았습니다.');

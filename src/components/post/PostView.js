@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom';
 import {
   postDellike,
   postLike,
-  postRemove,
   postReport,
   postScrap,
   postView,
@@ -16,41 +15,24 @@ import ReportModal from './ReportModal';
 import { Card, message, PageHeader, Popconfirm, Skeleton } from 'antd';
 import styles from '../../css/PostView.module.css';
 import like from '../../image/recommend.png';
+import usePostDetail from '../../hooks/usePostDetail';
+import { PUBLIC_IP } from '../../config';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 function PostView({ match, history }) {
-  const [loading, setLoading] = useState(true);
   const [post, setPost] = useState();
   const dispatch = useDispatch();
+  const postId = +match.params.id;
+  const { postDetail, isLoading, isError } = usePostDetail(postId);
+
   useEffect(() => {
-    dispatch(postView(+match.params.id))
-      .then((response) => {
-        if (response.status === 200) {
-          setPost(response.payload);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            history.push('/');
-            break;
-          case 404:
-            message.error('존재하지 않는 게시글입니다');
-            history.push('/');
-            break;
-          default:
-            break;
-        }
-      });
-  }, []);
-  const onDelete = () => {
-    dispatch(postRemove(post.id))
+    if (!isLoading) {
+      setPost(postDetail);
+    }
+  }, [postDetail]);
+  const onDelete = async () => {
+    axios
+      .delete(`${PUBLIC_IP}/post/${postDetail.id}`)
       .then((response) => {
         if (response.status === 200) {
           message.success('게시글 삭제가 완료되었습니다.');
@@ -76,7 +58,8 @@ function PostView({ match, history }) {
       });
   };
   const onLike = () => {
-    dispatch(postLike(post.id))
+    // 안끝난거
+    dispatch(postLike(postDetail.id))
       .then(async (response) => {
         await postView(+match.params.id).then((response) => {
           message.success('성공');
@@ -100,15 +83,18 @@ function PostView({ match, history }) {
         }
       });
   };
-  const onScrap = () => {
-    dispatch(postScrap(post.id))
+  const onScrap = async () => {
+    await axios
+      .post(`${PUBLIC_IP}/user/scrap`, null, {
+        params: { postId: postDetail.id },
+      })
       .then((response) => {
         message.success(
           '스크랩에 성공했습니다. 마이페이지에서 확인할 수 있습니다.',
         );
       })
       .catch((error) => {
-        switch (error.response.status) {
+        switch (error.response?.status) {
           case 401:
             message.error('로그인이 필요합니다.');
             // history.push('/');
@@ -124,97 +110,93 @@ function PostView({ match, history }) {
         }
       });
   };
-
+  if (isLoading) return <>loading...</>;
   return (
     <div className={styles.communitymain}>
       <div className={styles.communitybox}>
-        {loading ? (
-          <h1>loading</h1>
-        ) : (
-          <Card
-            title={
-              <>
-                <div style={{ fontWeight: 'bold', fontSize: '22px' }}>
-                  {post.title}
-                </div>
-                <span className={styles.like}>
-                  <img src={like} />
-                  <span className={styles.recommend} onClick={onLike}>
-                    {post.like}
-                  </span>
+        <Card
+          title={
+            <>
+              <div style={{ fontWeight: 'bold', fontSize: '22px' }}>
+                {post.title}
+              </div>
+              <span className={styles.like}>
+                <img src={like} />
+                <span className={styles.recommend} onClick={onLike}>
+                  {post.like}
                 </span>
-                <div className={styles.postinfo}>
-                  {post.User === null ? (
-                    <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
-                  ) : (
-                    <span style={{ fontSize: '13px' }}>
-                      {' '}
-                      {post.User.nickname}{' '}
-                    </span>
-                  )}
-                  <span style={{ marginLeft: '24px', fontSize: '12px' }}>
-                    {post.createdAt?.slice(0, 10)}
-                  </span>
-                  <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+              </span>
+              <div className={styles.postinfo}>
+                {post.User === null ? (
+                  <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
+                ) : (
+                  <span style={{ fontSize: '13px' }}>
                     {' '}
-                    글 번호 {post.id}
+                    {post.User.nickname}{' '}
                   </span>
-                </div>
-              </>
-            }
-          >
-            <div
-              dangerouslySetInnerHTML={{ __html: post.content }}
-              className="board-content"
-            />
-            <div>
-              <div style={{ fontSize: '12px' }}>
-                <ReportModal type="post" id={post.id} history={history} />{' '}
-                <div>
-                  <Popconfirm
-                    title="정말로 게시글을 삭제하시겠습니까?"
-                    onConfirm={onDelete}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <span
-                      style={{
-                        cursor: 'pointer',
-                        float: 'left',
-                        marginRight: '12px',
-                      }}
-                    >
-                      삭제
-                    </span>
-                  </Popconfirm>
+                )}
+                <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+                  {post.createdAt?.slice(0, 10)}
+                </span>
+                <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+                  {' '}
+                  글 번호 {post.id}
+                </span>
+              </div>
+            </>
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={{ __html: post.content }}
+            className="board-content"
+          />
+          <div>
+            <div style={{ fontSize: '12px' }}>
+              <ReportModal type="post" id={post.id} history={history} />{' '}
+              <div>
+                <Popconfirm
+                  title="정말로 게시글을 삭제하시겠습니까?"
+                  onConfirm={onDelete}
+                  okText="Yes"
+                  cancelText="No"
+                >
                   <span
-                    onClick={onScrap}
                     style={{
                       cursor: 'pointer',
-                      float: 'right',
-                      marginLeft: '12px',
+                      float: 'left',
+                      marginRight: '12px',
                     }}
                   >
-                    스크랩
+                    삭제
                   </span>
-                </div>{' '}
-                <Link to={`${post.id}/update`}>
-                  <span>수정</span>
-                </Link>
+                </Popconfirm>
+                <span
+                  onClick={onScrap}
+                  style={{
+                    cursor: 'pointer',
+                    float: 'right',
+                    marginLeft: '12px',
+                  }}
+                >
+                  스크랩
+                </span>
               </div>{' '}
-            </div>
-            <div>
-              <hr />
-            </div>
-            <CommentList
-              setPost={setPost}
-              history={history}
-              comments={post.Replies ? post.Replies : []}
-              match={match}
-            />
-            <CommentEdit setPost={setPost} history={history} match={match} />
-          </Card>
-        )}
+              <Link to={`${post.id}/update`}>
+                <span>수정</span>
+              </Link>
+            </div>{' '}
+          </div>
+          <div>
+            <hr />
+          </div>
+          <CommentList
+            setPost={setPost}
+            history={history}
+            comments={post.Replies ? post.Replies : []}
+            match={match}
+          />
+          <CommentEdit setPost={setPost} history={history} match={match} />
+        </Card>
       </div>
     </div>
   );

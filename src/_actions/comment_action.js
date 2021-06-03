@@ -56,24 +56,7 @@ export const commentRemove = async (commentId) => {
     };
   }
 };
-// 완료
-export const commentReport = async (commentId, body) => {
-  const request = await axios.post(
-    `${PUBLIC_IP}/reply/${commentId}/report`,
-    body,
-  );
-  if (request.status === 200) {
-    return {
-      type: COMMENT_REPORT,
-      status: request.status,
-    };
-  } else {
-    return {
-      type: COMMENT_REPORT_FAIL,
-      status: request.status,
-    };
-  }
-};
+
 export const commentReply = async (reply) => {
   const request = await axios.post(`${PUBLIC_IP}/reply/add/re`, reply);
 

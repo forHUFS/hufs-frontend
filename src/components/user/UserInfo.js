@@ -8,6 +8,7 @@ import SecondMajorSelect from './SecondMajorSelect';
 import styles from '../../css/UserInfo.module.css';
 import profile from '../../image/profile.png';
 import useUserInfo from '../../hooks/useUserInfo';
+import { mutate } from 'swr';
 function UserInfo(props) {
   const [mainMajorList, setMainMajorList] = useState([]);
   const [doubleMajorList, setDoubleMajorList] = useState([]);
@@ -76,6 +77,7 @@ function UserInfo(props) {
               break;
           }
         });
+      mutate(`${PUBLIC_IP}/user`);
     }
   };
   function MainMajorChange(value) {

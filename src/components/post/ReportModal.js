@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Input, Select, Modal, Button, message } from 'antd';
-
-import { useDispatch } from 'react-redux';
-import { postReport } from '../../_actions/post_action';
 import { withRouter } from 'react-router';
-import { commentReport } from '../../_actions/comment_action';
+import { PUBLIC_IP } from '../../config';
+import axios from 'axios';
 function ReportModal({ type, id, history }) {
   const { Option } = Select;
   const { TextArea } = Input;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const dispatch = useDispatch();
   const [body, setBody] = useState({ content: 1, detail: '' });
   const showModal = () => {
     setIsModalVisible(true);
@@ -17,14 +14,15 @@ function ReportModal({ type, id, history }) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const onReport = (e) => {
+  const onReport = async () => {
     if (type === 'post') {
-      dispatch(postReport(id, body))
-        .then((response) => {
+      await axios
+        .post(`${PUBLIC_IP}/post/${id}/report`, body)
+        .then(() => {
           message.success('신고가 완료되었습니다. 감사합니다.');
         })
         .catch((error) => {
-          switch (error.response.status) {
+          switch (error.response?.status) {
             case 401:
               message.error('로그인이 필요합니다.');
               history.push('/');
@@ -40,12 +38,13 @@ function ReportModal({ type, id, history }) {
           }
         });
     } else if (type === 'comment') {
-      dispatch(commentReport(id, body))
+      await axios
+        .post(`${PUBLIC_IP}/reply/${id}/report`, body)
         .then((response) => {
           message.success('신고가 완료되었습니다. 감사합니다.');
         })
         .catch((error) => {
-          switch (error.response.status) {
+          switch (error.response?.status) {
             case 401:
               message.error('로그인이 필요합니다.');
               history.push('/');
