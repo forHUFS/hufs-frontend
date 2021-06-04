@@ -5,7 +5,9 @@ import useInput from '../../hooks/useInput';
 import { withRouter } from 'react-router';
 import { Button, Input, message } from 'antd';
 import { postView } from '../../_actions/post_action';
-function CommentEdit({ history, match, setPost }) {
+import { mutate } from 'swr';
+import { PUBLIC_IP } from '../../config';
+function CommentEdit({ history, match, setPost, postDetail }) {
   const { TextArea } = Input;
 
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function CommentEdit({ history, match, setPost }) {
       content: content,
     };
     dispatch(commentSave(body)) //error 옮겨야함
-      .then(async (response) => {
+      .then(async () => {
         message.success('댓글 작성 성공!');
         await postView(+match.params.id).then((response) =>
           setPost(response.payload),
