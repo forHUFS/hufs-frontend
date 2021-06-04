@@ -7,6 +7,7 @@ import { Button, Table } from 'antd';
 import PostSearch from './PostSearch';
 import PostSub from './PostSub';
 import { findBoardName } from './PostSub';
+import useBoard from '../../hooks/useBoard';
 
 const { Column } = Table;
 function PostList({ match, history }) {
@@ -16,6 +17,8 @@ function PostList({ match, history }) {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
+  const boardId = match.path.substring(1);
+
   useEffect(() => {
     dispatch(postList(match))
       .then((response) => {
