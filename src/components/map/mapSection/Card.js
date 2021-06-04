@@ -228,9 +228,9 @@ const Rstrn = ({
     var content9 = document.createElement('div');
     var content10 = document.createElement('button');
     content10.className = 'link';
-    content10.appendChild(document.createTextNode('상세 보기'));
+    content10.appendChild(document.createTextNode('리뷰 보기'));
     content10.onclick = function () {
-      setIsModalVisible(true);
+      goReview();
     };
     var content12 = document.createElement('img');
     content12.src = star;
@@ -362,60 +362,32 @@ const Rstrn = ({
     setIsModalVisible(false);
   };
 
+  const goReview = (e) => {
+    // map/info -> map/info/:name 24시해장국
+    history.push({
+      // map/info/:name/24시해장국/reviewpage
+      pathname: `${match.path}/info/${id}/ReviewPage`,
+      state: {
+        id: id,
+        name: name,
+      },
+    });
+  }
+
   return (
     /* jshint ignore:start */
     <div>
       <div>
         {
-          <Card size="small" style={{ width: 300, height: 40 }}>
-            <Title level={5}>{name}</Title>
-            <h5>{roadAddress}</h5>
-            <Button type="primary" onClick={getMarker}>
+          <Card size="small" style={{width : 300}}>
+            <Title level={5}>{name}</Title><h6>{StoreSubCategory.name}</h6>
+            <h5 className = "Card-h5">{roadAddress}</h5> 
+            <Button size="small" onClick={getMarker}>
               위치 확인
             </Button>
           </Card>
         }
       </div>
-      <div id="map" style={style}></div>
-      <Modal
-        title={<Title level={3}>{name}</Title>}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size={83} src={item.img} />}
-                title={item.title}
-                description={item.description}
-              />
-            </List.Item>
-          )}
-        />
-        <div>
-          <Button
-            style={{ width: '30%' }}
-            onClick={(e) => {
-              // map/info -> map/info/:name 24시해장국
-              history.push({
-                // map/info/:name/24시해장국/reviewpage
-                pathname: `${match.path}/info/${id}/ReviewPage`,
-                state: {
-                  id: id,
-                  name: name,
-                },
-              });
-            }}
-          >
-            리뷰 보러가기
-          </Button>
-          {/*<ItemListContainer/>*/}
-        </div>
-      </Modal>
     </div>
 
     /* jshint ignore:end */
