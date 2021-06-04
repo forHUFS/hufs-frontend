@@ -7,7 +7,9 @@ import { withRouter } from 'react-router';
 import { dDayCheck } from './CalendarP';
 import moment from 'moment';
 import CalendarComponent from './CalendarComponent';
+import useScholarship from '../../hooks/useScholarship';
 function CalendarMainPage(props) {
+  const { scholarshipData, isError, isLoading } = useScholarship();
   const dispatch = useDispatch();
   const [dataList, setDataList] = useState([]);
   const [scholar, setscholar] = useState([]);
