@@ -1,5 +1,5 @@
 import React from 'react'
-import MapNavi from '../component/MapNavi'
+import MapNavi from '../MapNavi'
 function House() {
 
 

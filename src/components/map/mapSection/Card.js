@@ -3,18 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import { Card, Button, Typography, Col, Row, Modal, List, Avatar } from 'antd';
 import { useHistory, withRouter, useLocation } from 'react-router-dom';
-import './Card.css';
 import icon_rstrn from './mapData/icon_rstrn.png';
 import numIcon from './mapData/icon1.png';
 import roadIcon from './mapData/icon2.png';
 import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
 import { reviewDetail } from '../../../_actions/reviewPost_action';
-
-import axios from 'axios';
-import { PUBLIC_IP } from '../../../config';
-
-
 const { kakao } = window;
 const { Text, Title } = Typography;
 
@@ -44,12 +38,7 @@ const Rstrn = ({
   const getMarker = async () => {
     dispatch(reviewDetail(id))
       .then((response) => {
-        // if (response.status === 200) {
-        //   setDetail({
-        //     average: response.payload.average,
-        //     count: response.payload.count,
-        //   });
-        // }
+
         if (response.payload.average === null) {
           displayMarker(parseFloat(0).toFixed(1), response.payload.count);
         }
@@ -379,9 +368,9 @@ const Rstrn = ({
     <div>
       <div>
         {
-          <Card size="small" style={{width : 300}}>
+          <Card size="small" style={{ width: 300 }}>
             <Title level={5}>{name}</Title><h6>{StoreSubCategory.name}</h6>
-            <h5 className = "Card-h5">{roadAddress}</h5> 
+            <h5 className="Card-h5">{roadAddress}</h5>
             <Button size="small" onClick={getMarker}>
               위치 확인
             </Button>

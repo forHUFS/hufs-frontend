@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PUBLIC_IP } from '../../../config';
-import mapboo from '../../../image/boo/mapboo.png';
+import { PUBLIC_IP } from '../../config';
+import mapboo from '../../image/boo/mapboo.png';
 import { Button } from 'antd';
 import { withRouter } from 'react-router';
 
