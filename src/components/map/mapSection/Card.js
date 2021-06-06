@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { Card, Button, Typography, Col, Row, Modal, List, Avatar } from 'antd';
 import { useHistory, withRouter, useLocation } from 'react-router-dom';
 import icon_rstrn from './mapData/icon_rstrn.png';
@@ -9,31 +8,32 @@ import roadIcon from './mapData/icon2.png';
 import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
 import { reviewDetail } from '../../../_actions/reviewPost_action';
+
 const { kakao } = window;
 const { Text, Title } = Typography;
+
 
 const Rstrn = ({
   id,
   name,
   numAddress,
   StoreSubCategory,
+  HouseCategory,
   roadAddress,
   lat,
   long,
   match,
 }) => {
-  //const history = useHistory();
+  // 백엔드 에서 데이터 받을떄 StoreSubCategory 말고 HouseCategory ? 로 받자
 
-  //const [markerPositions, setMarkerPositions] = useState();
-  //const { map } = useSelector((state) => ({ map: state.map }), []);
   const dispatch = useDispatch();
   const [state, setstate] = useState();
   const history = useHistory();
   const location = useLocation();
   const [marker, setMarkers] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const [detail, setDetail] = useState([]);
+
 
   const getMarker = async () => {
     dispatch(reviewDetail(id))
@@ -89,23 +89,23 @@ const Rstrn = ({
   //   }, [])
 
 
-  const data = [
-    {
-      title: '카테고리',
-      description: StoreSubCategory.name,
-      img: cateIcon2,
-    },
-    {
-      title: '지번주소',
-      description: numAddress,
-      img: numIcon,
-    },
-    {
-      title: '도로명주소',
-      description: roadAddress,
-      img: roadIcon,
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: '카테고리',
+  //     description: StoreSubCategory.name,
+  //     img: cateIcon2,
+  //   },
+  //   {
+  //     title: '지번주소',
+  //     description: numAddress,
+  //     img: numIcon,
+  //   },
+  //   {
+  //     title: '도로명주소',
+  //     description: roadAddress,
+  //     img: roadIcon,
+  //   },
+  // ];
 
   //const {map} = useSelector(state => state.map,[]);
 
@@ -343,18 +343,11 @@ const Rstrn = ({
     height: '80px',
     width: '100px',
   };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   const goReview = (e) => {
     // map/info -> map/info/:name 24시해장국
     history.push({
-      // map/info/:name/24시해장국/reviewpage
+      // map/info/:name/24시해장국/reviewpage   
       pathname: `${match.path}/info/${id}/ReviewPage`,
       state: {
         id: id,
@@ -362,19 +355,46 @@ const Rstrn = ({
       },
     });
   }
+  const houseReview = () => {
+    history.push({
+      pathname: `${match.path}/info/${id}/ReviewPage`
+    })
+  }
+
+  const houseTrade = () => {
+    history.push({
+      pathname: `${match.path}/info/${id}/TradePage`
+    })
+  }
 
   return (
-    /* jshint ignore:start */
+
     <div>
       <div>
-        {
-          <Card size="small" style={{ width: 300 }}>
-            <Title level={5}>{name}</Title><h6>{StoreSubCategory.name}</h6>
-            <h5 className="Card-h5">{roadAddress}</h5>
-            <Button size="small" onClick={getMarker}>
-              위치 확인
+        {StoreSubCategory !== undefined ?
+          (
+            <Card size="small" style={{ width: 300 }}>
+              <Title level={5}>{name}</Title>
+              <h6>{StoreSubCategory?.name}</h6>
+              <h5 className="Card-h5">{roadAddress}</h5>
+              <Button size="small" onClick={getMarker}>
+                위치 확인
             </Button>
-          </Card>
+            </Card>
+          )
+          :
+          (
+            <Card size="small" style={{ width: 300 }}>
+              <Title level={5}>{name}</Title>
+              <h5 className="Card-h5">{roadAddress}</h5>
+              <Button size="small" onClick={houseReview}>
+                리뷰 공간
+            </Button>
+              <Button size="small" onClick={houseTrade}>
+                거래 공간
+            </Button>
+            </Card>
+          )
         }
       </div>
     </div>
