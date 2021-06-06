@@ -14,24 +14,26 @@ export const postScrap = async (postId) => {
     params: { postId: postId },
   });
 };
-/////////
-
-export const postSave = async (body, needDelete, boardId) => {
-  await axios.post(`${PUBLIC_IP}/board/${boardId}/post`, body);
-  if (needDelete.length !== 0) {
-    await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
-  }
+export const deleteScrap = async (scrapId) => {
+  await axios.delete(`${PUBLIC_IP}/user/scrap`, {
+    params: { id: scrapId },
+  });
 };
-
 export const postUpdate = async (updated, needDelete, postId) => {
   await axios.put(`${PUBLIC_IP}/post/${postId}`, updated);
   if (needDelete.length !== 0) {
     await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
   }
 };
-
-export const deleteScrap = async (scrapId) => {
-  await axios.delete(`${PUBLIC_IP}/user/scrap`, {
-    params: { id: scrapId },
+export const postSave = async (body, needDelete, boardId) => {
+  await axios.post(`${PUBLIC_IP}/board/${boardId}/post`, body);
+  if (needDelete.length !== 0) {
+    await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
+  }
+};
+export const postSearch = async (body) => {
+  await axios.get(`${PUBLIC_IP}/search`, {
+    params: body, // option = titleAndContent, title, content, nick
   });
 };
+/////////

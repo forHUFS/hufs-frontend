@@ -1,58 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Badge, message } from 'antd';
-import { useDispatch } from 'react-redux';
 import { Button, List, Typography } from 'antd';
-import { getScholar } from '../../_actions/calender_action';
 import { withRouter } from 'react-router';
-import { dDayCheck } from './CalendarP';
-import moment from 'moment';
+import { dDayCheck } from './CalendarComponent';
 import CalendarComponent from './CalendarComponent';
 import useScholarship from '../../hooks/useScholarship';
 function CalendarMainPage(props) {
   const { scholarshipData, isError, isLoading } = useScholarship();
-  const dispatch = useDispatch();
   const [dataList, setDataList] = useState([]);
-  const [scholar, setscholar] = useState([]);
   useEffect(() => {
-    dispatch(getScholar())
-      .then((response) => {
-        setscholar(response.payload.data);
-        const selectedMatchedData = response.payload.data.filter((e) => {
-          if (e.ScholarshipDate === null) {
-            return null;
-          } else {
-            let x = moment(e.ScholarshipDate.date);
-            let today = moment();
-            return (
-              // x.date() === today.day() &&
-              // x.month() + 1 === today.date() &&
-              // x.year() === today.year()
-              x.diff(today, 'days') >= 0
-            );
-          }
-        });
-        setDataList(selectedMatchedData);
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            props.history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            break;
-          default:
-            break;
-        }
-      });
-  }, []);
+    setDataList(scholarshipData);
+  }, [isLoading]);
 
+  if (isLoading) return <>isLoading..</>;
   return (
     <div>
       <div className="site-calendar-demo-card">
         <CalendarComponent
-          scholar={scholar ? scholar : null}
+          scholar={scholarshipData ? scholarshipData : null}
           setDataList={setDataList}
         />
       </div>
@@ -65,7 +30,7 @@ function CalendarMainPage(props) {
               <Button
                 style={{ float: 'right' }}
                 type="text"
-                onClick={(e) => setDataList(scholar)}
+                onClick={(e) => setDataList(scholarshipData)}
               >
                 전체 보기
               </Button>

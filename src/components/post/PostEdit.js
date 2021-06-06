@@ -1,17 +1,16 @@
 import React, { useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-import { useDispatch } from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
-import { postSave } from '../../_actions/post_action';
 import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { postSave } from '../../functions/postFunctions';
+import { errorMessage } from '../../functions/errorHandling';
 import { PUBLIC_IP } from '../../config';
 import { Button, Input, message } from 'antd';
 import imageCompression from 'browser-image-compression';
 let uploadedImg = [];
 function PostEdit(props) {
-  const dispatch = useDispatch();
   useBeforeunload((e) => {
     e.preventDefault();
     window.onunload = function () {
@@ -22,7 +21,6 @@ function PostEdit(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     if (value.title.trim().length === 0) {
-      // 공백 제목 검사
       message.info('제목을 적어주세요');
       return;
     }
@@ -39,25 +37,13 @@ function PostEdit(props) {
       title: value.title,
       content: value.content,
     };
-    dispatch(postSave(body, needDelete, boardId.substring(1)))
-      .then((response) => {
-        if (response.status === 200) {
-          props.history.goBack();
-          message.success('작성 완료');
-        }
+    postSave(body, needDelete, boardId.substring(1))
+      .then(() => {
+        props.history.goBack();
+        message.success('작성 완료');
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            props.history.push('/');
-          case 403:
-            message.error('접근 권한 오류');
-            props.history.push('/');
-            break;
-          default:
-            break;
-        }
+        errorMessage(error.response?.data.message);
       });
   };
   const onExit = () => {
