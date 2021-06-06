@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useBeforeunload } from 'react-beforeunload';
 import imageCompression from 'browser-image-compression';
 import { withRouter } from 'react-router-dom';
-import { postUpdate, postView } from '../../_actions/post_action';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
-import Footer from '../../views/Footer/Footer';
-import Header from '../../views/Header/Header';
-import Quick from '../../views/Quick/Quick';
 import { Skeleton, Button, message } from 'antd';
-
-// 상세 게시글 보기
-// 게시글 내용 불러오기 ->
+import { errorMessage } from '../../functions/errorHandling';
+import usePostDetail from '../../hooks/usePostDetail';
+import { postUpdate } from '../../functions/postFunctions';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
 function PostUpdate({ match, history }) {
-  const dispatch = useDispatch();
+  const { postDetail, isLoading, isError } = usePostDetail(+match.params.id);
   const [updated, setUpdated] = useState(false);
   useBeforeunload((e) => {
     e.preventDefault();
@@ -27,43 +22,22 @@ function PostUpdate({ match, history }) {
     };
   });
   useEffect(() => {
-    dispatch(postView(+match.params.id))
-      .then((response) => {
-        if (response.status === 200) {
-          const firstImg = Array.from(
-            new DOMParser()
-              .parseFromString(response.payload.content, 'text/html')
-              .querySelectorAll('img'),
-          ).map((img) => img.getAttribute('src'));
-          setUpdated({
-            title: response.payload.title,
-            content: response.payload.content,
-          });
-          wholeImg = wholeImg.concat(firstImg);
-        }
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            break;
-          case 404:
-            message.error('존재하지 않는 게시글입니다');
-            break;
-          default:
-            break;
-        }
+    if (postDetail) {
+      const firstImg = Array.from(
+        new DOMParser()
+          .parseFromString(postDetail.content, 'text/html')
+          .querySelectorAll('img'),
+      ).map((img) => img.getAttribute('src'));
+      setUpdated({
+        title: postDetail.title,
+        content: postDetail.content,
       });
-  }, []);
+      wholeImg = wholeImg.concat(firstImg);
+    }
+  }, [isLoading]);
 
   const onUpdate = () => {
-    // 처음 이미지 url과 최종 제출 url 비교해서 삭제해야 할 이미지 url 찾기
     if (updated.title.trim().length === 0) {
-      // 공백 제목 검사
       message.info('제목을 적어주세요');
       return;
     }
@@ -74,26 +48,13 @@ function PostUpdate({ match, history }) {
     ).map((img) => img.getAttribute('src'));
 
     const needDelete = getUnused(wholeImg, afterEdit); // return : 삭제해야 할 이미지 url
-
-    dispatch(postUpdate(updated, needDelete, +match.params.id))
-      .then((response) => {
-        if (response.status === 200) {
-          message.success('게시글 수정 완료');
-          history.goBack();
-        }
+    postUpdate(updated, needDelete, +match.params.id)
+      .then(() => {
+        message.success('게시글 수정 완료');
+        history.goBack();
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            break;
-          default:
-            break;
-        }
+        errorMessage(error.response?.data.message);
       });
   };
   const onExit = () => {
@@ -101,12 +62,10 @@ function PostUpdate({ match, history }) {
     if (answer) {
       axios
         .post(`${PUBLIC_IP}/post/back`, { url: uploadedImg })
-        .then(history.goBack())
-        .catch(history.goBack());
+        .then(() => history.goBack())
+        .catch(() => history.goBack());
     }
   };
-
-  useEffect(() => { }, [updated]);
 
   return (
     <>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { message, Skeleton, Pagination } from 'antd';
-import { postList } from '../../_actions/post_action';
 import { Button, Table } from 'antd';
 import PostSearch from './PostSearch';
 import PostSub from './PostSub';
@@ -14,37 +12,18 @@ function PostList({ match, history }) {
   const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
-  const boardId = match.path.substring(1);
-
+  const { board, isLoading, isError } = useBoard(match.path);
   useEffect(() => {
-    dispatch(postList(match))
-      .then((response) => {
-        if (response.status === 200) {
-          const postKey = response.payload.map((post, key) => {
-            return { ...post, key: key + 1 };
-          });
-          setPosts(postKey.reverse());
-          setloading(true);
-        }
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            history.push('/');
-            break;
-          default:
-            break;
-        }
+    if (!isLoading) {
+      const postKey = board.map((post, key) => {
+        return { ...post, key: key + 1 };
       });
-  }, [match.path]);
+      setPosts(postKey.reverse());
+      setloading(true);
+    }
+  }, [match.path, isLoading]);
 
   useEffect(() => {
     const sliced = posts.slice(firstIndex, lastIndex);
@@ -53,12 +32,11 @@ function PostList({ match, history }) {
 
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
+  if (isLoading) return <>loading..</>;
   return (
     <>
-      {' '}
       <table className="community-main">
         <PostSub match={match} />
-        {''}
         <div className="community-box">
           <PostSearch setPosts={setPosts} match={match} />
           <TableBody

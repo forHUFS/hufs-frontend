@@ -27,9 +27,6 @@ function Header(props) {
       <Menu.Item>
         <Link to="/major">과별 공간</Link>
       </Menu.Item>
-      <Menu.Item>
-        <Link to="/document">서류 공간</Link>
-      </Menu.Item>
     </Menu>
   );
   const menu3 = (
