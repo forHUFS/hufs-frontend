@@ -1,7 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, withRouter,useLocation } from 'react-router-dom';
+import { Link, withRouter, useLocation } from 'react-router-dom';
 import {
   postDellike,
   postLike,
@@ -14,7 +13,7 @@ import CommentList from '../../../comment/CommentList';
 import { Card, PageHeader, Skeleton } from 'antd';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
-function ReviewView({ match, history}) {
+function ReviewView({ match, history }) {
   var location = useLocation();
   const [post, setPost] = useState();
   const dispatch = useDispatch();
@@ -73,91 +72,7 @@ function ReviewView({ match, history}) {
         });
     }
   };
-  // const onLike = () => {
-  //   dispatch(postLike(post.id))
-  //     .then((response) => {
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       switch (error.response?.status) {
-  //         case 401:
-  //           alert('로그인이 필요합니다.');
-  //           history.push('/');
-  //           break;
-  //         case 403:
-  //           alert('접근 권한이 없습니다');
-  //           break;
-  //         case 409:
-  //           alert('이미 좋아요한 게시글입니다.');
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     });
-  //   // 새로고침 필요한지
-  // };
-  // const onDellike = () => {
-  //   dispatch(postDellike(post.id))
-  //     .then((response) => {
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       switch (error.response.status) {
-  //         case 401:
-  //           alert('로그인이 필요합니다.');
-  //           history.push('/');
-  //           break;
-  //         case 403:
-  //           alert('접근 권한이 없습니다');
-  //           break;
-  //         case 409:
-  //           alert('좋아요한 기록이 없습니다.');
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     });
-  // };
-  // const onScrap = () => {
-  //   dispatch(postScrap(post.id))
-  //     .then((response) => {
-  //       alert('스크랩에 성공했습니다. 마이페이지에서 확인할 수 있습니다.');
-  //     })
-  //     .catch((error) => {
-  //       switch (error.response.status) {
-  //         case 401:
-  //           alert('로그인이 필요합니다.');
-  //           // history.push('/');
-  //           break;
-  //         case 403:
-  //           alert('접근 권한이 없습니다');
-  //           break;
-  //         case 409:
-  //           alert('이미 스크랩 한 게시글 입니다.');
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     });
-  // };
-  // function findBoardName(boardId) {
-  //   switch (boardId) {
-  //     case 1:
-  //       return '1 게시판';
-  //     case 2:
-  //       return '2 게시판';
-  //     case 3:
-  //       return '3 게시판';
-  //     case 4:
-  //       return '4 게시판';
-  //     case 5:
-  //       return '5 게시판';
-  //     case 6:
-  //       return '6 게시판';
-  //     default:
-  //       break;
-  //   }
-  // }
+
   return (
     <div className="community-mai">
       <div className="community-bo">
@@ -181,8 +96,8 @@ function ReviewView({ match, history}) {
           extra={post.id}
         >
           <div style={{ fontWeight: 'bold', fontSize: '22px' }}>
-                {post.score}
-              </div>
+            {post.score}
+          </div>
           <div
             dangerouslySetInnerHTML={{ __html: post.content }}
             style={{ display: 'inline-block', minHeight: '500px' }}

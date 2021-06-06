@@ -11,7 +11,7 @@ const ReviewEdit = loadable(() => import('../../components/map/reviewSection/new
 
 const ReviewPage = loadable(() => import('../ReviewPage/ReviewPage'));
 const ReviewUpdate = loadable(() => import('../../components/map/reviewSection/newReviewSection/ReviewUpdate'));
-const House = loadable(() => import('../../components/map/house/House'))
+
 function MapPage({ match }) {
 
   return (
@@ -20,7 +20,7 @@ function MapPage({ match }) {
       <Quick />
       <Switch>
         <Route exact path={`${match.path}`} component={MapContainer} />
-        <Route exact path={`${match.path}/house`} component={House} />
+
         <Route
           exact
           path={`${match.path}/info/:id/ReviewPage`}

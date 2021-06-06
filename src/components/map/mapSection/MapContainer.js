@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import KaKaoMap from './KakaoMap';
 import Card from './Card.js';
 import SearchBar from './SearchBar.js';
-import MapNavi from '../component/MapNavi';
+import MapNavi from '../MapNavi';
 import Rank from './Rank'
 import sdata from './mapData/sdata.json';
+
 import { Button } from 'antd';
 
 const MapContainer = ({ match }) => {
@@ -12,10 +13,10 @@ const MapContainer = ({ match }) => {
   const [lat, setLat] = useState(37.59732049638715); // default 서울캠
   const [lng, setLng] = useState(127.0588283395548);
   const [keyword, setKeyword] = useState('');
-  
-  const _ = require("lodash"); 
+
+  const _ = require("lodash");
   const [ranker, setRanker] = useState(sdata.data);
-  
+
 
   var check = true;
 
@@ -33,7 +34,9 @@ const MapContainer = ({ match }) => {
       return c.name.toLowerCase().indexOf(keyword) > -1;
     });
     return data?.map((d, index) => {
+
       return <Card id="aa" {...d} key={index} match={match} />
+
     }
     );
 
@@ -62,14 +65,15 @@ const MapContainer = ({ match }) => {
 
   }
 
-  
+
+
   function sortScoreByAsc() {
     const orderBy = _.orderBy(ranker, ['score'], ['desc']);
     setRanker(orderBy);
     console.log(ranker)
   }
-  
-   function sortReviewByAsc() {
+
+  function sortReviewByAsc() {
     const orderBy = _.orderBy(ranker, ['count'], ['desc']);
     setRanker(orderBy);
     console.log(ranker)
@@ -111,21 +115,21 @@ const MapContainer = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className="Map-bottom"> 
-      
-      <div className="Rank-list">
-      <h2>음식점 랭킹</h2>
-      <Button size = 'small' onClick={() => sortScoreByAsc()}>별점 높은 순</Button> &nbsp;&nbsp;&nbsp;
-      <Button size = 'small' onClick={() => sortReviewByAsc()}>리뷰 많은 순</Button>
-      {ranker?.map((d, index) => (
-        <Rank id="bb" {...d} key={index} index = {index} match={match}/>
-              ))} 
-      </div>
-      <div className="Last-review">
-      
-      </div>
+      <div className="Map-bottom">
 
-        
+        <div className="Rank-list">
+          <h2>음식점 랭킹</h2>
+          <Button size='small' onClick={() => sortScoreByAsc()}>별점 높은 순</Button> &nbsp;&nbsp;&nbsp;
+      <Button size='small' onClick={() => sortReviewByAsc()}>리뷰 많은 순</Button>
+          {ranker?.map((d, index) => (
+            <Rank id="bb" {...d} key={index} index={index} match={match} />
+          ))}
+        </div>
+        <div className="Last-review">
+
+        </div>
+
+
 
 
       </div>
