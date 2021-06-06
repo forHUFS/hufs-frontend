@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PUBLIC_IP } from '../../../config';
-import mapboo from '../../../image/boo/mapboo.png';
+import { PUBLIC_IP } from '../../config';
+import mapboo from '../../image/boo/mapboo.png';
 import { Button } from 'antd';
 import { withRouter } from 'react-router';
+import housemock from './mapSection/mapData/housemock.json'
 
 function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
     const [storeSeoul, setStoreSeoul] = useState();
@@ -39,7 +40,7 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
             <div className="Map-left">
                 <div className="content" >
 
-                    <div id="seoul" defaultSelectedKeys={['1']}>
+                    <div id="seoul" >
 
                         <div type="text" id="button-head" key="1">Seoul</div>
                         <Button type="text" onClick={(e) => {
@@ -49,7 +50,8 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                             setLng(127.0588283395548)
                         }}>맛집 공간</Button>
                         <Button type="text" onClick={() => {
-                            setHouseSeoul()
+                            setData(housemock)
+
                             setKeyword('')
                             setLat(37.59732049638715)
                             setLng(127.0588283395548)
@@ -58,7 +60,7 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
 
                     </div>
                     <hr className="line" />
-                    <div id="global" defaultSelectedKeys={['2']}>
+                    <div id="global" >
                         <div type="text" id="button-head" key="2">Global</div>
                         <Button type="text" onClick={(e) => {
                             setData(storeGlobal);
@@ -67,7 +69,7 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                             setLng(127.25253858610613);
                         }}>맛집 공간</Button>
                         <Button type="text" onClick={() => {
-                            setHouseGlobal()
+                            setData(housemock)
                             setKeyword('')
                             setLat(37.336538181222245);
                             setLng(127.25253858610613);

@@ -142,3 +142,52 @@
 .SearchInput {
   width: 100%;
 }
+.Map-bottom {
+  position: absolute;
+  width: 65%;
+  height: 39%;
+  top: 61%;
+  right: 21%;
+
+}
+.Map-bottom > .Rank-list {
+
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background-color:#ffffff;
+
+}
+
+.Map-bottom > .Last-review {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background-color:antiquewhite;
+  left: 50%;
+
+}
+
+.Rank-hr{
+  width:90%;
+  height: 1px;
+  border: 0px ;
+  background-color: #c8c8c8;
+  text-align: left;
+  margin-left: 0px;
+}
+
+.Rank-list img{
+  height: 10px;
+}
+
+.Card-h5 {
+  display: inline-block; 
+  width: 200px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: normal; 
+  line-height: 1.5;
+
+}

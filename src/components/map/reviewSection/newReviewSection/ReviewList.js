@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { message } from 'antd';
@@ -27,12 +27,12 @@ function ReviewList({ match, history }) {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]); // result
   const [detail, setDetail] = useState([]);
-  const [items,setItems] = useState([]); // item
-  
+  const [items, setItems] = useState([]); // item
 
-  const fetchMoreData = async() => {
+
+  const fetchMoreData = async () => {
     setLoading(true);
-    setPosts(posts.concat(items.slice(0,5)))
+    setPosts(posts.concat(items.slice(0, 5)))
     setItems(items.slice(5))
     setLoading(false)
   }
@@ -41,19 +41,19 @@ function ReviewList({ match, history }) {
     let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
     let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
     let clientHeight = document.documentElement.clientHeight;
-    scrollHeight-=200;
+    scrollHeight -= 200;
 
-    if (scrollTop + clientHeight >= scrollHeight && loading ===false){
+    if (scrollTop + clientHeight >= scrollHeight && loading === false) {
       fetchMoreData();
     }
-  },[loading]);
-  
+  }, [loading]);
+
   useEffect(() => {
     dispatch(postList(history.location.state.id))
       .then((response) => {
         if (response.status === 200) {
           let result = response.payload.reverse();
-          setPosts(result.slice(0,5))
+          setPosts(result.slice(0, 5))
           result = result.slice(5)
           //setPosts(response.payload.reverse());
           setItems(result)
@@ -82,12 +82,12 @@ function ReviewList({ match, history }) {
   // `getItems` 가 바뀔 때 마다 함수 실행
   useEffect(() => {
     window.addEventListener('scroll', infiniteScroll, true);
-    return() => window.removeEventListener('scroll',infiniteScroll,true)
+    return () => window.removeEventListener('scroll', infiniteScroll, true)
   }, [infiniteScroll])
 
 
   useEffect(() => {
-    
+
 
     dispatch(reviewDetail(history.location.state.id))
       .then((response) => {
@@ -160,15 +160,6 @@ function ReviewList({ match, history }) {
     }
   };
 
- 
-  /* 
-  useEffect(() => {
-    const sliced = posts.slice(firstIndex, lastIndex);
-    setCurrentList(sliced);
-  }, [posts, currentPage]);
-
-  const lastIndex = currentPage * listPerPage; // 10, 20, 30
-  const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21.. */
 
   const checkNull = (nickname) => {
     if (nickname == null) {
@@ -235,85 +226,85 @@ function ReviewList({ match, history }) {
 
         </div>
         <hr ></hr>
-<div>
-        <List
-          itemLayout="vertical"
-          size="small"
-          dataSource={posts}
-          renderItem={(item) =>
-            item ? (
-              <List.Item
+        <div>
+          <List
+            itemLayout="vertical"
+            size="small"
+            dataSource={posts}
+            renderItem={(item) =>
+              item ? (
+                <List.Item
 
-                actions={[
-                  <Button
-                    style={{
+                  actions={[
+                    <Button
+                      style={{
 
-                      left: '40px',
-                      borderColor: 'none',
-                      border: 'none',
-                      fontSize: '12px',
-                      boxShadow: 'none',
-                      fontWeight: 'bold',
-                      color: 'navy'
-                    }}
+                        left: '40px',
+                        borderColor: 'none',
+                        border: 'none',
+                        fontSize: '12px',
+                        boxShadow: 'none',
+                        fontWeight: 'bold',
+                        color: 'navy'
+                      }}
 
-                    onClick={(e) => {
-                      history.push({
-                        pathname: '/3/edit',
-                        state: {
-                          name: item.name,
+                      onClick={(e) => {
+                        history.push({
+                          pathname: '/3/edit',
+                          state: {
+                            name: item.name,
 
-                          id: item.id
-                        },
-                      })
-                    }}>
-                    수정</Button>,
-                  <Button
-                    style={{
-                      left: '10px',
-                      borderColor: 'none',
-                      border: 'none',
-                      fontSize: '12px',
-                      boxShadow: 'none',
-                      fontWeight: 'bold',
-                      color: 'navy'
-                    }}
-                    onClick={() => { onDelete(item.id) }}>삭제 </Button>]}
+                            id: item.id
+                          },
+                        })
+                      }}>
+                      수정</Button>,
+                    <Button
+                      style={{
+                        left: '10px',
+                        borderColor: 'none',
+                        border: 'none',
+                        fontSize: '12px',
+                        boxShadow: 'none',
+                        fontWeight: 'bold',
+                        color: 'navy'
+                      }}
+                      onClick={() => { onDelete(item.id) }}>삭제 </Button>]}
 
-                key={item.title}
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={checkNull(item.User)}
-                  description={
-                    <div>
+                  key={item.title}
+                >
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.avatar} />}
+                    title={checkNull(item.User)}
+                    description={
                       <div>
                         <div>
-                          <p>
-                            {item.createdAt
-                              ? item.createdAt.slice(0, 10)
-                              : 'none'}
-                          </p>
+                          <div>
+                            <p>
+                              {item.createdAt
+                                ? item.createdAt.slice(0, 10)
+                                : 'none'}
+                            </p>
+                          </div>
+                          <Rate disabled allowHalf value={item.score} />{' '}
+                          {item.score}
                         </div>
-                        <Rate disabled allowHalf value={item.score} />{' '}
-                        {item.score}
                       </div>
-                    </div>
-                  }
-                />
-                <div style={{ marginLeft: '50px' }}>
-                  <strong>{item.title}</strong>
-                </div>
-                <div
-                  style={{ marginLeft: '50px', marginTop: '20px' }}
-                  dangerouslySetInnerHTML={{ __html: item.content }}
-                ></div>
-              </List.Item>
-            ) : (
-              'none'
-            )
-          }
-        />
+                    }
+                  />
+                  <div style={{ marginLeft: '50px' }}>
+                    <strong>{item.title}</strong>
+                  </div>
+                  <div
+                    style={{ marginLeft: '50px', marginTop: '20px' }}
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                  ></div>
+                </List.Item>
+              ) : (
+                'none'
+              )
+            }
+          />
         </div>
         {/* ,
       {' '}

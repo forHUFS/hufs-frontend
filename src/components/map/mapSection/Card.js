@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { Card, Button, Typography, Col, Row, Modal, List, Avatar } from 'antd';
 import { useHistory, withRouter, useLocation } from 'react-router-dom';
-import './Card.css';
 import icon_rstrn from './mapData/icon_rstrn.png';
 import numIcon from './mapData/icon1.png';
 import roadIcon from './mapData/icon2.png';
@@ -11,45 +9,36 @@ import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
 import { reviewDetail } from '../../../_actions/reviewPost_action';
 
-import axios from 'axios';
-import { PUBLIC_IP } from '../../../config';
-
-
 const { kakao } = window;
 const { Text, Title } = Typography;
+
 
 const Rstrn = ({
   id,
   name,
   numAddress,
   StoreSubCategory,
+  HouseCategory,
   roadAddress,
   lat,
   long,
   match,
 }) => {
-  //const history = useHistory();
+  // 백엔드 에서 데이터 받을떄 StoreSubCategory 말고 HouseCategory ? 로 받자
 
-  //const [markerPositions, setMarkerPositions] = useState();
-  //const { map } = useSelector((state) => ({ map: state.map }), []);
   const dispatch = useDispatch();
   const [state, setstate] = useState();
   const history = useHistory();
   const location = useLocation();
   const [marker, setMarkers] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   const [detail, setDetail] = useState([]);
+
 
   const getMarker = async () => {
     dispatch(reviewDetail(id))
       .then((response) => {
-        // if (response.status === 200) {
-        //   setDetail({
-        //     average: response.payload.average,
-        //     count: response.payload.count,
-        //   });
-        // }
+
         if (response.payload.average === null) {
           displayMarker(parseFloat(0).toFixed(1), response.payload.count);
         }
@@ -100,23 +89,23 @@ const Rstrn = ({
   //   }, [])
 
 
-  const data = [
-    {
-      title: '카테고리',
-      description: StoreSubCategory.name,
-      img: cateIcon2,
-    },
-    {
-      title: '지번주소',
-      description: numAddress,
-      img: numIcon,
-    },
-    {
-      title: '도로명주소',
-      description: roadAddress,
-      img: roadIcon,
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: '카테고리',
+  //     description: StoreSubCategory.name,
+  //     img: cateIcon2,
+  //   },
+  //   {
+  //     title: '지번주소',
+  //     description: numAddress,
+  //     img: numIcon,
+  //   },
+  //   {
+  //     title: '도로명주소',
+  //     description: roadAddress,
+  //     img: roadIcon,
+  //   },
+  // ];
 
   //const {map} = useSelector(state => state.map,[]);
 
@@ -228,9 +217,9 @@ const Rstrn = ({
     var content9 = document.createElement('div');
     var content10 = document.createElement('button');
     content10.className = 'link';
-    content10.appendChild(document.createTextNode('상세 보기'));
+    content10.appendChild(document.createTextNode('리뷰 보기'));
     content10.onclick = function () {
-      setIsModalVisible(true);
+      goReview();
     };
     var content12 = document.createElement('img');
     content12.src = star;
@@ -354,68 +343,60 @@ const Rstrn = ({
     height: '80px',
     width: '100px',
   };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const goReview = (e) => {
+    // map/info -> map/info/:name 24시해장국
+    history.push({
+      // map/info/:name/24시해장국/reviewpage   
+      pathname: `${match.path}/info/${id}/ReviewPage`,
+      state: {
+        id: id,
+        name: name,
+      },
+    });
+  }
+  const houseReview = () => {
+    history.push({
+      pathname: `${match.path}/info/${id}/ReviewPage`
+    })
+  }
+
+  const houseTrade = () => {
+    history.push({
+      pathname: `${match.path}/info/${id}/TradePage`
+    })
+  }
 
   return (
-    /* jshint ignore:start */
+
     <div>
       <div>
-        {
-          <Card size="small" style={{ width: 300, height: 40 }}>
-            <Title level={5}>{name}</Title>
-            <h5>{roadAddress}</h5>
-            <Button type="primary" onClick={getMarker}>
-              위치 확인
+        {StoreSubCategory !== undefined ?
+          (
+            <Card size="small" style={{ width: 300 }}>
+              <Title level={5}>{name}</Title>
+              <h6>{StoreSubCategory?.name}</h6>
+              <h5 className="Card-h5">{roadAddress}</h5>
+              <Button size="small" onClick={getMarker}>
+                위치 확인
             </Button>
-          </Card>
+            </Card>
+          )
+          :
+          (
+            <Card size="small" style={{ width: 300 }}>
+              <Title level={5}>{name}</Title>
+              <h5 className="Card-h5">{roadAddress}</h5>
+              <Button size="small" onClick={houseReview}>
+                리뷰 공간
+            </Button>
+              <Button size="small" onClick={houseTrade}>
+                거래 공간
+            </Button>
+            </Card>
+          )
         }
       </div>
-      <div id="map" style={style}></div>
-      <Modal
-        title={<Title level={3}>{name}</Title>}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size={83} src={item.img} />}
-                title={item.title}
-                description={item.description}
-              />
-            </List.Item>
-          )}
-        />
-        <div>
-          <Button
-            style={{ width: '30%' }}
-            onClick={(e) => {
-              // map/info -> map/info/:name 24시해장국
-              history.push({
-                // map/info/:name/24시해장국/reviewpage
-                pathname: `${match.path}/info/${id}/ReviewPage`,
-                state: {
-                  id: id,
-                  name: name,
-                },
-              });
-            }}
-          >
-            리뷰 보러가기
-          </Button>
-          {/*<ItemListContainer/>*/}
-        </div>
-      </Modal>
     </div>
 
     /* jshint ignore:end */

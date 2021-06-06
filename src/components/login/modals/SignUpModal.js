@@ -89,15 +89,6 @@ const SignUpModal = (props) => {
       return '@hufs.ac.kr 앞 부분까지만 입력해주세요'
     }
   }
-/* 
-  const isWebMail = (props) => {
-    var emailInfo = (submit.email).split('@');
-    if (emailInfo[1] === 'hufs.ac.kr') {
-      return emailInfo[0]
-    } else {
-      return ''
-    }
-  } */
 
   const layout = {
     labelcol: { span: 8 },
@@ -113,18 +104,10 @@ const SignUpModal = (props) => {
       <Header />
       <div
         className="ant-modal-body-revise"
-        style={{
-          display: 'inline-block',
-          position: 'relative',
-          width: '1100px',
-          left: '10%'
-
-        }}
       >
         <Form
           id="basic"
           initialValues={{ remember: true }}
-
         >
           <Form.Item
             label="닉네임"
@@ -162,12 +145,15 @@ const SignUpModal = (props) => {
             rules={[{ required: true, message: '' }]}
           >
             <Select
+              showSearch
               style={{ width: '100%' }}
               onChange={(event) =>
-
                 setSubmit({ ...submit, mainMajorId: +event })
               }
               placeholder='주전공을 선택하세요. 없으면 "미정"을 눌러주세요'
+              optionFilterProp="children"
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+              filterSort = {(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
             >
               {major ? (
                 major.map((major) => {
@@ -189,11 +175,15 @@ const SignUpModal = (props) => {
             rules={[{ required: true, message: '' }]}
           >
             <Select
+              showSearch
               style={{ width: '100%' }}
               onChange={(event) => {
                 setSubmit({ ...submit, doubleMajorId: +event });
               }}
               placeholder='이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요'
+              optionFilterProp="children"
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+              filterSort = {(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
             >
               {doubleMajor ? (
                 doubleMajor.map((major) => {

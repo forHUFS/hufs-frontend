@@ -1,0 +1,103 @@
+{
+    
+    "data": [
+      {
+        "id": 1,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "효준 빌",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+          "name": "멘션"
+        },
+        "score": 3.5,
+        "count": 11
+      },
+      {
+        "id": 2,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "한솔 고시텔",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+            "name": "고시원"
+          },
+        "score": 4.5,
+        "count": 1
+    },
+    {
+        "id": 3,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "가영 빌",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+            "name": "투룸"
+          },
+        "score": 2.1,
+        "count": 3
+      }
+      ,
+      {
+        "id": 4,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "태훈 홀",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+            "name": "원룸"
+          },
+        "score": 1.9,
+        "count": 33
+      },
+      {
+        "id": 5,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "남주 하우스",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+            "name": "아파트"
+          },
+        "score": 3.5,
+        "count": 12
+      },
+      {
+        "id": 6,
+        "long": 127.0612756,
+        "lat": 37.59585367,
+        "name": "수로 밭",
+        "tel": "209656790",
+        "numAddress": "서울특별시 동대문구 이문동 305-59번지 ",
+        "roadAddress": "서울특별시 동대문구 휘경로 12 (이문동)",
+        "campus": 1,
+        
+        "HouseCategory": {
+            "name": "밭"
+          },
+        "score": 4.1,
+        "count": 13
+      }
+    ]
+    
+  }
