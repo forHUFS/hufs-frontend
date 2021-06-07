@@ -5,6 +5,7 @@ import SearchBar from './SearchBar.js';
 import MapNavi from '../MapNavi';
 import Rank from './Rank'
 import sdata from './mapData/sdata.json';
+
 import { Button } from 'antd';
 
 const MapContainer = ({ match }) => {
@@ -33,7 +34,9 @@ const MapContainer = ({ match }) => {
       return c.name.toLowerCase().indexOf(keyword) > -1;
     });
     return data?.map((d, index) => {
+
       return <Card id="aa" {...d} key={index} match={match} />
+
     }
     );
 

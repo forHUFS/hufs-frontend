@@ -5,28 +5,23 @@ import { message } from 'antd';
 import {
   postList,
   postRemove,
-  reviewDetail,
 } from '../../../../_actions/reviewPost_action';
 import {
   Button,
-  Table,
   List,
   Avatar,
-  Space,
   Rate,
   Layout,
 } from 'antd';
-import { StarFilled } from '@ant-design/icons';
+import ReviewHead from './ReviewHead'
 
 
 
 const { Content } = Layout;
-const { Column } = Table;
 function ReviewList({ match, history }) {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]); // result
-  const [detail, setDetail] = useState([]);
   const [items, setItems] = useState([]); // item
 
 
@@ -86,48 +81,6 @@ function ReviewList({ match, history }) {
   }, [infiniteScroll])
 
 
-  useEffect(() => {
-
-
-    dispatch(reviewDetail(history.location.state.id))
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.payload.average === null) {
-            setDetail({
-              average: parseFloat(0).toFixed(1),
-              count: response.payload.count,
-
-            })
-          }
-          else {
-
-
-            setDetail({
-              average: response.payload.average,
-              count: response.payload.count,
-            });
-          }
-        }
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-
-            //
-            break;
-          case 403:
-
-            message.error('접근 권한 오류');
-            history.push('/');
-            break;
-          default:
-            break;
-        }
-      });
-  }, [match.path]);
-
   const onDelete = (postId) => {
     const answer = window.confirm('게시글을 삭제하시겠습니까?');
 
@@ -180,52 +133,8 @@ function ReviewList({ match, history }) {
         width: '1000px',
         margin: '0 15%'
       }}>
-        <h1>맛집 리뷰</h1>
-        <div >
+        <ReviewHead />
 
-          <div
-          // style={{ paddingTop: '10px' }}
-          >
-            <StarFilled
-              style={{ color: '#fadb14', fontSize: '20px', float: 'left' }}
-            />{' '}
-            <h2 style={{ float: 'left' }}>{detail.average} </h2>
-          </div>
-          <div style={{ paddingtBottom: '10px' }}>
-            <font color="gray" size="5" style={{ paddingLeft: '5px' }}>
-              ({detail.count})
-            </font>
-          </div>
-        </div>
-
-        <div aling="left" style={{
-          padding: '10px'
-        }}>
-          <Button
-            style={{ border: '1px solid navy' }}
-
-            onClick={(e) => {
-              history.push({
-                pathname: '/3/register',
-                state: {
-                  detail: match.path,
-                  name: history.location.state.name,
-
-                  id: history.location.state.id
-                },
-              }
-
-              )
-
-
-            }
-            }
-          >
-            리뷰 작성하기</Button>
-
-
-        </div>
-        <hr ></hr>
         <div>
           <List
             itemLayout="vertical"
@@ -306,56 +215,7 @@ function ReviewList({ match, history }) {
             }
           />
         </div>
-        {/* ,
-      {' '}
-      <table className="community-main">
-        <div className="community-box">
-          <Button
-            onClick={(e) =>{
-              history.push({
-                pathname: '/3/register',
-                state: { detail: match.path,
-                    name : history.location.state.name,
-                  id : history.location.state.id },
-                  }   
-                        
-                  )
 
-            //   history.push({
-            //     pathname: "map/register",
-            //     state: { detail: match.path,
-            //     name : history.location.state.name,
-            //   id : history.location.state.id },
-            //   }
-            // )
-          }
-            }
-          >
-            글 작성
-          </Button>
-          <TableBody
-            currentList={posts.slice(firstIndex, lastIndex)}
-            match={match}
-            loading={loading}
-          />
-          <div className="bottom">
-            <ReactPaginate
-              pageCount={Math.ceil(posts.length / 10)}
-              pageRangeDisplayed={5}
-              marginPagesDisplayed={0}
-              breakLabel={''}
-              previousLabel={'이전'}
-              nextLabel={'다음'}
-              onPageChange={(event) => setCurrentPage(event.selected + 1)}
-              containerClassName={'pagination-ul'}
-              activeClassName={'currentPage'}
-              previousClassName={'pageLabel-btn'}
-              nextClassName={'pageLabel-btn'}
-            />
-          </div>
-        </div>
-      </table>
-          */}
       </Content>
     </>
   );

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { message, Select, Input } from 'antd';
-import { useDispatch } from 'react-redux';
 import useInput from '../../hooks/useInput';
-import { postSearch } from '../../_actions/post_action';
 import { useHistory, withRouter } from 'react-router';
+import { postSearch } from '../../functions/postFunctions';
 const { Option } = Select;
 const { Search } = Input;
 function PostSearch({ setPosts, match }) {
-  const dispatch = useDispatch();
   const [keyword, setKeyword] = useInput('');
   const [searchType, setSearchType] = useState('titleAndContent');
   const history = useHistory();
@@ -20,17 +18,13 @@ function PostSearch({ setPosts, match }) {
       option: searchType,
       board: match.path.substring(1),
     };
-    dispatch(postSearch(body))
+    postSearch(body)
       .then((response) => {
-        if (response.status === 200) {
-          // setPosts(response.payload.reverse());
-
-          history.push({
-            pathname: `/search`,
-            state: { detail: response.payload.reverse() },
-            BoardId: match.path.substring(1),
-          });
-        }
+        history.push({
+          pathname: `/search`,
+          state: { detail: response.payload.reverse() },
+          BoardId: match.path.substring(1),
+        });
       })
       .catch((error) => {
         switch (error.response?.status) {

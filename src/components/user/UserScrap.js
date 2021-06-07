@@ -1,47 +1,23 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { PUBLIC_IP } from '../../config';
-import { deleteScrap } from '../../_actions/post_action';
 import { Button, message, Popconfirm, Table } from 'antd';
 
 import { Link } from 'react-router-dom';
+import useScrap from '../../hooks/useScrap';
+import { mutate } from 'swr';
+import { deleteScrap } from '../../functions/postFunctions';
 function UserScrap() {
   const { Column } = Table;
+  const { scrapData, isLoading, isError } = useScrap();
 
-  const dispatch = useDispatch();
-  // const { scraps } = useSelector((state) => state.user);
-  const [scraps, setScraps] = useState([]);
-  useEffect(async () => {
-    const request = await axios
-      .get(`${PUBLIC_IP}/user/scrap`, {
-        params: { directoryId: 1 },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setScraps(response.data.data); // [스크랩 id, 포스트 Post.id, 포스트 Post.title]
-        }
-      })
-      .catch((error) => { });
-    // }
-  }, []);
   const onRemove = (recordId) => {
-    dispatch(deleteScrap(recordId))
-      .then(async (response) => {
-        await axios
-          .get(`${PUBLIC_IP}/user/scrap`, {
-            params: { directoryId: 1 },
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              setScraps(response.data.data); // [스크랩 id, 포스트 Post.id, 포스트 Post.title]
-            }
-          });
+    deleteScrap(recordId)
+      .then(() => {
+        mutate(`${PUBLIC_IP}/user/scrap`);
         message.success('스크랩 삭제');
       })
       .catch((error) => {
-        switch (error?.response.message) {
+        switch (error.response?.data.message) {
           case 'UNAUTHORIZED':
             message.error('로그인하지 않은 사용자');
           case 'FORBIDDEN_SUSPENSION':
@@ -55,10 +31,10 @@ function UserScrap() {
         }
       });
   };
-
+  if (isLoading) return <>loading..</>;
   return (
     <div>
-      <Table pagination={true} dataSource={scraps}>
+      <Table pagination={true} dataSource={scrapData}>
         <Column
           title="카테고리"
           dataIndex="id"
@@ -72,9 +48,6 @@ function UserScrap() {
           key="content"
           render={(text, record) => (
             <Link to={`1/${record?.Post?.id}`}>
-              {/* {record.Post?.title.length > 30
-                ? record.Post?.title.slice(0, 29)
-                : record.Post.title} */}
               {record.Post ? (
                 record.Post?.title.slice(0, 25)
               ) : (
@@ -87,20 +60,21 @@ function UserScrap() {
           title="삭제하기"
           key="content"
           render={(text, record) => (
-
             <Popconfirm
-
               title="스크랩을 삭제하시겠습니까?"
               onConfirm={(e) => onRemove(record.id)}
               okText="Yes"
               cancelText="No"
               value={record.id}
             >
-              <Button style={{ marginRight: '33%' }} type="link" value={record.id}>
+              <Button
+                style={{ marginRight: '33%' }}
+                type="link"
+                value={record.id}
+              >
                 삭제하기
               </Button>
             </Popconfirm>
-
           )}
         />
       </Table>

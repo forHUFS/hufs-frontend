@@ -21,6 +21,7 @@ function SignInModal({ setLogin }) {
         onCancel={() => setModalVisible(false)}
       >
         <GoogleSignIn setLogin={setLogin} setModalVisible={(modalState) => setModalVisible(modalState)} />
+        <KakaoSignIn setLogin={setLogin} setModalVisible={(modalState) => setModalVisible(modalState)} />
       </Modal>
     </>
   );

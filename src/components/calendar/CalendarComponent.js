@@ -1,4 +1,5 @@
 import { Badge, Calendar } from 'antd';
+import moment from 'moment';
 import React from 'react';
 function CalendarComponent({ setDataList, scholar }) {
   function getListData(value) {
@@ -67,3 +68,11 @@ function CalendarComponent({ setDataList, scholar }) {
 }
 
 export default CalendarComponent;
+export function dDayCheck(date) {
+  const today = moment();
+  const dDay =
+    today.diff(date, 'days') > 0
+      ? `+ ${today.diff(date, 'days')}`
+      : `- ${-today.diff(date, 'days')}`;
+  return dDay === `- 0` ? '- Day!' : dDay;
+}

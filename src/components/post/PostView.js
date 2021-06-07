@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { postView } from '../../_actions/post_action';
 import CommentEdit from '../comment/CommentEdit';
 import CommentList from '../comment/CommentList';
 import ReportModal from './ReportModal';
@@ -11,11 +10,11 @@ import like from '../../image/recommend.png';
 import usePostDetail from '../../hooks/usePostDetail';
 import { postDelete, postLike, postScrap } from '../../functions/postFunctions';
 import { errorMessage } from '../../functions/errorHandling';
+import { mutate } from 'swr';
+import { PUBLIC_IP } from '../../config';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 function PostView({ match, history }) {
-  const [post, setPost] = useState();
-  const dispatch = useDispatch();
   const postId = +match.params.id;
   const { postDetail, isLoading, isError } = usePostDetail(postId);
 
@@ -29,13 +28,10 @@ function PostView({ match, history }) {
         errorMessage(error.response.data.message);
       });
   const onLike = () => {
-    //mutation 필요
     postLike(postDetail.id)
-      .then(async () => {
-        await postView(+match.params.id).then((response) => {
-          message.success('성공');
-          setPost(response.payload);
-        });
+      .then(() => {
+        mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
+        message.success('성공');
       })
       .catch((error) => {
         errorMessage(error.response.data.message);
@@ -130,12 +126,11 @@ function PostView({ match, history }) {
             <hr />
           </div>
           <CommentList
-            setPost={setPost}
             history={history}
             comments={postDetail.Replies ? postDetail.Replies : []}
             match={match}
           />
-          <CommentEdit setPost={setPost} history={history} match={match} />
+          <CommentEdit history={history} match={match} />
         </Card>
       </div>
     </div>
