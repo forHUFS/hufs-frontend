@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, Button, Typography, Col, Row, Modal, List, Avatar } from 'antd';
+import { Card, Button, Typography } from 'antd';
 import { useHistory, withRouter, useLocation } from 'react-router-dom';
 import icon_rstrn from './mapData/icon_rstrn.png';
-import numIcon from './mapData/icon1.png';
-import roadIcon from './mapData/icon2.png';
-import cateIcon2 from './mapData/icon4.png';
 import star from './mapData/star.png';
 import { reviewDetail } from '../../../_actions/reviewPost_action';
 const { kakao } = window;
@@ -28,10 +25,7 @@ const Rstrn = ({
   const dispatch = useDispatch();
   const [state, setstate] = useState();
   const history = useHistory();
-  const location = useLocation();
-  const [marker, setMarkers] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [detail, setDetail] = useState([]);
+
 
 
   const getMarker = async () => {
@@ -59,58 +53,7 @@ const Rstrn = ({
         }
       }));
   };
-  // useEffect(() => {
-  //   displayMarker();
-  // }, [detail]);
-  //   useEffect(()=>{
-  //     dispatch(reviewDetail(id))
-  // .then((response) => {
-  //   if (response.status === 200) {
-  //     setDetail({average : response.payload.average,
-  //       count : response.payload.count
 
-  //     })
-  //   }
-  // })
-  // .catch((error) => {
-  //   switch (error.response?.status) {
-  //     case 401:
-  //       history.push('/');
-  //       break;
-  //     case 403:
-  //       history.push('/');
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // });
-
-  //   }, [])
-
-
-  // const data = [
-  //   {
-  //     title: '카테고리',
-  //     description: StoreSubCategory.name,
-  //     img: cateIcon2,
-  //   },
-  //   {
-  //     title: '지번주소',
-  //     description: numAddress,
-  //     img: numIcon,
-  //   },
-  //   {
-  //     title: '도로명주소',
-  //     description: roadAddress,
-  //     img: roadIcon,
-  //   },
-  // ];
-
-  //const {map} = useSelector(state => state.map,[]);
-
-  //const infor = [image, title, author];
-  //let history = useHistory();
-  // 변수 초기값
 
   var map = state;
   var markers = [];
@@ -142,29 +85,7 @@ const Rstrn = ({
       yAnchor: 1,
     });
 
-    /*
-    var content = '<div class="wrap">' +// 
-            '    <div class="info">' + //
-            '        <div class="title">' + //
-            `            ${name}`+//
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-            '        </div>' + //
-            '        <div class="body">' + 
-            '            <div class="img">' +
-            '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-            '           </div>' + //
-            '            <div class="desc">' + //
-            '                <div class="ellipsis">'+`${numAddress}`+
-            '</div>' + //
-            '                <div class="jibun ellipsis">'+`${roadAddress}`+
-            '</div>' + //
-            '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
-            '           </div>' + 
-            '        </div>' + 
-            '    </div>' +    
-            '</div>';
-            
-           */
+
 
     var content = document.createElement('div');
     content.className = 'wrap'; //
@@ -251,63 +172,7 @@ const Rstrn = ({
 
     customOverlay1.setContent(content);
 
-    /*
 
-    var content = document.createElement("div");
-    content.className = "overlaybox";
-    var content1 = document.createElement("h1");
-    content1.appendChild(document.createTextNode(name));
-    content.appendChild(content1);
-
-    var buttonContainer = document.createElement("div");
-    buttonContainer.className = "popup-buttons";
-
-    var closeBtn = document.createElement("button");
-    closeBtn.className = "popup-button";
-    closeBtn.appendChild(document.createTextNode("취소"));
-    closeBtn.onclick = function () {
-      customOverlay1.setMap(null);
-    };
-    React.createElement('div', null,  'hello world')
-    var selectBtn = document.createElement("button");
-
-    var temp_link = document.createElement("a");
-    temp_link.className = "popup-button";
-    temp_link.target='_blank';
-    temp_link.appendChild(document.createTextNode("이동"));
-    selectBtn.appendChild(temp_link);
-    selectBtn.onclick = function () {
-      history.push( {
-        pathname: `${match.path}/info/${name}/${id}`,
-        state: {   
-          id: id,
-          name : name,
-        numAddress : numAddress,
-        roadAddress : roadAddress,
-        }
-        
-    }
-      );
-    // history.pushState(query, '', `${match.path}/info/${name}`);  
-      
-    };
-    buttonContainer.appendChild(closeBtn);
-    buttonContainer.appendChild(selectBtn);
-
-    content.appendChild(buttonContainer);
-    
-   /*
-    function closeOverlay() {
-      history.push( {
-        pathname: `${match.path}/info/${name}/${id}`,
-        state: {   
-          id: id,
-          name : name,
-        numAddress : numAddress,
-        roadAddress : roadAddress,
-        }
-      });
-    }*/
 
     // 마커 이미지의 이미지 크기 입니다
     //var imageSize = new kakao.maps.Size(30, 35);
@@ -351,16 +216,15 @@ const Rstrn = ({
       },
     });
   }
-
   const houseReview = () => {
     history.push({
-      pathname: `${match.path}/house/review/${id}/ReviewPage`
+      pathname: `${match.path}/house/${id}/ReviewPage`
     })
   }
 
   const houseTrade = () => {
     history.push({
-      pathname: `${match.path}/house/trade/${id}/TradePage`
+      pathname: `${match.path}/house/${id}/TradePage`
     })
   }
 

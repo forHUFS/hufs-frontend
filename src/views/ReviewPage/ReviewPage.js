@@ -4,9 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 const ReviewEdit = loadable(() =>
   import('../../components/map/reviewSection/newReviewSection/ReviewEdit'),
 );
-// const ReviewView = loadable(() =>
-//   import('../../components/map/reviewSection/newReviewSection/ReviewView'),
-// );
+
 const ReviewList = loadable(() =>
   import('../../components/map/reviewSection/newReviewSection/ReviewList'),
 );
