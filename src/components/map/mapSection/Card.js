@@ -209,7 +209,7 @@ const Rstrn = ({
     // map/info -> map/info/:name 24시해장국
     history.push({
       // map/info/:name/24시해장국/reviewpage   
-      pathname: `${match.path}/info/${id}/ReviewPage`,
+      pathname: `${match.path}/store/review/${id}/ReviewPage`,
       state: {
         id: id,
         name: name,
@@ -218,13 +218,13 @@ const Rstrn = ({
   }
   const houseReview = () => {
     history.push({
-      pathname: `${match.path}/house/${id}/ReviewPage`
+      pathname: `${match.path}/house/review/${id}/ReviewPage`
     })
   }
 
   const houseTrade = () => {
     history.push({
-      pathname: `${match.path}/house/${id}/TradePage`
+      pathname: `${match.path}/house/trade/${id}/TradePage`
     })
   }
 

@@ -15,6 +15,17 @@ function ReviewHead({ match, history }) {
     const [detail, setDetail] = useState([]);
 
 
+    const reviewName = (log) => {
+        switch (log) {
+            case 'store/review':
+                return '맛집 리뷰';
+            case 'house/review':
+                return '자취방 후기'
+            case 'house/trade':
+                return '자취방 거래'
+
+        }
+    }
     useEffect(() => {
         dispatch(reviewDetail(history.location.state.id))
             .then((response) => {
@@ -55,11 +66,9 @@ function ReviewHead({ match, history }) {
             });
     }, [match.path]);
 
-
-
     return (
         <>
-            <h1>맛집 리뷰</h1>
+            <h1>{reviewName(match?.url.substring(3, 15))}</h1>
             <div >
 
                 <div>
