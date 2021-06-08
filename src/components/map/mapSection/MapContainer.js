@@ -66,7 +66,6 @@ const MapContainer = ({ match }) => {
   }
 
 
-
   function sortScoreByAsc() {
     const orderBy = _.orderBy(ranker, ['score'], ['desc']);
     setRanker(orderBy);

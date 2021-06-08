@@ -4,9 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 const ReviewEdit = loadable(() =>
   import('../../components/map/reviewSection/newReviewSection/ReviewEdit'),
 );
-const ReviewView = loadable(() =>
-  import('../../components/map/reviewSection/newReviewSection/ReviewView'),
-);
+
 const ReviewList = loadable(() =>
   import('../../components/map/reviewSection/newReviewSection/ReviewList'),
 );
@@ -18,7 +16,7 @@ function ReviewPage(props) {
     <>
       <Switch>
         {/* <Route path="/register" component={ReviewEdit} /> */}
-        <Route exact path={`${props.match.url}/:id`} component={ReviewView} />
+        {/* <Route exact path={`${props.match.url}/:id`} component={ReviewView} /> */}
 
         <Route exact path={props.match.url} component={ReviewList} />
         {/* <Route exact path={`${props.match.url}/:id/update`} component={ReviewUpdate} /> */}
