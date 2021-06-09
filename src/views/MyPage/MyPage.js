@@ -13,7 +13,7 @@ import styles from '../../css/MyPage.module.css';
 import useUserInfo from '../../hooks/useUserInfo';
 function MyPage(props) {
   const { Header, Content, Footer } = Layout;
-  const [userInfo, setUserInfo] = useState({});
+  const { user, isError, isLoading } = useUserInfo();
 
   const [click, setClick] = useState('1');
 
@@ -27,9 +27,9 @@ function MyPage(props) {
       case '2':
         return <UserScrap />;
       case '3':
-        return <UserPost match={props.match} />;
+        return <UserPost posts={user.Posts} />;
       case '4':
-        return <UserComment />;
+        return <UserComment replies={user.Replies} />;
       case '5':
         return <UserWithdraw />;
       default:
@@ -43,7 +43,7 @@ function MyPage(props) {
       <div className={styles.main}>
         <div className={styles.communitymain}>
           <Layout className={styles.layout}>
-            <UserInfo userInfo={userInfo} />
+            <UserInfo user={user} isLoading={isLoading} />
             <Header>
               <Menu
                 theme="dark"
