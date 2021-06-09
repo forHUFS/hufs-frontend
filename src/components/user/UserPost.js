@@ -1,14 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Table } from 'antd';
-function UserPost({ match }) {
+function UserPost({ posts }) {
   const { Column } = Table;
-  const { Posts } = useSelector((state) => state.user);
 
   return (
     <div>
-      <Table pagination={true} dataSource={Posts}>
+      <Table pagination={true} dataSource={posts}>
         <Column
           title="카테고리"
           dataIndex="id"

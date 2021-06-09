@@ -14,7 +14,8 @@ function UserInfo(props) {
   const [doubleMajorList, setDoubleMajorList] = useState([]);
   const [change, setChange] = useState({});
   const [webMailInput, setWebMailInput] = useState('');
-  const { user, isError, isLoading } = useUserInfo();
+  let user = props.user;
+  let isLoading = props.isLoading;
   useEffect(async () => {
     await axios
       .all([
@@ -124,9 +125,6 @@ function UserInfo(props) {
         }
       });
   };
-  useEffect(() => {
-    console.log(change);
-  }, [change]);
   if (isLoading) return <>loading..</>;
   return (
     <div>
