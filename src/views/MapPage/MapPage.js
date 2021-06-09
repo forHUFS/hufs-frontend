@@ -26,6 +26,16 @@ function MapPage({ match }) {
           path={`${match.path}/store/review/:id/ReviewPage`}
           component={ReviewPage}
         />
+        <Route
+          exact
+          path={`${match.path}/house/review/:id/ReviewPage`}
+          component={ReviewPage}
+        />
+        <Route
+          exact
+          path={`${match.path}/house/tradee/:id/ReviewPage`}
+          component={ReviewPage}
+        />
         <Route path={`${match.path}/register`} component={ReviewEdit} />
         <Route exact path={`${match.path}/edit`} component={ReviewUpdate} />
 

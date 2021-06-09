@@ -33,7 +33,7 @@ function Header(props) {
     <Menu>
       <Menu.Item>
         <Link to="/3">맛집 공간</Link>
-        <Link to="/3">주거 공간</Link>
+        {/* <Link to="/3">주거 공간</Link> */}
       </Menu.Item>
     </Menu>
   );

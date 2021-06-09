@@ -49,14 +49,14 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                             setLat(37.59732049638715);
                             setLng(127.0588283395548)
                         }}>맛집 공간</Button>
-                        <Button type="text" onClick={() => {
+                        {/* <Button type="text" onClick={() => {
                             setData(housemock)
 
                             setKeyword('')
                             setLat(37.59732049638715)
                             setLng(127.0588283395548)
                             // history.push('/3/house')
-                        }}>주거 공간</Button>
+                        }}>주거 공간</Button> */}
 
                     </div>
                     <hr className="line" />
@@ -68,13 +68,13 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                             setLat(37.336538181222245);
                             setLng(127.25253858610613);
                         }}>맛집 공간</Button>
-                        <Button type="text" onClick={() => {
+                        {/* <Button type="text" onClick={() => {
                             setData(housemock)
                             setKeyword('')
                             setLat(37.336538181222245);
                             setLng(127.25253858610613);
                             //  history.push('/3/house')
-                        }}>주거 공간</Button>
+                        }}>주거 공간</Button> */}
 
                     </div>
 
