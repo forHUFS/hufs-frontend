@@ -1,5 +1,5 @@
 import { Avatar, Button, Comment, List, message, Popconfirm } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import ReportModal from '../post/ReportModal';
 import { UserOutlined } from '@ant-design/icons';
@@ -15,6 +15,7 @@ import { mutate } from 'swr';
 import { errorMessage } from '../../functions/errorHandling';
 import { PUBLIC_IP } from '../../config';
 function CommentList({ comments, history, match }) {
+  const [state, setstate] = useState({});
   const onLike = (event) => {
     commentLike(+event.target.value)
       .then(() => {
@@ -37,7 +38,7 @@ function CommentList({ comments, history, match }) {
   };
 
   const onReply = async (content, parentId) => {
-    if (content.trim().length === 0) {
+    if (content?.trim().length === 0 || content === undefined) {
       message.info('댓글을 입력하세요');
       return;
     }
@@ -50,6 +51,7 @@ function CommentList({ comments, history, match }) {
       .then(() => {
         mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('작성 완료');
+        setstate({ ...state, [parentId]: '' });
       })
       .catch((error) => {
         errorMessage(error.response?.data.message);
@@ -166,28 +168,32 @@ function CommentList({ comments, history, match }) {
                   );
                 })}
 
-                <form
-                  className={styles.form}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    onReply(e.target[0].value, item.id);
-                    e.target[0].value = '';
+                <TextArea
+                  id={`replyText-${item.id}`}
+                  className={styles.commenttextarea}
+                  size={'small'}
+                  rows={4}
+                  autoSize={{ minRows: 2, maxRows: 4 }}
+                  maxLength={200}
+                  value={state[item?.id]}
+                  type="text"
+                  placeholder="댓글을 입력하세요"
+                  onChange={(e) => {
+                    setstate({ ...state, [item.id]: e.target.value });
+                  }}
+                />
+                <Button
+                  style={{
+                    width: '100px',
+                    height: '46px',
+                    position: 'absolute',
+                  }}
+                  onClick={(e) => {
+                    onReply(state[item.id], item.id);
                   }}
                 >
-                  <TextArea
-                    className={styles.commenttextarea}
-                    size={'small'}
-                    defaultValue={''}
-                    rows={4}
-                    autoSize={{ minRows: 2, maxRows: 4 }}
-                    maxLength={200}
-                    type="text"
-                    id={item.id}
-                    placeholder="댓글을 입력하세요"
-                    onClick={(e) => console.log((e.target.value = ''))}
-                  />
-                  <input type="submit" value="댓글 입력" />
-                </form>
+                  댓글 입력
+                </Button>
               </div>
             </Comment>
           )
