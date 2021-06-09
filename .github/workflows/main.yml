@@ -2,7 +2,7 @@ name: React build
 on:
   push: # main Branch에서 push 이벤트가 일어났을 때만 실행
     branches:
-      - githubactions
+      - main
 jobs:
   build:
     runs-on: ubuntu-18.04
