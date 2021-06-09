@@ -2,7 +2,7 @@ name: React build
 on:
   push: # main Branch에서 push 이벤트가 일어났을 때만 실행
     branches:
-      - main
+      - githubactions
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -29,13 +29,12 @@ jobs:
       - name: Build # React Build
         run: npm run winBuild
         
-      - name: S3 and CloudFront Deploy
-         # You may pin to the exact commit or the version.
-        # uses: lbertenasco/s3-deploy@d3fbc741f842c22bcc49d2cf250280866afd2014
-        uses: lbertenasco/s3-deploy@v1.2.4
-        with:
-          folder: build
-          bucket: ${{ secrets.BUCKET_NAME }}
-          dist-id:  ${{ secrets.DISTRIBUTION_ID }}
-          invalidation:  / *
-      
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+            --recursive \
+            --region ap-northeast-2 \
+            build s3://hufs-frontend
