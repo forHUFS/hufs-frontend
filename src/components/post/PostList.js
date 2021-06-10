@@ -6,6 +6,7 @@ import PostSearch from './PostSearch';
 import PostSub from './PostSub';
 import { findBoardName } from './PostSub';
 import useBoard from '../../hooks/useBoard';
+import errorHandling from '../../functions/errorHandling';
 
 const { Column } = Table;
 function PostList({ match, history }) {
@@ -16,14 +17,14 @@ function PostList({ match, history }) {
   const [loading, setloading] = useState(false);
   const { board, isLoading, isError } = useBoard(match.path);
   useEffect(() => {
-    if (!isLoading) {
+    if (!isError && !isLoading) {
       const postKey = board.map((post, key) => {
         return { ...post, key: key + 1 };
       });
       setPosts(postKey.reverse());
       setloading(true);
     }
-  }, [match.path, isLoading]);
+  }, [match.path, isLoading, board]);
 
   useEffect(() => {
     const sliced = posts.slice(firstIndex, lastIndex);
@@ -33,6 +34,9 @@ function PostList({ match, history }) {
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
   if (isLoading) return <>loading..</>;
+  if (isError) {
+    return errorHandling(isError.response?.data.message);
+  }
   return (
     <>
       <table className="community-main">

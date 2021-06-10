@@ -12,7 +12,7 @@ import {
   commentReply,
 } from '../../functions/commentFunctions';
 import { mutate } from 'swr';
-import { errorMessage } from '../../functions/errorHandling';
+import errorHandling from '../../functions/errorHandling';
 import { PUBLIC_IP } from '../../config';
 function CommentList({ comments, history, match }) {
   const [state, setstate] = useState({});
@@ -23,7 +23,7 @@ function CommentList({ comments, history, match }) {
         message.success('추천 완료');
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
   };
   const onDelete = (commentId) => {
@@ -33,7 +33,7 @@ function CommentList({ comments, history, match }) {
         message.success('삭제 완료');
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
   };
 
@@ -54,7 +54,7 @@ function CommentList({ comments, history, match }) {
         setstate({ ...state, [parentId]: '' });
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
   };
   return (

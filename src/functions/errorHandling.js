@@ -1,23 +1,23 @@
 import { message } from 'antd';
-import { Redirect } from 'react-router';
-//CONFLICT, 404 정리 필요. +a
-
-export const errorMessage = (error) => {
+import { Redirect, useHistory } from 'react-router';
+//CONFLICT, 404 정리 필요. +are
+export default function useErrorHandling(error) {
+  const history = useHistory();
   switch (error) {
     case 'INVALID_NICKNAME_TIME':
       message.error('닉네임을 변경한지 30일이 지나지 않았습니다.');
       break;
     case 'UNAUTHORIZED':
-      message.error('로그인이 필요합니다.');
-      return <Redirect to="/" />;
+      history.push('/');
+      return message.error('로그인이 필요합니다.');
       break;
     case 'FORBIDDEN_SUSPENSION':
-      message.error('정지된 사용자');
-      return <Redirect to="/" />;
+      history.push('/');
+      return message.error('정지된 사용자');
       break;
     case 'FORBIDDEN_BEFORE':
-      message.error('이메일 인증이 필요합니다');
-      return <Redirect to="/" />;
+      history.push('/');
+      return message.error('이메일 인증이 필요합니다');
       break;
     case 'CONFLICT':
       message.error('이미 인증처리가 된 웹메일입니다.');
@@ -44,9 +44,7 @@ export const errorMessage = (error) => {
       message.error('인증 시간(24시간)이 만료되었습니다. 다시 인증해주세요.');
       break;
     case 'QUERY_KEYWORD':
-      message.error('두 글자 이상 입력해주세요.');
-      window.location.href('https://hufspace.com/mypage');
-      // return <Redirect to="/mypage" />;
+      return message.error('두 글자 이상 입력해주세요.');
       break;
     case 'QUERY_OPTION':
       message.error('옵션을 다시 선택해주세요.');
@@ -55,4 +53,4 @@ export const errorMessage = (error) => {
       message.error('알 수 없는 에러');
       break;
   }
-};
+}
