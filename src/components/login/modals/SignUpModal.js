@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { message, Select, Button, Input, Form, Checkbox } from 'antd';
 import { withRouter } from 'react-router';
-import Header from '../../../views/Header/Header';
 import { PUBLIC_IP } from '../../../config';
 import { InformationModal2 } from '../../rule/InformationModal';
 import { UseModal2 } from '../../rule/UseModal';
@@ -82,7 +81,7 @@ const SignUpModal = (props) => {
   const isWebMail = (props) => {
     var emailInfo = (submit.email).split('@');
     if (emailInfo[1] === 'hufs.ac.kr') {
-      submit.webMail= ((submit.email).split('@'))[0];
+      submit.webMail = ((submit.email).split('@'))[0];
       return emailInfo[0]
     } else {
       inputAble = false;
@@ -101,7 +100,7 @@ const SignUpModal = (props) => {
 
   return (
     <>
-      <Header />
+
       <div
         className="ant-modal-body-revise"
       >
@@ -123,21 +122,21 @@ const SignUpModal = (props) => {
             ></Input>
           </Form.Item>
           <Form.Item
-          label="웹메일"
-          extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
-          name="webMail"
-          onChange={(event) => {
-            setSubmit({ ...submit, webMail: event.target.value });
-          }}
-          style={{ width: '100%' }}
+            label="웹메일"
+            extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
+            name="webMail"
+            onChange={(event) => {
+              setSubmit({ ...submit, webMail: event.target.value });
+            }}
+            style={{ width: '100%' }}
           >
             <Input
-            style = {{ textAlign: 'center' }}
-            placeholder={isWebMail()}
-            suffix="@hufs.ac.kr"
-            disabled={inputAble}
+              style={{ textAlign: 'center' }}
+              placeholder={isWebMail()}
+              suffix="@hufs.ac.kr"
+              disabled={inputAble}
             ></Input>
-            </Form.Item>
+          </Form.Item>
 
           <Form.Item
             label="주전공"
@@ -152,8 +151,8 @@ const SignUpModal = (props) => {
               }
               placeholder='주전공을 선택하세요. 없으면 "미정"을 눌러주세요'
               optionFilterProp="children"
-              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
-              filterSort = {(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              filterSort={(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
             >
               {major ? (
                 major.map((major) => {
@@ -182,8 +181,8 @@ const SignUpModal = (props) => {
               }}
               placeholder='이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요'
               optionFilterProp="children"
-              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
-              filterSort = {(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              filterSort={(optionA, optionB) => optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())}
             >
               {doubleMajor ? (
                 doubleMajor.map((major) => {

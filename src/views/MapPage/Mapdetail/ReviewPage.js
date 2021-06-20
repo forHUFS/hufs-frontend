@@ -1,16 +1,10 @@
 import React from 'react';
 import loadable from '@loadable/component';
 import { Route, Switch } from 'react-router-dom';
-const ReviewEdit = loadable(() =>
-  import('../../components/map/reviewSection/newReviewSection/ReviewEdit'),
+const ReviewList = loadable(() =>
+  import('../../../components/map/reviewSection/newReviewSection/ReviewList'),
 );
 
-const ReviewList = loadable(() =>
-  import('../../components/map/reviewSection/newReviewSection/ReviewList'),
-);
-const ReviewUpdate = loadable(() =>
-  import('../../components/map/reviewSection/newReviewSection/ReviewUpdate'),
-);
 function ReviewPage(props) {
   return (
     <>

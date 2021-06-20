@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
 import { PageHeader, Pagination, Table } from 'antd';
 import { TableBody2 } from '../../components/post/PostList';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 const { Column } = Table;
 function SearchPage(props) {
   const [currentList, setCurrentList] = useState([]);
@@ -24,7 +22,7 @@ function SearchPage(props) {
 
   return (
     <>
-      <Header />
+
       {props.location.state.detail ? (
         <>
           <table className="community-main">
@@ -56,7 +54,7 @@ function SearchPage(props) {
       ) : (
         <>X</>
       )}
-      <Footer />
+
     </>
   );
 }

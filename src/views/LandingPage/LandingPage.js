@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Header from '../Header/Header';
-import Quick from '../Quick/Quick';
-import Footer from '../Footer/Footer';
+import Quick from '../Common/Quick';
 import Slide from '../../components/slide/Slide';
 import SearchAll from '../../components/post/SearchAll';
 import CalendarMainPage from '../../components/calendar/CalendarMainPage';
@@ -14,15 +11,15 @@ function LandingPage(props) {
 
   return (
     <div>
-      <Header />
+
       <Popup />
 
       <div className="Main">
         <SearchAll />
-        {/* {now_url === 'https://hufspace.com/' ? <Quick /> : null} */}
+
         <div
-          id={styles.quick}>
-          <Quick />
+        >
+          {/* <Quick id="quick" /> */}
         </div>
         <div className="Mainbanner">
 
@@ -33,7 +30,7 @@ function LandingPage(props) {
         </div>
         <div className="board"></div>
       </div>
-      <Footer />
+
     </div>
   );
 }

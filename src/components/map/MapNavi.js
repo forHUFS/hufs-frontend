@@ -4,7 +4,7 @@ import { PUBLIC_IP } from '../../config';
 import mapboo from '../../image/boo/mapboo.png';
 import { Button } from 'antd';
 import { withRouter } from 'react-router';
-import housemock from './mapSection/mapData/housemock.json'
+// import housemock from './mapSection/mapData/housemock.json'
 
 function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
     const [storeSeoul, setStoreSeoul] = useState();
