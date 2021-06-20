@@ -9,7 +9,6 @@ import App from './App';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import axios from 'axios';
-import { errorMessage } from './functions/errorHandling';
 const createStoreWithMiddleware = applyMiddleware(
   PromiseMiddleware,
   ReduxThunk,
@@ -22,7 +21,7 @@ axios.defaults.withCredentials = true;
 //     return response;
 //   },
 //   function (error) {
-//     errorMessage(error.response?.data.message);
+//     errorHandling(error.response?.data.message);
 //     return Promise.reject(error);
 //   },
 // );

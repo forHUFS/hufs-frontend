@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Button, Input, message } from 'antd';
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
-import { errorMessage } from '../../functions/errorHandling';
+import errorHandling from '../../functions/errorHandling';
 import { commentSave } from '../../functions/commentFunctions';
 function CommentEdit({ history, match, postDetail }) {
   const { TextArea } = Input;
@@ -25,7 +25,7 @@ function CommentEdit({ history, match, postDetail }) {
         message.success('댓글 작성 성공!');
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
     setContent('');
   };

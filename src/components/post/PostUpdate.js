@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
 import { Skeleton, Button, message } from 'antd';
-import { errorMessage } from '../../functions/errorHandling';
+import errorHandling from '../../functions/errorHandling';
 import usePostDetail from '../../hooks/usePostDetail';
 import { postUpdate } from '../../functions/postFunctions';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
@@ -54,7 +54,7 @@ function PostUpdate({ match, history }) {
         history.goBack();
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
   };
   const onExit = () => {
@@ -66,7 +66,9 @@ function PostUpdate({ match, history }) {
         .catch(() => history.goBack());
     }
   };
-
+  if (isError) {
+    return errorHandling(isError.response?.data.message);
+  }
   return (
     <>
       <div id="community-main">

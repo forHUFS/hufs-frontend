@@ -5,12 +5,15 @@ import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { postSave } from '../../functions/postFunctions';
-import { errorMessage } from '../../functions/errorHandling';
+import errorHandling from '../../functions/errorHandling';
 import { PUBLIC_IP } from '../../config';
 import { Button, Input, message } from 'antd';
 import imageCompression from 'browser-image-compression';
+import useUserInfo from '../../hooks/useUserInfo';
+import { mutate } from 'swr';
 let uploadedImg = [];
 function PostEdit(props) {
+  const { user, isError, isLoading } = useUserInfo();
   useBeforeunload((e) => {
     e.preventDefault();
     window.onunload = function () {
@@ -43,7 +46,7 @@ function PostEdit(props) {
         message.success('작성 완료');
       })
       .catch((error) => {
-        errorMessage(error.response?.data.message);
+        errorHandling(error.response?.data.message);
       });
   };
   const onExit = () => {
@@ -57,7 +60,9 @@ function PostEdit(props) {
         .catch(props.history.goBack());
     }
   };
-
+  if (isError) {
+    return errorHandling(isError.response?.data.message);
+  }
   return (
     <>
       <div id="community-main">

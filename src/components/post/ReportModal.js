@@ -3,7 +3,7 @@ import { Input, Select, Modal, Button, message } from 'antd';
 import { withRouter } from 'react-router';
 import { PUBLIC_IP } from '../../config';
 import axios from 'axios';
-import { errorMessage } from '../../functions/errorHandling';
+import errorHandling from '../../functions/errorHandling';
 function ReportModal({ type, id, history }) {
   const { Option } = Select;
   const { TextArea } = Input;
@@ -23,7 +23,7 @@ function ReportModal({ type, id, history }) {
           message.success('신고가 완료되었습니다. 감사합니다.');
         })
         .catch((error) => {
-          errorMessage(error.response?.data.message);
+          errorHandling(error.response?.data.message);
         });
     } else if (type === 'comment') {
       await axios
@@ -32,7 +32,7 @@ function ReportModal({ type, id, history }) {
           message.success('신고가 완료되었습니다. 감사합니다.');
         })
         .catch((error) => {
-          errorMessage(error.response?.data.message);
+          errorHandling(error.response?.data.message);
         });
     }
     setBody({ content: 1, detail: '' });

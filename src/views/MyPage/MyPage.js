@@ -9,6 +9,7 @@ import { withRouter } from 'react-router';
 import Page404 from '../Page404/Page404';
 import Header1 from '../Common/Header';
 import styles from '../../css/MyPage.module.css';
+import errorHandling from '../../functions/errorHandling';
 import useUserInfo from '../../hooks/useUserInfo';
 function MyPage(props) {
   const { Header, Content, Footer } = Layout;
@@ -35,7 +36,9 @@ function MyPage(props) {
         return <Page404 />;
     }
   };
-
+  if (isError) {
+    return errorHandling(isError.response?.data.message);
+  }
   return (
     <>
       <Header1 />
