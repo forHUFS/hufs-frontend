@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Card, Layout, Menu, message } from 'antd';
 import UserScrap from '../../components/user/UserScrap';
 import UserComment from '../../components/user/UserComment';
@@ -8,7 +7,7 @@ import UserPost from '../../components/user/UserPost';
 import UserWithdraw from '../../components/user/UserWithdraw';
 import { withRouter } from 'react-router';
 import Page404 from '../Page404/Page404';
-import Header1 from '../Header/Header';
+import Header1 from '../Common/Header';
 import styles from '../../css/MyPage.module.css';
 import errorHandling from '../../functions/errorHandling';
 import useUserInfo from '../../hooks/useUserInfo';

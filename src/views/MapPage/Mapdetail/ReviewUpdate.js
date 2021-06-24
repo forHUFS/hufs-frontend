@@ -5,10 +5,10 @@ import 'react-quill/dist/quill.snow.css';
 import { useBeforeunload } from 'react-beforeunload';
 import imageCompression from 'browser-image-compression';
 import { withRouter } from 'react-router-dom';
-import { postUpdate, postView } from '../../../../_actions/reviewPost_action';
+import { postUpdate, postView } from '../../../_actions/reviewPost_action';
 import axios from 'axios';
-import { PUBLIC_IP } from '../../../../config';
-import { Skeleton, Button, Rate, message,Input } from 'antd';
+import { PUBLIC_IP } from '../../../config';
+import { Skeleton, Button, Rate, message, Input } from 'antd';
 
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
@@ -100,12 +100,12 @@ function ReviewUpdate({ match, history }) {
     if (answer) {
       axios
         .post(`${PUBLIC_IP}/post/back`, { url: uploadedImg })
-        
+
         .catch(history.goBack());
     }
   };
 
-  useEffect(() => {}, [updated]);
+  useEffect(() => { }, [updated]);
 
   return (
     <>
@@ -123,11 +123,11 @@ function ReviewUpdate({ match, history }) {
             />
 
             <div style={{ padding: '5px 5px' }}>
-                        <label style={{ fontWeight: 'bold' }}>평점 </label>
-        <Rate allowHalf value={updated.score} onChange={(e) => {
-            setUpdated({ ...updated, score: e });
-          }} />
-        </div>
+              <label style={{ fontWeight: 'bold' }}>평점 </label>
+              <Rate allowHalf value={updated.score} onChange={(e) => {
+                setUpdated({ ...updated, score: e });
+              }} />
+            </div>
 
             <ReactQuill
               className="11"

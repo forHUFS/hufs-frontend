@@ -21,7 +21,7 @@ function ReviewHead({ match, history }) {
                 return '맛집 리뷰';
             case 'house/review':
                 return '자취방 후기'
-            case 'house/trade':
+            case 'house/tradee':
                 return '자취방 거래'
 
         }

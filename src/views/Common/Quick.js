@@ -5,8 +5,13 @@ import { MailOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
 function Quick() {
-  const handleClick = (e) => {};
 
+  const handleClick = (e) => { };
+
+  if (window.document.location.href === 'http://localhost:3000' || window.document.location.href === 'http://hufspace.com') {
+
+  }
+  // console.log(window.document.location)
   return (
     <Menu onClick={handleClick} mode="inline">
       <SubMenu icon={<MailOutlined />} title="Quick Menu">

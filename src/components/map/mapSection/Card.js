@@ -218,13 +218,19 @@ const Rstrn = ({
   }
   const houseReview = () => {
     history.push({
-      pathname: `${match.path}/house/review/${id}/ReviewPage`
+      pathname: `${match.path}/house/review/${id}/ReviewPage`,
+      state: {
+        id: id
+      }
     })
   }
 
   const houseTrade = () => {
     history.push({
-      pathname: `${match.path}/house/trade/${id}/TradePage`
+      pathname: `${match.path}/house/tradee/${id}/TradePage`,
+      state: {
+        id: id
+      }
     })
   }
 

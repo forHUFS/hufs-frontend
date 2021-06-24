@@ -24,9 +24,9 @@ function Header(props) {
       <Menu.Item>
         <Link to="/2">장학 공간</Link>
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <Link to="/major">과별 공간</Link>
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
   const menu3 = (

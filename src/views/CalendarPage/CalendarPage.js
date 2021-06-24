@@ -10,8 +10,7 @@ import CalendarComponent, {
 } from '../../components/calendar/CalendarComponent';
 import useScholarship from '../../hooks/useScholarship';
 import useScholarshipTags from '../../hooks/useScholarshipTags';
-import Header from '../Header/Header';
-import Quick from '../Quick/Quick';
+
 
 function CalendarPage(props) {
   const [selectedOptionTag, setSelectedOptionTag] = useState({ optionId: [] });
@@ -56,8 +55,7 @@ function CalendarPage(props) {
   };
   return (
     <>
-      <Header />
-      <Quick />
+
       <div className="community-main">
         <PostSub match={props.match} />
         <Alert message={`장학금 달력`} />
@@ -71,32 +69,32 @@ function CalendarPage(props) {
               캠퍼스
               {campusTags
                 ? campusTags.map((tag) => (
-                    <CheckableTag
-                      key={tag.id}
-                      checked={selectedCampusTag.campusId.indexOf(tag.id) > -1}
-                      onChange={(event) => onCampusTag(event, tag.id)}
-                    >
-                      {tag.name}
-                    </CheckableTag>
-                  ))
+                  <CheckableTag
+                    key={tag.id}
+                    checked={selectedCampusTag.campusId.indexOf(tag.id) > -1}
+                    onChange={(event) => onCampusTag(event, tag.id)}
+                  >
+                    {tag.name}
+                  </CheckableTag>
+                ))
                 : null}
             </div>
             <div className="scholar-search-head">
               유형
               {optionTags
                 ? optionTags.map((tag) => (
-                    <CheckableTag
-                      style={{
-                        marginLeft: '12px',
-                        marginRight: '0px',
-                      }}
-                      key={tag.id}
-                      checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
-                      onChange={(event) => onOptionTag(event, tag.id)}
-                    >
-                      {tag.name}
-                    </CheckableTag>
-                  ))
+                  <CheckableTag
+                    style={{
+                      marginLeft: '12px',
+                      marginRight: '0px',
+                    }}
+                    key={tag.id}
+                    checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
+                    onChange={(event) => onOptionTag(event, tag.id)}
+                  >
+                    {tag.name}
+                  </CheckableTag>
+                ))
                 : null}
             </div>
           </div>
