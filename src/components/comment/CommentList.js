@@ -12,10 +12,12 @@ import {
   commentReply,
 } from '../../functions/commentFunctions';
 import { mutate } from 'swr';
-import errorHandling from '../../functions/errorHandling';
+import useErrorHandling from '../../hooks/useErrorHandling';
+
 import { PUBLIC_IP } from '../../config';
 function CommentList({ comments, history, match }) {
   const [state, setstate] = useState({});
+  const errorHandling = useErrorHandling();
   const onLike = (event) => {
     commentLike(+event.target.value)
       .then(() => {

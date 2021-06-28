@@ -3,8 +3,9 @@ import { Input, Select, Modal, Button, message } from 'antd';
 import { withRouter } from 'react-router';
 import { PUBLIC_IP } from '../../config';
 import axios from 'axios';
-import errorHandling from '../../functions/errorHandling';
+import useErrorHandling from '../../hooks/useErrorHandling';
 function ReportModal({ type, id, history }) {
+  const errorHandling = useErrorHandling();
   const { Option } = Select;
   const { TextArea } = Input;
   const [isModalVisible, setIsModalVisible] = useState(false);

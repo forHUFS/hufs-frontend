@@ -5,15 +5,17 @@ import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { postSave } from '../../functions/postFunctions';
-import errorHandling from '../../functions/errorHandling';
+
 import { PUBLIC_IP } from '../../config';
 import { Button, Input, message } from 'antd';
 import imageCompression from 'browser-image-compression';
 import useUserInfo from '../../hooks/useUserInfo';
 import { mutate } from 'swr';
+import useErrorHandling from '../../hooks/useErrorHandling';
 let uploadedImg = [];
 function PostEdit(props) {
   const { user, isError, isLoading } = useUserInfo();
+  const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
     e.preventDefault();
     window.onunload = function () {

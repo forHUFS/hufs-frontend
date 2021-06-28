@@ -9,14 +9,15 @@ import styles from '../../css/PostView.module.css';
 import like from '../../image/recommend.png';
 import usePostDetail from '../../hooks/usePostDetail';
 import { postDelete, postLike, postScrap } from '../../functions/postFunctions';
-import errorHandling from '../../functions/errorHandling';
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
+import useErrorHandling from '../../hooks/useErrorHandling';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 function PostView({ match, history }) {
   const postId = +match.params.id;
   const { postDetail, isLoading, isError } = usePostDetail(postId);
+  const errorHandling = useErrorHandling();
 
   const onDelete = () =>
     postDelete(postDetail.id)
