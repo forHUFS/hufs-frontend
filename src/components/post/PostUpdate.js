@@ -7,13 +7,14 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
 import { Skeleton, Button, message } from 'antd';
-import errorHandling from '../../functions/errorHandling';
 import usePostDetail from '../../hooks/usePostDetail';
 import { postUpdate } from '../../functions/postFunctions';
+import useErrorHandling from '../../hooks/useErrorHandling';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
 function PostUpdate({ match, history }) {
   const { postDetail, isLoading, isError } = usePostDetail(+match.params.id);
+  const errorHandling = useErrorHandling();
   const [updated, setUpdated] = useState(false);
   useBeforeunload((e) => {
     e.preventDefault();

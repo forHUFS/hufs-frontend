@@ -4,10 +4,11 @@ import { withRouter } from 'react-router';
 import { Button, Input, message } from 'antd';
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
-import errorHandling from '../../functions/errorHandling';
 import { commentSave } from '../../functions/commentFunctions';
+import useErrorHandling from '../../hooks/useErrorHandling';
 function CommentEdit({ history, match, postDetail }) {
   const { TextArea } = Input;
+  const errorHandling = useErrorHandling();
   const [content, onChange, setContent] = useInput('');
   const onSubmit = (e) => {
     e.preventDefault();

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../config';
 
 export const postDelete = async (postId) => {
-  axios.delete(`${PUBLIC_IP}/post/${postId}`);
+  await axios.delete(`${PUBLIC_IP}/post/${postId}`);
 };
 
 export const postLike = async (postId) => {

@@ -6,10 +6,10 @@ import PostSearch from './PostSearch';
 import PostSub from './PostSub';
 import { findBoardName } from './PostSub';
 import useBoard from '../../hooks/useBoard';
-import errorHandling from '../../functions/errorHandling';
-
+import useErrorHandling from '../../hooks/useErrorHandling';
 const { Column } = Table;
 function PostList({ match, history }) {
+  const errorHandling = useErrorHandling();
   const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
