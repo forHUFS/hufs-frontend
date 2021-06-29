@@ -42,7 +42,6 @@ function MyPage(props) {
   }
   return (
     <>
-      <Header1 />
       <div className={styles.main}>
         <div className={styles.communitymain}>
           <Layout className={styles.layout}>
