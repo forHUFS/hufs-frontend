@@ -3,9 +3,11 @@ import { message, Select, Input } from 'antd';
 import useInput from '../../hooks/useInput';
 import { useHistory, withRouter } from 'react-router';
 import { postSearch } from '../../functions/postFunctions';
+import useErrorHandling from '../../hooks/useErrorHandling';
 const { Option } = Select;
 const { Search } = Input;
 function PostSearch({ setPosts, match }) {
+  const errorHandling = useErrorHandling();
   const [keyword, setKeyword] = useInput('');
   const [searchType, setSearchType] = useState('titleAndContent');
   const history = useHistory();
@@ -27,26 +29,7 @@ function PostSearch({ setPosts, match }) {
         });
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한 오류');
-            history.push('/');
-            break;
-          case 404:
-            message.info('검색 결과가 존재하지 않습니다.');
-          case 422:
-            if (error.response.data.message === 'QUERY_KEYWORD') {
-              message.error('두 글자 이상 입력해주세요');
-            } else {
-              message.error('query error');
-            }
-          default:
-            break;
-        }
+        errorHandling(error.response?.data.message);
       });
   };
   return (
