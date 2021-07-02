@@ -1,0 +1,50 @@
+/* 오른쪽 퀵메뉴*/
+.ant-menu.ant-menu-light.ant-menu-root.ant-menu-inline:not(#spc) {
+  position: absolute;
+  text-align: left;
+  width: 160px;
+  height: 206px;
+  top: 200px;
+  left: 80%;
+  /* width1220까지 안 겹침 */
+  .ant-menu-item.ant-menu-item-only-child {
+    padding-left: 20px !important;
+  }
+}
+.ant-menu-submenu-title > * {
+  color: var(--navy-color);
+}
+.ant-menu-submenu.ant-menu-submenu-inline {
+  border: 1px solid var(--navy-color);
+}
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border-right: none;
+}
+
+#quick > ul {
+  /* 메인화면 전용 */
+  position: absolute;
+  text-align: left;
+  width: 160px;
+  height: 206px;
+  top: 120px;
+  left: 102% !important;
+}
+
+@media (max-width: 1600px) {
+  #quick > ul {
+    left: 98% !important;
+  }
+}
+@media (max-width: 1400px) {
+  #quick > ul {
+    left: 99% !important;
+  }
+}
+@media (max-width: 1280px) {
+  #quick > ul {
+    left: 97% !important;
+  }
+}

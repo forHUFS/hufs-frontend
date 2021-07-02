@@ -1,70 +1,46 @@
 import { Avatar, Button, Comment, List, message, Popconfirm } from 'antd';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
+import ReportModal from '../post/ReportModal';
+import { UserOutlined } from '@ant-design/icons';
+import styles from '../../css/Comment.module.css';
+import like from '../../image/recommend.png';
+import TextArea from 'antd/lib/input/TextArea';
 import {
   commentLike,
   commentRemove,
   commentReply,
-} from '../../_actions/comment_action';
-import ReportModal from '../post/ReportModal';
-import { UserOutlined } from '@ant-design/icons';
-import { postView } from '../../_actions/post_action';
-import styles from '../../css/Comment.module.css';
-import like from '../../image/recommend.png';
-import TextArea from 'antd/lib/input/TextArea';
-function CommentList({ comments, history, setPost, match }) {
-  const dispatch = useDispatch();
+} from '../../functions/commentFunctions';
+import { mutate } from 'swr';
+import useErrorHandling from '../../hooks/useErrorHandling';
+
+import { PUBLIC_IP } from '../../config';
+function CommentList({ comments, history, match }) {
+  const [state, setstate] = useState({});
+  const errorHandling = useErrorHandling();
   const onLike = (event) => {
-    dispatch(commentLike(+event.target.value))
-      .then(async (response) => {
+    commentLike(+event.target.value)
+      .then(() => {
+        mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('추천 완료');
-        await postView(+match.params.id).then((response) =>
-          setPost(response.payload),
-        );
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한이 없습니다');
-            break;
-          case 409:
-            message.error('이미 좋아요 한 댓글입니다.');
-            break;
-          default:
-            break;
-        }
+        errorHandling(error.response?.data.message);
       });
   };
   const onDelete = (commentId) => {
-    dispatch(commentRemove(commentId))
-      .then((response) => {
+    commentRemove(commentId)
+      .then(() => {
+        mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('삭제 완료');
-        dispatch(postView(+match.params.id)).then((response) =>
-          setPost(response.payload),
-        );
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한이 없습니다');
-            break;
-          default:
-            break;
-        }
+        errorHandling(error.response?.data.message);
       });
   };
 
   const onReply = async (content, parentId) => {
-    if (content.trim().length === 0) {
+    if (content?.trim().length === 0 || content === undefined) {
       message.info('댓글을 입력하세요');
       return;
     }
@@ -73,15 +49,15 @@ function CommentList({ comments, history, setPost, match }) {
       parentId: parentId,
       postId: +match.params.id,
     };
-    dispatch(commentReply(reply)).then((response) => {
-      dispatch(postView(+match.params.id)).then((response) => {
-        setPost(response.payload);
-        let textArray = document.getElementsByTagName('textarea');
-        for (let i = 0; i < textArray.length - 1; i++) {
-          textArray[i].value = '';
-        }
+    commentReply(reply)
+      .then(() => {
+        mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
+        message.success('작성 완료');
+        setstate({ ...state, [parentId]: '' });
+      })
+      .catch((error) => {
+        errorHandling(error.response?.data.message);
       });
-    });
   };
   return (
     <div className="comment-body">
@@ -194,25 +170,32 @@ function CommentList({ comments, history, setPost, match }) {
                   );
                 })}
 
-                <form
-                  className={styles.form}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    onReply(e.target[0].value, item.id);
+                <TextArea
+                  id={`replyText-${item.id}`}
+                  className={styles.commenttextarea}
+                  size={'small'}
+                  rows={4}
+                  autoSize={{ minRows: 2, maxRows: 4 }}
+                  maxLength={200}
+                  value={state[item?.id]}
+                  type="text"
+                  placeholder="댓글을 입력하세요"
+                  onChange={(e) => {
+                    setstate({ ...state, [item.id]: e.target.value });
+                  }}
+                />
+                <Button
+                  style={{
+                    width: '100px',
+                    height: '46px',
+                    position: 'absolute',
+                  }}
+                  onClick={(e) => {
+                    onReply(state[item.id], item.id);
                   }}
                 >
-                  <TextArea
-                    className={styles.commenttextarea}
-                    size={'small'}
-                    rows={4}
-                    autoSize={{ minRows: 2, maxRows: 4 }}
-                    maxLength={200}
-                    type="text"
-                    id={item.id}
-                    placeholder="댓글을 입력하세요"
-                  />
-                  <input type="submit" value="댓글 입력" />
-                </form>
+                  댓글 입력
+                </Button>
               </div>
             </Comment>
           )

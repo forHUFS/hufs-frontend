@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { message, Select, Input } from 'antd';
-import { useDispatch } from 'react-redux';
 import useInput from '../../hooks/useInput';
-import { postSearch } from '../../_actions/post_action';
+import { postSearch } from '../../functions/postFunctions';
 import { withRouter } from 'react-router-dom';
 const { Option } = Select;
 const { Search } = Input;
 function SearchAll(props) {
-  const dispatch = useDispatch();
   const [keyword, setKeyword] = useInput('');
 
   const onSearch = () => {
@@ -15,14 +13,12 @@ function SearchAll(props) {
       return message.warn('검색 키워드를 입력해주세요.');
     }
     const body = { keyword: keyword, option: 'titleAndContent' };
-    dispatch(postSearch(body))
+    postSearch(body)
       .then((response) => {
-        if (response.status === 200) {
-          props.history.push({
-            pathname: `/search`,
-            state: { detail: response.payload.reverse() },
-          });
-        }
+        props.history.push({
+          pathname: `/search`,
+          state: { detail: response.payload.reverse() },
+        });
       })
       .catch((error) => {
         switch (error.response?.status) {

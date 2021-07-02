@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { useDispatch } from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
-import { postSave } from '../../../../_actions/reviewPost_action';
+import { postSave } from '../../../_actions/reviewPost_action';
 import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { PUBLIC_IP } from '../../../../config';
+import { PUBLIC_IP } from '../../../config';
 import imageCompression from 'browser-image-compression';
 import { Button, Rate, message, Input } from 'antd';
 

@@ -2,22 +2,29 @@ import React, { useState, useEffect } from 'react';
 import KaKaoMap from './KakaoMap';
 import Card from './Card.js';
 import SearchBar from './SearchBar.js';
-import MapNavi from '../component/MapNavi';
+import MapNavi from '../MapNavi';
 import Rank from './Rank'
-import sdata from './mapData/sdata.json';
-import { Button } from 'antd';
+import sdata from './mapData/review-mock.json'
+import MoreRank from './MoreRank';
+import RecentReview from './RecentReview';
+
+import { Button, Modal } from 'antd';
 
 const MapContainer = ({ match }) => {
   const [data, setData] = useState();
   const [lat, setLat] = useState(37.59732049638715); // default 서울캠
   const [lng, setLng] = useState(127.0588283395548);
   const [keyword, setKeyword] = useState('');
+  const [ishidden, setIshidden] = useState(false);
+
+  const [mdata, setMdata] = useState(sdata);
+  const [sortt, setSortt] = useState();
   
   const _ = require("lodash"); 
-  const [ranker, setRanker] = useState(sdata.data);
+  const [ranker, setRanker] = useState();
   
-
   var check = true;
+ 
 
   const handleValueChange = (e) => {
     setKeyword(e.target.value);
@@ -33,7 +40,9 @@ const MapContainer = ({ match }) => {
       return c.name.toLowerCase().indexOf(keyword) > -1;
     });
     return data?.map((d, index) => {
+
       return <Card id="aa" {...d} key={index} match={match} />
+
     }
     );
 
@@ -64,18 +73,36 @@ const MapContainer = ({ match }) => {
 
   
   function sortScoreByAsc() {
-    const orderBy = _.orderBy(ranker, ['score'], ['desc']);
+    setIshidden(true)
+    const orderBy = _.orderBy(data.data, ['reviewAverage'], ['desc']);
     setRanker(orderBy);
-    console.log(ranker)
   }
   
    function sortReviewByAsc() {
-    const orderBy = _.orderBy(ranker, ['count'], ['desc']);
+     setIshidden(true)
+    const orderBy = _.orderBy(data.data, ['reviewCount'], ['desc']);
     setRanker(orderBy);
-    console.log(ranker)
   }
 
+  useEffect(() => {
+    const orderBy = _.orderBy(mdata.data, ['createdAt'], ['desc']);
+   setSortt(orderBy);
 
+  }, [])
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div className="Map">
@@ -111,21 +138,53 @@ const MapContainer = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className="Map-bottom"> 
-      
-      <div className="Rank-list">
-      <h2>음식점 랭킹</h2>
-      <Button size = 'small' onClick={() => sortScoreByAsc()}>별점 높은 순</Button> &nbsp;&nbsp;&nbsp;
-      <Button size = 'small' onClick={() => sortReviewByAsc()}>리뷰 많은 순</Button>
-      {ranker?.map((d, index) => (
-        <Rank id="bb" {...d} key={index} index = {index} match={match}/>
-              ))} 
-      </div>
-      <div className="Last-review">
-      
-      </div>
+      <div className="Map-bottom">
 
-        
+        <div className="Rank-list">
+          <h2>음식점 랭킹</h2>
+          <Button size='small' onClick={() => sortScoreByAsc()}>별점 높은 순</Button> &nbsp;&nbsp;&nbsp;
+      <Button size='small' onClick={() => sortReviewByAsc()}>리뷰 많은 순</Button> <h6>버튼을 클릭해주세요!</h6>
+          {ranker?.map((d, index) => {
+            if (index < 5) {
+              return <Rank id="bb" {...d} key={index} index={index} match={match} />
+                          }
+
+                        }
+                        
+
+           
+          )}
+            {ishidden && (
+        <Button type="primary" onClick={showModal}>
+        더보기
+        </Button>
+      )}
+          {/* <Button type="primary" onClick={showModal}>
+      더보기
+      </Button> */}
+      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      {ranker?.map((d, index) => ( <MoreRank id="bb" {...d} key={index} index={index} match={match} /> ))
+                          
+
+                        }
+                        </Modal>
+        </div>
+        <div className="Last-review">
+          <h2>최신순 리뷰</h2>
+          {sortt?.map((d, index) => {
+            if (index < 3) {
+              return <RecentReview id="cc" {...d} key={index} index={index} match={match} />
+                          }
+
+                        }
+                        
+
+           
+          )}
+
+        </div>
+
+
 
 
       </div>

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { PageHeader, Pagination, Table } from 'antd';
 import { TableBody2 } from '../../components/post/PostList';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 const { Column } = Table;
-function PostList(props) {
+function SearchPage(props) {
   const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const dispatch = useDispatch();
   const [posts, setPosts] = useState(props.location.state.detail);
   const [loading, setloading] = useState(false);
   // console.log(props.match.path.substring(1)); // 게시판 이름
@@ -18,7 +14,6 @@ function PostList(props) {
   useEffect(() => {
     const sliced = posts.slice(firstIndex, lastIndex);
     setCurrentList(sliced);
-
     setloading(true);
   }, [currentPage]);
 
@@ -27,7 +22,7 @@ function PostList(props) {
 
   return (
     <>
-      <Header />
+
       {props.location.state.detail ? (
         <>
           <table className="community-main">
@@ -59,9 +54,9 @@ function PostList(props) {
       ) : (
         <>X</>
       )}
-      <Footer />
+
     </>
   );
 }
 
-export default withRouter(PostList);
+export default withRouter(SearchPage);

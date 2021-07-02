@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Card, Layout, Menu, message } from 'antd';
 import UserScrap from '../../components/user/UserScrap';
 import UserComment from '../../components/user/UserComment';
@@ -8,12 +7,14 @@ import UserPost from '../../components/user/UserPost';
 import UserWithdraw from '../../components/user/UserWithdraw';
 import { withRouter } from 'react-router';
 import Page404 from '../Page404/Page404';
-import Header1 from '../Header/Header';
+import Header1 from '../Common/Header';
 import styles from '../../css/MyPage.module.css';
 import useUserInfo from '../../hooks/useUserInfo';
+import useErrorHandling from '../../hooks/useErrorHandling';
 function MyPage(props) {
+  const errorHandling = useErrorHandling();
   const { Header, Content, Footer } = Layout;
-  const [userInfo, setUserInfo] = useState({});
+  const { user, isError, isLoading } = useUserInfo();
 
   const [click, setClick] = useState('1');
 
@@ -27,23 +28,25 @@ function MyPage(props) {
       case '2':
         return <UserScrap />;
       case '3':
-        return <UserPost match={props.match} />;
+        return <UserPost posts={user.Posts} />;
       case '4':
-        return <UserComment />;
+        return <UserComment replies={user.Replies} />;
       case '5':
         return <UserWithdraw />;
       default:
         return <Page404 />;
     }
   };
-
+  if (isError) {
+    return errorHandling(isError.response?.data.message);
+  }
   return (
     <>
       <Header1 />
       <div className={styles.main}>
         <div className={styles.communitymain}>
           <Layout className={styles.layout}>
-            <UserInfo userInfo={userInfo} />
+            <UserInfo user={user} isLoading={isLoading} />
             <Header>
               <Menu
                 theme="dark"

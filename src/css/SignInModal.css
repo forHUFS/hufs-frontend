@@ -26,11 +26,31 @@
   display: block;
   margin: 10px auto;
 }
+.ant-modal-body-revise {
+  display: inline-block;
+  position: relative;
+  width: 1100px;
+  left: 10%;
+}
 .ant-modal-footer {
   height: 50px;
 }
 .ant-modal-footer .ant-btn.ant-btn-primary {
   color: navy;
+}
+#signIn-kakao {
+  display: inline-flex;
+  padding: 0;
+  width: 280px;
+  height: 45px;
+  line-height: 44px;
+  color: black;
+  background-color: #ffeb00;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
 }
 #basic {
   border: 3px solid #8897cb;

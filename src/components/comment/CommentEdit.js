@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { commentSave } from '../../_actions/comment_action';
 import useInput from '../../hooks/useInput';
 import { withRouter } from 'react-router';
 import { Button, Input, message } from 'antd';
-import { postView } from '../../_actions/post_action';
-function CommentEdit({ history, match, setPost }) {
+import { mutate } from 'swr';
+import { PUBLIC_IP } from '../../config';
+import { commentSave } from '../../functions/commentFunctions';
+import useErrorHandling from '../../hooks/useErrorHandling';
+function CommentEdit({ history, match, postDetail }) {
   const { TextArea } = Input;
-
-  const dispatch = useDispatch();
+  const errorHandling = useErrorHandling();
   const [content, onChange, setContent] = useInput('');
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,42 +16,24 @@ function CommentEdit({ history, match, setPost }) {
       message.info('댓글을 입력하세요');
       return;
     }
-
     let body = {
       postId: +match.params.id,
       content: content,
     };
-    dispatch(commentSave(body)) //error 옮겨야함
-      .then(async (response) => {
+    commentSave(body)
+      .then(() => {
+        mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('댓글 작성 성공!');
-        await postView(+match.params.id).then((response) =>
-          setPost(response.payload),
-        );
       })
       .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            history.push('/');
-            break;
-          case 403:
-            message.error('접근 권한이 없습니다');
-            break;
-          default:
-            break;
-        }
+        errorHandling(error.response?.data.message);
       });
-
     setContent('');
   };
   return (
-    <div
-      className="comment-input"
-      // style={{ width: '900px' }}
-    >
+    <div className="comment-input">
       <TextArea
         className="comment-textarea"
-        // style={{ display: 'inline-block', width: '750px' }}
         size={'small'}
         rows={4}
         autoSize={{ minRows: 4, maxRows: 4 }}
@@ -66,8 +48,7 @@ function CommentEdit({ history, match, setPost }) {
         style={{ width: '120px', height: '113px', position: 'absolute' }}
         onClick={onSubmit}
       >
-        {' '}
-        댓글 입력{' '}
+        댓글 입력
       </Button>
     </div>
   );

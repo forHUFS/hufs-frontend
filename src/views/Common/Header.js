@@ -24,19 +24,16 @@ function Header(props) {
       <Menu.Item>
         <Link to="/2">장학 공간</Link>
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <Link to="/major">과별 공간</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link to="/document">서류 공간</Link>
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
   const menu3 = (
     <Menu>
       <Menu.Item>
         <Link to="/3">맛집 공간</Link>
-        <Link to="/3">주거 공간</Link>
+        {/* <Link to="/3">주거 공간</Link> */}
       </Menu.Item>
     </Menu>
   );
