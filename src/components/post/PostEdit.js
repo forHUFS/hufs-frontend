@@ -7,7 +7,7 @@ import axios from 'axios';
 import { postSave } from '../../functions/postFunctions';
 
 import { PUBLIC_IP } from '../../config';
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Select } from 'antd';
 import imageCompression from 'browser-image-compression';
 import useUserInfo from '../../hooks/useUserInfo';
 import { mutate } from 'swr';
@@ -22,7 +22,7 @@ function PostEdit(props) {
       axios.post(`${PUBLIC_IP}/post/back`, uploadedImg);
     };
   });
-  const [value, setvalue] = useState({ title: '', content: '' });
+  const [value, setvalue] = useState({ title: '', content: '', header: '' });
   const onSubmit = (e) => {
     e.preventDefault();
     if (value.title.trim().length === 0) {
@@ -68,6 +68,14 @@ function PostEdit(props) {
   return (
     <>
       <div id="community-main">
+        {/* <Select defaultValue="lucy" style={{ width: 120 }} onChange={e =>}>
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+      </Select> */}
         <Input
           className="title-bar"
           type="text"
