@@ -163,7 +163,6 @@
   position: absolute;
   width: 50%;
   height: 100%;
-  background-color:antiquewhite;
   left: 50%;
 
 }
@@ -176,6 +175,12 @@
   text-align: left;
   margin-left: 0px;
 }
+
+.Rank-morelist p{
+  font-weight: bold;
+}
+
+
 
 .Rank-list img{
   height: 10px;
@@ -190,4 +195,14 @@
   white-space: normal; 
   line-height: 1.5;
 
+}
+
+.Rank-nickname {
+  font-weight: bold;
+  line-height: 40%;
+}
+
+.Rank-storename {
+  line-height: 40%;
+  color: #808080;
 }
