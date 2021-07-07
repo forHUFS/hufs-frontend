@@ -14,12 +14,12 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
 
     useEffect(async () => {
 
-        axios.get(`${PUBLIC_IP}/store/seoul`)
+        axios.get(`${PUBLIC_IP}/store/1`)  //seoul
             .then((res) => {
                 setData(res.data)
                 setStoreSeoul(res.data)
             })
-        axios.get(`${PUBLIC_IP}/store/global`)
+        axios.get(`${PUBLIC_IP}/store/2`) //global
             .then((res) => {
                 setStoreGlobal(res.data)
             })

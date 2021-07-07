@@ -234,6 +234,18 @@ const Rstrn = ({
     })
   }
 
+/*   const goReview = (e) => {
+    // map/info -> map/info/:name 24시해장국
+    history.push({
+      // map/info/:name/24시해장국/reviewpage
+      pathname: `${match.path}/info/${id}/ReviewPage`,
+      state: {
+        id: id,
+        name: name,
+      },
+    });
+  } */
+
   return (
 
     <div>

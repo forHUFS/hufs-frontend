@@ -72,6 +72,22 @@ function CommentList({ comments, history, match }) {
                 <>
                   {item.content}
                   <div className={styles.commentset}>
+                    <span
+                      style={{ fontSize: '12px' }}
+                      onClick={(e) => {
+                        let replyWrite = document.getElementById(
+                          `replyText-${item.id}`,
+                        );
+
+                        if (replyWrite.style.display === 'none') {
+                          replyWrite.style.display = 'block';
+                        } else {
+                          replyWrite.style.display = 'none';
+                        }
+                      }}
+                    >
+                      대댓글 쓰기
+                    </span>
                     <Popconfirm
                       title="정말로 댓글을 삭제하시겠습니까?"
                       onConfirm={(e) => onDelete(item.id)}
@@ -79,7 +95,11 @@ function CommentList({ comments, history, match }) {
                       cancelText="No"
                       value={item.id}
                     >
-                      <button className={styles.delete} value={item.id}>
+                      <button
+                        style={{ height: '12px' }}
+                        className={styles.delete}
+                        value={item.id}
+                      >
                         삭제
                       </button>
                     </Popconfirm>
@@ -101,7 +121,7 @@ function CommentList({ comments, history, match }) {
               }
               datetime={item.createAt ? item.createAt.slice(0, 10) : null}
             >
-              <span
+              {/* <span
                 style={{ cursor: 'pointer', fontWeight: 'bolder' }}
                 onClick={(e) => {
                   let replyView = document.getElementById(`reply-${item.id}`);
@@ -114,9 +134,10 @@ function CommentList({ comments, history, match }) {
                 }}
               >
                 대댓글
-              </span>
+              </span> */}
 
-              <div id={`reply-${item.id}`} style={{ display: 'none' }}>
+              {/* <div id={`reply-${item.id}`} style={{ display: 'none' }}> */}
+              <div id={`reply-${item.id}`}>
                 {comments.map((reply) => {
                   return (
                     reply.parentId === item.id && (
@@ -169,33 +190,33 @@ function CommentList({ comments, history, match }) {
                     )
                   );
                 })}
-
-                <TextArea
-                  id={`replyText-${item.id}`}
-                  className={styles.commenttextarea}
-                  size={'small'}
-                  rows={4}
-                  autoSize={{ minRows: 2, maxRows: 4 }}
-                  maxLength={200}
-                  value={state[item?.id]}
-                  type="text"
-                  placeholder="댓글을 입력하세요"
-                  onChange={(e) => {
-                    setstate({ ...state, [item.id]: e.target.value });
-                  }}
-                />
-                <Button
-                  style={{
-                    width: '100px',
-                    height: '46px',
-                    position: 'absolute',
-                  }}
-                  onClick={(e) => {
-                    onReply(state[item.id], item.id);
-                  }}
-                >
-                  댓글 입력
-                </Button>
+                <div id={`replyText-${item.id}`} style={{ display: 'none' }}>
+                  <TextArea
+                    className={styles.commenttextarea}
+                    size={'small'}
+                    rows={4}
+                    autoSize={{ minRows: 2, maxRows: 4 }}
+                    maxLength={200}
+                    value={state[item?.id]}
+                    type="text"
+                    placeholder="댓글을 입력하세요"
+                    onChange={(e) => {
+                      setstate({ ...state, [item.id]: e.target.value });
+                    }}
+                  />
+                  <Button
+                    style={{
+                      width: '100px',
+                      height: '46px',
+                      position: 'absolute',
+                    }}
+                    onClick={(e) => {
+                      onReply(state[item.id], item.id);
+                    }}
+                  >
+                    댓글 입력
+                  </Button>
+                </div>
               </div>
             </Comment>
           )
