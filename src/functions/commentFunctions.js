@@ -2,7 +2,7 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../config';
 
 export const commentSave = async (body) => {
-  await axios.post(`${PUBLIC_IP}/reply/add`, body);
+  await axios.post(`${PUBLIC_IP}/reply`, body);
 };
 
 export const commentLike = async (commentId) => {
