@@ -5,7 +5,6 @@ import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { postSave } from '../../functions/postFunctions';
-
 import { PUBLIC_IP } from '../../config';
 import { Button, Input, message, Select } from 'antd';
 import imageCompression from 'browser-image-compression';
@@ -68,14 +67,6 @@ function PostEdit(props) {
   return (
     <>
       <div id="community-main">
-        {/* <Select defaultValue="lucy" style={{ width: 120 }} onChange={e =>}>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
-        Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
-      </Select> */}
         <Input
           className="title-bar"
           type="text"

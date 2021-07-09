@@ -10,7 +10,6 @@ import useErrorHandling from '../../hooks/useErrorHandling';
 const { Column } = Table;
 function PostList({ match, history }) {
   const errorHandling = useErrorHandling();
-  const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
@@ -26,13 +25,14 @@ function PostList({ match, history }) {
     }
   }, [match.path, isLoading, board]);
 
-  useEffect(() => {
-    const sliced = posts.slice(firstIndex, lastIndex);
-    setCurrentList(sliced);
-  }, [posts, currentPage]);
-
+  // const [currentList, setCurrentList] = useState([]);
+  // useEffect(() => {
+  //   const sliced = posts.slice(firstIndex, lastIndex);
+  //   setCurrentList(sliced);
+  // }, [posts, currentPage]);
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
+
   if (isLoading) return <>loading..</>;
   if (isError) {
     return errorHandling(isError.response?.data.message);
@@ -62,10 +62,10 @@ function PostList({ match, history }) {
           <div className="bottom">
             <Pagination
               className="postpagination"
-              defaultCurrent={1}
+              defaultCurrent={currentPage}
               total={posts.length}
               onChange={(e) => setCurrentPage(e)}
-              pageSize={10}
+              pageSize={listPerPage}
               showSizeChanger={false}
             />
           </div>
