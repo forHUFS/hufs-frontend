@@ -14,7 +14,7 @@ function PostList({ match, history }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
-  const { board, isLoading, isError } = useBoard(match.path);
+  const { board, isLoading, isError } = useBoard(match.path.substring(1));
   useEffect(() => {
     if (!isError && !isLoading) {
       const postKey = board.map((post, key) => {
@@ -52,8 +52,8 @@ function PostList({ match, history }) {
             className="makepost"
             onClick={(e) =>
               history.push({
-                pathname: `${match.path}/edit`,
-                state: { detail: match.path },
+                pathname: `${match.url}/edit`,
+                state: { detail: match.url },
               })
             }
           >
@@ -87,7 +87,7 @@ export function TableBody({ currentList, match, loading }) {
             title="제목"
             key="title"
             render={(text, record) => (
-              <Link to={`${match.path}/${record.id}`}>
+              <Link to={`${match.url}/${record.id}`}>
                 {record.title.length > 25
                   ? record.title.slice(0, 25)
                   : record.title}

@@ -36,12 +36,12 @@ function PostEdit(props) {
     ).map((img) => img.getAttribute('src'));
 
     const needDelete = getUnused(uploadedImg, submittedImg); // return : 삭제해야 할 이미지 url
-    let boardId = props.location.state.detail;
+    let boardId = props.location.state.detail.substring(1);
     let body = {
       title: value.title,
       content: value.content,
     };
-    postSave(body, needDelete, boardId.substring(1))
+    postSave(body, needDelete, boardId)
       .then(() => {
         props.history.goBack();
         message.success('작성 완료');

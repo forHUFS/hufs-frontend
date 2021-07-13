@@ -10,7 +10,14 @@ function MajorPage({ match }) {
     <>
       <Switch>
         <Route exact path={match.path} component={MajorList} />
-        <Route exact path={`${match.path}/:id`} component={MajorBoard} />
+        <Route exact path={`${match.path}/:major`} component={MajorBoard} />
+        <Route exact path={`${match.path}/:major/edit`} component={MajorList} />
+        <Route exact path={`${match.path}/:major/:id`} component={MajorBoard} />
+        <Route
+          exact
+          path={`${match.path}/:major/:id/update`}
+          component={MajorBoard}
+        />
       </Switch>
     </>
   );
