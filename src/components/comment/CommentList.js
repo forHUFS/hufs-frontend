@@ -70,53 +70,59 @@ function CommentList({ comments, history, match }) {
               avatar={<Avatar icon={<UserOutlined />} />}
               content={
                 <>
-                  {item.content}
-                  <div className={styles.commentset}>
-                    <span
-                      style={{ fontSize: '12px' }}
-                      onClick={(e) => {
-                        let replyWrite = document.getElementById(
-                          `replyText-${item.id}`,
-                        );
+                  {item.deletedAt ? (
+                    '삭제된 댓글입니다.'
+                  ) : (
+                    <>
+                      {item.content}
+                      <div className={styles.commentset}>
+                        <span
+                          style={{ fontSize: '12px' }}
+                          onClick={(e) => {
+                            let replyWrite = document.getElementById(
+                              `replyText-${item.id}`,
+                            );
 
-                        if (replyWrite.style.display === 'none') {
-                          replyWrite.style.display = 'block';
-                        } else {
-                          replyWrite.style.display = 'none';
-                        }
-                      }}
-                    >
-                      대댓글 쓰기
-                    </span>
-                    <Popconfirm
-                      title="정말로 댓글을 삭제하시겠습니까?"
-                      onConfirm={(e) => onDelete(item.id)}
-                      okText="Yes"
-                      cancelText="No"
-                      value={item.id}
-                    >
-                      <button
-                        style={{ height: '12px' }}
-                        className={styles.delete}
-                        value={item.id}
-                      >
-                        삭제
-                      </button>
-                    </Popconfirm>
-                    <ReportModal
-                      type="comment"
-                      id={item.id}
-                      history={history}
-                    />
-                    <img src={like} />
-                    <button
-                      className={styles.like}
-                      value={item.id}
-                      onClick={onLike}
-                    >
-                      {item.like}
-                    </button>
-                  </div>
+                            if (replyWrite.style.display === 'none') {
+                              replyWrite.style.display = 'block';
+                            } else {
+                              replyWrite.style.display = 'none';
+                            }
+                          }}
+                        >
+                          대댓글 쓰기
+                        </span>
+                        <Popconfirm
+                          title="정말로 댓글을 삭제하시겠습니까?"
+                          onConfirm={(e) => onDelete(item.id)}
+                          okText="Yes"
+                          cancelText="No"
+                          value={item.id}
+                        >
+                          <button
+                            style={{ height: '12px' }}
+                            className={styles.delete}
+                            value={item.id}
+                          >
+                            삭제
+                          </button>
+                        </Popconfirm>
+                        <ReportModal
+                          type="comment"
+                          id={item.id}
+                          history={history}
+                        />
+                        <img src={like} />
+                        <button
+                          className={styles.like}
+                          value={item.id}
+                          onClick={onLike}
+                        >
+                          {item.like}
+                        </button>
+                      </div>{' '}
+                    </>
+                  )}
                 </>
               }
               datetime={item.createAt ? item.createAt.slice(0, 10) : null}
@@ -151,36 +157,42 @@ function CommentList({ comments, history, match }) {
                         avatar={<Avatar icon={<UserOutlined />} />}
                         content={
                           <>
-                            {reply.content}
-                            <div className={styles.commentset}>
-                              <Popconfirm
-                                title="정말로 댓글을 삭제하시겠습니까?"
-                                onConfirm={(event) => onDelete(reply.id)}
-                                okText="Yes"
-                                cancelText="No"
-                                value={reply.id}
-                              >
-                                <button
-                                  className={styles.delete}
-                                  value={reply.id}
-                                >
-                                  삭제
-                                </button>
-                              </Popconfirm>
-                              <ReportModal
-                                type="comment"
-                                id={reply.id}
-                                history={history}
-                              />
-                              <img src={like} />
-                              <button
-                                className={styles.like}
-                                value={reply.id}
-                                onClick={onLike}
-                              >
-                                {reply.like}
-                              </button>
-                            </div>
+                            {reply.deletedAt ? (
+                              '삭제된 댓글입니다.'
+                            ) : (
+                              <>
+                                {reply.content}
+                                <div className={styles.commentset}>
+                                  <Popconfirm
+                                    title="정말로 댓글을 삭제하시겠습니까?"
+                                    onConfirm={(event) => onDelete(reply.id)}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    value={reply.id}
+                                  >
+                                    <button
+                                      className={styles.delete}
+                                      value={reply.id}
+                                    >
+                                      삭제
+                                    </button>
+                                  </Popconfirm>
+                                  <ReportModal
+                                    type="comment"
+                                    id={reply.id}
+                                    history={history}
+                                  />
+                                  <img src={like} />
+                                  <button
+                                    className={styles.like}
+                                    value={reply.id}
+                                    onClick={onLike}
+                                  >
+                                    {reply.like}
+                                  </button>
+                                </div>
+                              </>
+                            )}
                           </>
                         }
                         datetime={
