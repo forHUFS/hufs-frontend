@@ -9,7 +9,8 @@ function ReportModal({ type, id, history }) {
   const { Option } = Select;
   const { TextArea } = Input;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [body, setBody] = useState({ content: 1, detail: '' });
+  const [data, setData] = useState({ content: 1, detail: '', [type]: id });
+  console.log(data);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -17,26 +18,16 @@ function ReportModal({ type, id, history }) {
     setIsModalVisible(false);
   };
   const onReport = async () => {
-    if (type === 'post') {
-      await axios
-        .post(`${PUBLIC_IP}/post/${id}/report`, body)
-        .then(() => {
-          message.success('신고가 완료되었습니다. 감사합니다.');
-        })
-        .catch((error) => {
-          errorHandling(error.response?.data.message);
-        });
-    } else if (type === 'comment') {
-      await axios
-        .post(`${PUBLIC_IP}/reply/${id}/report`, body)
-        .then(() => {
-          message.success('신고가 완료되었습니다. 감사합니다.');
-        })
-        .catch((error) => {
-          errorHandling(error.response?.data.message);
-        });
-    }
-    setBody({ content: 1, detail: '' });
+    await axios
+      .post(`${PUBLIC_IP}/report`, data)
+      .then(() => {
+        message.success('신고가 완료되었습니다. 감사합니다.');
+      })
+      .catch((error) => {
+        errorHandling(error.response?.data.message);
+      });
+
+    setData({ content: 1, detail: '' });
     setIsModalVisible(false);
   };
   return (
@@ -65,7 +56,7 @@ function ReportModal({ type, id, history }) {
           defaultValue={1}
           style={{ width: 170 }}
           onChange={(e) => {
-            setBody({ ...body, content: e });
+            setData({ ...data, content: e });
           }}
         >
           <Option value={1}>불쾌함</Option>
@@ -77,8 +68,8 @@ function ReportModal({ type, id, history }) {
         <TextArea
           placeholder="신고 상세 사유"
           rows={4}
-          value={body.detail}
-          onChange={(e) => setBody({ ...body, detail: e.target.value })}
+          value={data.detail}
+          onChange={(e) => setData({ ...data, detail: e.target.value })}
         />
       </Modal>
     </>

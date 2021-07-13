@@ -8,7 +8,11 @@ import { Card, message, PageHeader, Popconfirm, Skeleton } from 'antd';
 import styles from '../../css/PostView.module.css';
 import like from '../../image/recommend.png';
 import usePostDetail from '../../hooks/usePostDetail';
-import { postDelete, postLike, postScrap } from '../../functions/postFunctions';
+import {
+  postCommentLike,
+  postDelete,
+  postScrap,
+} from '../../functions/postFunctions';
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
 import useErrorHandling from '../../hooks/useErrorHandling';
@@ -29,7 +33,7 @@ function PostView({ match, history }) {
         errorHandling(error.response.data.message);
       });
   const onLike = () => {
-    postLike(postDetail.id)
+    postCommentLike('postId', postDetail.id)
       .then(() => {
         mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('성공');
@@ -92,7 +96,7 @@ function PostView({ match, history }) {
           />
           <div>
             <div style={{ fontSize: '12px' }}>
-              <ReportModal type="post" id={postDetail.id} history={history} />{' '}
+              <ReportModal type="postId" id={postDetail.id} history={history} />{' '}
               <div>
                 <Popconfirm
                   title="정말로 게시글을 삭제하시겠습니까?"

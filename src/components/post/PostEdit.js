@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { postSave } from '../../functions/postFunctions';
+import { imageUpload, postSave } from '../../functions/postFunctions';
 
 import { PUBLIC_IP } from '../../config';
 import { Button, Input, message } from 'antd';
@@ -180,13 +180,13 @@ function imageHandler() {
         return;
       }
 
-      await axios
-        .post(`${PUBLIC_IP}/post/img`, formData, {
-          header: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-
+      // await axios
+      //   .post(`${PUBLIC_IP}/post/img`, formData, {
+      //     header: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      imageUpload(formData)
         .then((response) => {
           this.quill.editor.insertEmbed(
             range.index,
