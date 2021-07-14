@@ -5,7 +5,7 @@ import { message } from 'antd';
 import {
   postList,
   postRemove,
-} from '../../../../_actions/reviewPost_action';
+} from '../../../_actions/reviewPost_action';
 import {
   Button,
   List,

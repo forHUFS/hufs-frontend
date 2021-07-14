@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Button, message } from 'antd';
 import {
     reviewDetail
-} from '../../../../_actions/reviewPost_action';
+} from '../../../_actions/reviewPost_action';
 import { StarFilled } from '@ant-design/icons';
 
 
@@ -80,7 +80,7 @@ function ReviewHead({ match, history }) {
                 <div style={{ paddingtBottom: '10px' }}>
                     <font color="gray" size="5" style={{ paddingLeft: '5px' }}>
                         ({detail.count})
-            </font>
+                    </font>
                 </div>
             </div>
 

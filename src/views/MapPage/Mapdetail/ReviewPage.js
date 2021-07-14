@@ -2,7 +2,7 @@ import React from 'react';
 import loadable from '@loadable/component';
 import { Route, Switch } from 'react-router-dom';
 const ReviewList = loadable(() =>
-  import('../../../components/map/reviewSection/newReviewSection/ReviewList'),
+  import('../../../components/map/reviewSection/ReviewList'),
 );
 
 function ReviewPage(props) {
