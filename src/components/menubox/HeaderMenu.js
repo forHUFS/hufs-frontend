@@ -136,7 +136,7 @@ function HeaderMenu({ setLogin, login }) {
             <SubMenu key="sub6" title="이거 모르면 바boo">
               <Menu.Item key="6">
                 <Link to="/6" onClick={onClose}>
-                  자유 공간
+                  제휴 혜택 & 꿀팁
                 </Link>
               </Menu.Item>
             </SubMenu>
