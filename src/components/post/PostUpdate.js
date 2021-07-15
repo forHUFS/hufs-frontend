@@ -8,7 +8,7 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
 import { Skeleton, Button, message } from 'antd';
 import usePostDetail from '../../hooks/usePostDetail';
-import { postUpdate } from '../../functions/postFunctions';
+import { imageUpload, postUpdate } from '../../functions/postFunctions';
 import useErrorHandling from '../../hooks/useErrorHandling';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
@@ -195,12 +195,13 @@ function imageHandler() {
 
       // this.quill.enable(false);
 
-      await axios
-        .post(`${PUBLIC_IP}/post/img`, formData, {
-          header: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+      // await axios
+      //   .post(`${PUBLIC_IP}/post/img`, formData, {
+      //     header: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      imageUpload(formData)
         .then((response) => {
           this.quill.enable(true);
           this.quill.editor.insertEmbed(
