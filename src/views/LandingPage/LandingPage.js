@@ -10,7 +10,7 @@ import CalendarList from '../../components/calendar/CalendarList';
 function LandingPage(props) {
   // const now_url = window.location.href;
   // console.log(now_url);
-  const { Default, Mobile } = useResponsive();
+  const [Default, Mobile] = useResponsive();
 
   return (
     <>
