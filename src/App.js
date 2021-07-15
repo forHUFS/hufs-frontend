@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './views/Common/Header'
-import Quick from './views/Common/Quick'
-import Footer from './views/Common/Footer'
+import Header from './views/Common/Header';
+import Quick from './views/Common/Quick';
+import Footer from './views/Common/Footer';
 import loadable from '@loadable/component';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './css/App.css';
@@ -35,7 +35,6 @@ const SearchPage = loadable(() => import('./views/SearchPage/SearchPage'));
 const MajorPage = loadable(() => import('./views/MajorPage/MajorPage'));
 
 function App() {
-
   return (
     <>
       <Router>
@@ -52,7 +51,6 @@ function App() {
           <Route path="/5" component={Post} />
           <Route path="/6" component={Post} />
           <Route path="/major" component={MajorPage} />
-          {/* <Route path="/redirect" component={SignUpModal} /> */}
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />
           <Route path="*" component={Page404} />
@@ -60,7 +58,6 @@ function App() {
 
         <Footer />
       </Router>
-
     </>
   );
 }
