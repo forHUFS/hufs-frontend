@@ -37,7 +37,7 @@ export const postSearch = async (body) => {
   });
 };
 export const imageUpload = async (formData) => {
-  await axios.post(`${PUBLIC_IP}/post/img`, formData, {
+  await axios.post(`${PUBLIC_IP}/post/image`, formData, {
     header: {
       'Content-Type': 'multipart/form-data',
     },
