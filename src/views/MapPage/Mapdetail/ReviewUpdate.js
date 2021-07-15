@@ -238,6 +238,7 @@ function imageHandler() {
 
       // this.quill.enable(false);
 
+<<<<<<< Updated upstream
       // await axios
       //   .post(`${PUBLIC_IP}/post/img`, formData, {
       //     header: {
@@ -245,6 +246,14 @@ function imageHandler() {
       //     },
       //   })
       imageUpload(formData)
+=======
+      await axios
+        .post(`${PUBLIC_IP}/post/image`, formData, {
+          header: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+>>>>>>> Stashed changes
         .then((response) => {
           this.quill.enable(true);
           this.quill.editor.insertEmbed(

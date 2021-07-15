@@ -1,7 +1,5 @@
 import React from 'react';
-import {  Button,Rate } from 'antd';
 import { useHistory } from 'react-router-dom';
-import star from './mapData/star.png'
 
 
 const MoreRank = ({name,id,index,reviewCount,reviewAverage,match}) => {

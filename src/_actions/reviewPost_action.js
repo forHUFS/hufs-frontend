@@ -106,7 +106,7 @@ export const postRemove = async (postId) => {
 // 완료
 
 export const reviewDetail = async (rstrnId) => {
-  const request = await axios.get(`${PUBLIC_IP}/store/${rstrnId}/detail`);
+  const request = await axios.get(`${PUBLIC_IP}/store/${rstrnId}`);
   if (request.status === 200) {
     return {
       type: REVIEW_DETAIL,
