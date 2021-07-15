@@ -6,20 +6,17 @@ import { UserOutlined } from '@ant-design/icons';
 import styles from '../../css/Comment.module.css';
 import like from '../../image/recommend.png';
 import TextArea from 'antd/lib/input/TextArea';
-import {
-  commentLike,
-  commentRemove,
-  commentReply,
-} from '../../functions/commentFunctions';
+import { commentRemove, commentSave } from '../../functions/commentFunctions';
 import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
-
 import { PUBLIC_IP } from '../../config';
+import { postCommentLike } from '../../functions/postFunctions';
 function CommentList({ comments, history, match }) {
   const [state, setstate] = useState({});
   const errorHandling = useErrorHandling();
   const onLike = (event) => {
-    commentLike(+event.target.value)
+    const commentId = +event.target.value;
+    postCommentLike('replyId', commentId)
       .then(() => {
         mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('추천 완료');
@@ -49,7 +46,7 @@ function CommentList({ comments, history, match }) {
       parentId: parentId,
       postId: +match.params.id,
     };
-    commentReply(reply)
+    commentSave(reply)
       .then(() => {
         mutate(`${PUBLIC_IP}/post/${+match.params.id}`);
         message.success('작성 완료');
@@ -108,7 +105,7 @@ function CommentList({ comments, history, match }) {
                           </button>
                         </Popconfirm>
                         <ReportModal
-                          type="comment"
+                          type="replyId"
                           id={item.id}
                           history={history}
                         />
@@ -178,7 +175,7 @@ function CommentList({ comments, history, match }) {
                                     </button>
                                   </Popconfirm>
                                   <ReportModal
-                                    type="comment"
+                                    type="replyId"
                                     id={reply.id}
                                     history={history}
                                   />

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import imageCompression from 'browser-image-compression';
 import { Button, Rate, message, Input } from 'antd';
+import { imageUpload } from '../../../functions/postFunctions';
 
 let uploadedImg = [];
 function ReviewEdit(props) {
@@ -87,9 +88,13 @@ function ReviewEdit(props) {
         />
         <div style={{ padding: '5px 5px' }}>
           <label style={{ fontWeight: 'bold' }}>평점 </label>
-          <Rate allowHalf value={value.score} onChange={(e) => {
-            setvalue({ ...value, score: e });
-          }} />
+          <Rate
+            allowHalf
+            value={value.score}
+            onChange={(e) => {
+              setvalue({ ...value, score: e });
+            }}
+          />
         </div>
 
         <ReactQuill
@@ -196,13 +201,13 @@ function imageHandler() {
         return;
       }
 
-      await axios
-        .post(`${PUBLIC_IP}/post/img`, formData, {
-          header: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-
+      // await axios
+      //   .post(`${PUBLIC_IP}/post/img`, formData, {
+      //     header: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      imageUpload(formData)
         .then((response) => {
           this.quill.editor.insertEmbed(
             range.index,

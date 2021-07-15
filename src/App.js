@@ -51,7 +51,6 @@ function App() {
           <Route path="/5" component={Post} />
           <Route path="/6" component={Post} />
           <Route path="/major" component={MajorPage} />
-          {/* <Route path="/redirect" component={SignUpModal} /> */}
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />
           <Route path="*" component={Page404} />

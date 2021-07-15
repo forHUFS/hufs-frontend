@@ -5,8 +5,8 @@ export const postDelete = async (postId) => {
   await axios.delete(`${PUBLIC_IP}/post/${postId}`);
 };
 
-export const postLike = async (postId) => {
-  await axios.get(`${PUBLIC_IP}/post/${postId}/addlike`);
+export const postCommentLike = async (type, id) => {
+  await axios.post(`${PUBLIC_IP}/like`, { [type]: id });
 };
 
 export const postScrap = async (postId) => {
@@ -34,6 +34,13 @@ export const postSave = async (body, needDelete, boardId) => {
 export const postSearch = async (body) => {
   await axios.get(`${PUBLIC_IP}/search`, {
     params: body, // option = titleAndContent, title, content, nick
+  });
+};
+export const imageUpload = async (formData) => {
+  await axios.post(`${PUBLIC_IP}/post/image`, formData, {
+    header: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 };
 /////////

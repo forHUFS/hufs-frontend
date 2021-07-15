@@ -9,6 +9,7 @@ import { postUpdate, postView } from '../../../_actions/reviewPost_action';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import { Skeleton, Button, Rate, message, Input } from 'antd';
+import { imageUpload } from '../../../functions/postFunctions';
 
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
@@ -105,7 +106,7 @@ function ReviewUpdate({ match, history }) {
     }
   };
 
-  useEffect(() => { }, [updated]);
+  useEffect(() => {}, [updated]);
 
   return (
     <>
@@ -124,9 +125,13 @@ function ReviewUpdate({ match, history }) {
 
             <div style={{ padding: '5px 5px' }}>
               <label style={{ fontWeight: 'bold' }}>평점 </label>
-              <Rate allowHalf value={updated.score} onChange={(e) => {
-                setUpdated({ ...updated, score: e });
-              }} />
+              <Rate
+                allowHalf
+                value={updated.score}
+                onChange={(e) => {
+                  setUpdated({ ...updated, score: e });
+                }}
+              />
             </div>
 
             <ReactQuill
@@ -145,12 +150,8 @@ function ReviewUpdate({ match, history }) {
             ></ReactQuill>
             <hr />
 
-            <div id="button-bar"
-            >
-              <Button
-                type="primary"
-                onClick={onUpdate}
-              >
+            <div id="button-bar">
+              <Button type="primary" onClick={onUpdate}>
                 수정
               </Button>
               <Button
@@ -237,12 +238,13 @@ function imageHandler() {
 
       // this.quill.enable(false);
 
-      await axios
-        .post(`${PUBLIC_IP}/post/img`, formData, {
-          header: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+      // await axios
+      //   .post(`${PUBLIC_IP}/post/img`, formData, {
+      //     header: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      imageUpload(formData)
         .then((response) => {
           this.quill.enable(true);
           this.quill.editor.insertEmbed(
