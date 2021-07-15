@@ -1,6 +1,14 @@
 import { useMediaQuery } from 'react-responsive';
 
 export default function useResponsive(params) {
+  const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 992 });
+    return isDesktop ? children : null;
+  };
+  const Tablet = ({ children }) => {
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+    return isTablet ? children : null;
+  };
   const Mobile = ({ children }) => {
     const isMobile = useMediaQuery({ maxWidth: 767 });
     return isMobile ? children : null;
@@ -10,5 +18,5 @@ export default function useResponsive(params) {
     return isNotMobile ? children : null;
   };
 
-  return { Mobile: Mobile, Default: Default };
+  return [Mobile, Desktop, Tablet, Default];
 }

@@ -6,7 +6,7 @@ import useResponsive from '../../hooks/useResponsive';
 const { SubMenu } = Menu;
 
 function Quick() {
-  const { Default } = useResponsive();
+  const [Default] = useResponsive();
 
   const handleClick = (e) => {};
 
