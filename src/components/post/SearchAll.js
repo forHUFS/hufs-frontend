@@ -8,7 +8,7 @@ const { Option } = Select;
 const { Search } = Input;
 function SearchAll(props) {
   const [keyword, setKeyword] = useInput('');
-  const [Mobile, Default] = useResponsive();
+  const { Mobile, Default } = useResponsive();
   const onSearch = () => {
     if (keyword === '') {
       return message.warn('검색 키워드를 입력해주세요.');
