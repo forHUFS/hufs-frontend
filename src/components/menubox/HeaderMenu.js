@@ -20,7 +20,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu1 = (
     <Menu>
       <Menu.Item>
-        <Link to="/1" onClick={onClose}>
+        <Link to="/board/떠들어Boo" onClick={onClose}>
           자유 공간
         </Link>
       </Menu.Item>
@@ -51,7 +51,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu4 = (
     <Menu>
       <Menu.Item>
-        <Link to="/4" onClick={onClose}>
+        <Link to="/board/학교떠난Boo" onClick={onClose}>
           졸업생 공간
         </Link>
       </Menu.Item>
@@ -60,7 +60,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu5 = (
     <Menu>
       <Menu.Item>
-        <Link to="/5" onClick={onClose}>
+        <Link to="/board/정면승Boo" onClick={onClose}>
           진로 공간
         </Link>
       </Menu.Item>
@@ -76,76 +76,79 @@ function HeaderMenu({ setLogin, login }) {
   return (
     <>
       <Mobile>
-        <MenuOutlined
-          onClick={showDrawer}
-          style={{
-            border: '1px solid grey',
-            borderRadius: 3,
-            fontSize: 24,
-            position: 'absolute',
-          }}
-        />
-        <Drawer
-          bodyStyle={{ paddingLeft: 0 }}
-          title="Hufspace"
-          placement="left"
-          closable={true}
-          onClose={onClose}
-          visible={visible}
-        >
-          {login ? (
-            <>
-              <Logout setLogin={setLogin} />
-
-              <Button type="text">
-                <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
-                  My page
-                </Link>{' '}
-              </Button>
-            </>
-          ) : (
-            <SignUp setLogin={setLogin} />
-          )}
-          <Menu
+        <div>
+          <MenuOutlined
+            onClick={showDrawer}
             style={{
-              width: 256,
-              position: 'relative',
-              left: 0,
-              top: 50,
-              display: 'block',
+              borderRadius: 3,
+              fontSize: 24,
+              top: 16,
+              left: 13,
+              position: 'absolute',
             }}
-            defaultSelectedKeys={['1']}
-            // defaultOpenKeys={['sub1']}
-            mode="inline"
+          />
+          <Drawer
+            bodyStyle={{ paddingLeft: 0 }}
+            title="Hufspace"
+            placement="left"
+            closable={true}
+            onClose={onClose}
+            visible={visible}
           >
-            <SubMenu key="sub1" title="떠들어 boo">
-              {menu1}
-            </SubMenu>
-            <SubMenu key="sub2" title="학교해 boo">
-              {menu2}
-            </SubMenu>
-            <SubMenu key="sub3" title="학교 간 boo">
-              {menu3}
-            </SubMenu>{' '}
-            <SubMenu key="sub4" title="학교 떠난 boo">
-              {menu4}
-            </SubMenu>{' '}
-            <SubMenu key="sub5" title="정면승 boo">
-              {menu5}
-            </SubMenu>{' '}
-            <SubMenu key="sub6" title="이거 모르면 바boo">
-              <Menu.Item key="6">
-                <Link to="/6" onClick={onClose}>
-                  제휴 혜택 & 꿀팁
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
-        </Drawer>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to="/">
-            <img src={logo} height={32} />
-          </Link>
+            {login ? (
+              <>
+                <Logout setLogin={setLogin} />
+
+                <Button type="text">
+                  <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
+                    My page
+                  </Link>{' '}
+                </Button>
+              </>
+            ) : (
+              <SignUp setLogin={setLogin} />
+            )}
+            <Menu
+              style={{
+                width: 256,
+                position: 'relative',
+                left: 0,
+                top: 50,
+                display: 'block',
+              }}
+              defaultSelectedKeys={['1']}
+              // defaultOpenKeys={['sub1']}
+              mode="inline"
+            >
+              <SubMenu key="sub1" title="떠들어 boo">
+                {menu1}
+              </SubMenu>
+              <SubMenu key="sub2" title="학교해 boo">
+                {menu2}
+              </SubMenu>
+              <SubMenu key="sub3" title="학교 간 boo">
+                {menu3}
+              </SubMenu>{' '}
+              <SubMenu key="sub4" title="학교 떠난 boo">
+                {menu4}
+              </SubMenu>{' '}
+              <SubMenu key="sub5" title="정면승 boo">
+                {menu5}
+              </SubMenu>{' '}
+              <SubMenu key="sub6" title="이거 모르면 바boo">
+                <Menu.Item key="6">
+                  <Link to="/board/이거모르면바Boo" onClick={onClose}>
+                    제휴 혜택 & 꿀팁
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+            </Menu>
+          </Drawer>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Link to="/">
+              <img src={logo} height={32} style={{ marginTop: 13 }} />
+            </Link>
+          </div>
         </div>
       </Mobile>
       <Default>
@@ -181,7 +184,7 @@ function HeaderMenu({ setLogin, login }) {
               <Menu mode="horizontal">
                 <Menu.Item key="mail">
                   <Dropdown overlay={menu1}>
-                    <Link to="/1">떠들어Boo</Link>
+                    <Link to="/board/떠들어Boo">떠들어Boo</Link>
                     {/* {statusCheck()} */}
                   </Dropdown>
                 </Menu.Item>
@@ -197,16 +200,16 @@ function HeaderMenu({ setLogin, login }) {
                 </Menu.Item>
                 <Menu.Item key="setting:4">
                   <Dropdown overlay={menu4}>
-                    <Link to="/4">학교 떠난 Boo</Link>
+                    <Link to="/board/학교떠난Boo">학교 떠난 Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item key="alipay">
                   <Dropdown overlay={menu5}>
-                    <Link to="/5">정면승Boo</Link>
+                    <Link to="/board/정면승Boo">정면승Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link to="/6">이거 모르면 바Boo</Link>
+                  <Link to="/board/이거모르면바Boo">이거 모르면 바Boo</Link>
                 </Menu.Item>
               </Menu>
             </Space>
