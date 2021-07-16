@@ -8,6 +8,8 @@ const ReviewEdit = loadable(() => import('./Mapdetail/ReviewEdit'));
 
 const ReviewPage = loadable(() => import('./Mapdetail/ReviewPage'));
 const ReviewUpdate = loadable(() => import('./Mapdetail/ReviewUpdate'));
+const HouseReview = loadable(() => import('./Mapdetail/HouseReview'));
+const HouseReviewUpdate = loadable(() => import('./Mapdetail/HouseTrade'));
 
 function MapPage({ match }) {
 
@@ -31,8 +33,10 @@ function MapPage({ match }) {
           path={`${match.path}/house/tradee/:id/ReviewPage`}
           component={ReviewPage}
         />
-        <Route path={`${match.path}/register`} component={ReviewEdit} />
+        <Route path={`${match.path}/store/review/register`} component={ReviewEdit} />
         <Route exact path={`${match.path}/edit`} component={ReviewUpdate} />
+        <Route path={`${match.path}/house/register`} component={HouseReview} />
+        <Route path={`${match.path}/house/edit`} component={HouseReviewUpdate} />
 
       </Switch>
 

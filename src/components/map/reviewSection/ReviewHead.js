@@ -91,16 +91,30 @@ function ReviewHead({ match, history }) {
                     style={{ border: '1px solid navy' }}
 
                     onClick={(e) => {
-                        history.push({
-                            pathname: '/3/register',
-                            //각 path에 맞게 수정해야함 .
-                            state: {
-                                detail: match.path,
-                                name: history.location.state.name,
+                        if (reviewName(match?.url.substring(3, 15)) === '맛집 리뷰') {
+                            history.push({
+                                pathname: '/store/review/register',
+                                //각 path에 맞게 수정해야함 .
+                                state: {
+                                    detail: match.path,
+                                    name: history.location.state.name,
 
-                                id: history.location.state.id
-                            },
-                        })
+                                    id: history.location.state.id
+                                },
+                            })
+                        }
+                        else {
+                            history.push({
+                                pathname: '/house/register',
+                                //각 path에 맞게 수정해야함 .
+                                state: {
+                                    detail: match.path,
+                                    name: history.location.state.name,
+
+                                    id: history.location.state.id
+                                },
+                            })
+                        }
                     }
                     }
                 >

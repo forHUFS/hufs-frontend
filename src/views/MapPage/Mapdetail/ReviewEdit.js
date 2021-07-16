@@ -88,6 +88,7 @@ function ReviewEdit(props) {
         <div style={{ padding: '5px 5px' }}>
           <label style={{ fontWeight: 'bold' }}>평점 </label>
           <Rate allowHalf value={value.score} onChange={(e) => {
+
             setvalue({ ...value, score: e });
           }} />
         </div>
@@ -141,10 +142,8 @@ const myToolbar = [
     'bold',
     'italic',
     'underline',
-    'strike',
-    // 'blockquote'
+    'strike'
   ],
-  // [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
   ['image'],
 ];
 const modules = {
@@ -159,10 +158,6 @@ const formats = [
   'italic',
   'underline',
   'strike',
-  // 'blockquote',
-  // 'list',
-  // 'bullet',
-  // 'indent',
   'link',
   'image',
 ];

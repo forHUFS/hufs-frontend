@@ -234,17 +234,17 @@ const Rstrn = ({
     })
   }
 
-/*   const goReview = (e) => {
-    // map/info -> map/info/:name 24시해장국
-    history.push({
-      // map/info/:name/24시해장국/reviewpage
-      pathname: `${match.path}/info/${id}/ReviewPage`,
-      state: {
-        id: id,
-        name: name,
-      },
-    });
-  } */
+  /*   const goReview = (e) => {
+      // map/info -> map/info/:name 24시해장국
+      history.push({
+        // map/info/:name/24시해장국/reviewpage
+        pathname: `${match.path}/info/${id}/ReviewPage`,
+        state: {
+          id: id,
+          name: name,
+        },
+      });
+    } */
 
   return (
 
@@ -258,7 +258,7 @@ const Rstrn = ({
               <h5 className="Card-h5">{roadAddress}</h5>
               <Button size="small" onClick={getMarker}>
                 위치 확인
-            </Button>
+              </Button>
             </Card>
           )
           :
@@ -268,10 +268,10 @@ const Rstrn = ({
               <h5 className="Card-h5">{roadAddress}</h5>
               <Button size="small" onClick={houseReview}>
                 리뷰 공간
-            </Button>
+              </Button>
               <Button size="small" onClick={houseTrade}>
                 거래 공간
-            </Button>
+              </Button>
             </Card>
           )
         }
