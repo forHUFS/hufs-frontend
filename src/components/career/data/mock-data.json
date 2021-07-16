@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+      "id": 1,
+      "title": "제목",
+      "content": "<p>안녕</p>",
+      "admin": false,
+      "createdAt": "2021-03-14T06:21:29.000Z",
+      "updatedAt": "2021-03-14T06:21:29.000Z",
+      "boardId": 8,
+      "userId": 1,
+      "User": {
+        "nickname": "하연"
+      }
+    },
+    {
+        "id": 2,
+        "title": "제목",
+        "content": "<p>안녕</p>",
+        "admin": false,
+        "createdAt": "2021-03-14T06:21:29.000Z",
+        "updatedAt": "2021-03-14T06:21:29.000Z",
+        "boardId": 8,
+        "userId": 1,
+        "User": {
+          "nickname": "하연"
+        }
+      },
+      {
+        "id": 3,
+        "title": "제목",
+        "content": "<p>안녕</p>",
+        "admin": false,
+        "createdAt": "2021-03-14T06:21:29.000Z",
+        "updatedAt": "2021-03-14T06:21:29.000Z",
+        "boardId": 8,
+        "userId": 1,
+        "User": {
+          "nickname": "하연"
+        }
+      }
+    ],
+    "message": ""
+  }
