@@ -93,6 +93,7 @@ function PostView({ match, history }) {
     return (
       <>
         <div
+          style={{ padding: 10 }}
           dangerouslySetInnerHTML={{ __html: postDetail.content }}
           className="board-content"
         />
@@ -141,8 +142,18 @@ function PostView({ match, history }) {
   function insideCard() {
     return (
       <>
-        <div style={{ fontWeight: 'bold', fontSize: '22px' }}>
-          {postDetail.title}
+        <div
+          style={{
+            display: 'inline-block',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: '22px',
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-line',
+            overflowWrap: 'break-word',
+          }}
+        >
+          <p>{postDetail.title}</p>
         </div>
         <span className={styles.like}>
           <img src={like} />
