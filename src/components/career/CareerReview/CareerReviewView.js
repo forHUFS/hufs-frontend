@@ -7,7 +7,6 @@ function CareerReviewView(props) {
     const {id} = props.match.params;
 
     const [data,setData] = useState(mdata.data);
-    console.log(id)
 
     useEffect(() => {
         for (var i = 0; i < data.length; i++) {
