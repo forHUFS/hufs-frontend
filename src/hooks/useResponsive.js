@@ -18,5 +18,5 @@ export default function useResponsive(params) {
     return isNotMobile ? children : null;
   };
 
-  return [Mobile, Desktop, Tablet, Default];
+  return { Mobile: Mobile, Desktop: Desktop, Tablet: Tablet, Default: Default };
 }
