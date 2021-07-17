@@ -8,18 +8,11 @@ import useErrorHandling from '../../hooks/useErrorHandling';
 const { Option } = Select;
 const { Search } = Input;
 function SearchAll(props) {
-<<<<<<< HEAD
-  const [keyword, setKeyword] = useInput('');
-  const { Mobile, Default } = useResponsive();
-  const onSearch = () => {
-=======
-
   const history = useHistory();
   const errorHandling = useErrorHandling();
 
   const { Mobile, Default } = useResponsive();
   const onSearch = (keyword) => {
->>>>>>> main
     if (keyword === '') {
       return message.warn('검색 키워드를 입력해주세요.');
     }

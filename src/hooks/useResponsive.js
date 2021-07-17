@@ -25,8 +25,4 @@ export default function useResponsive(params) {
     Default: Default,
     isMobile: isMobile,
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 }
