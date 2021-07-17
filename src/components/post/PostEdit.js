@@ -14,7 +14,6 @@ import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
 let uploadedImg = [];
 function PostEdit(props) {
-  console.log(props);
   const { user, isError, isLoading } = useUserInfo();
   const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
