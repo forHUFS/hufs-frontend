@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import useInput from '../../hooks/useInput';
 import { withRouter } from 'react-router';
 import { Button, Input, message } from 'antd';
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
 import { commentSave } from '../../functions/commentFunctions';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import useResponsive from '../../hooks/useResponsive';
 function CommentEdit({ history, match, postDetail }) {
   const { TextArea } = Input;
+  const { Mobile, isMobile, Default } = useResponsive();
   const errorHandling = useErrorHandling();
-  const [content, onChange, setContent] = useInput('');
+  const [content, setContent] = useState();
+  console.log(isMobile);
   const onSubmit = (e) => {
     e.preventDefault();
     if (content.trim().length === 0) {
@@ -42,13 +44,19 @@ function CommentEdit({ history, match, postDetail }) {
         type="text"
         placeholder="댓글을 입력하세요"
         value={content}
-        onChange={onChange}
+        onChange={(e) => setContent(e.target.value)}
       />
       <Button
-        style={{ width: '120px', height: '113px', position: 'absolute' }}
+        size={'small'}
+        style={{
+          right: '1em',
+          minWidth: '4em',
+          height: '113px',
+          position: 'absolute',
+        }}
         onClick={onSubmit}
       >
-        댓글 입력
+        입력
       </Button>
     </div>
   );

@@ -14,6 +14,7 @@ import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
 let uploadedImg = [];
 function PostEdit(props) {
+  console.log(props);
   const { user, isError, isLoading } = useUserInfo();
   const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
@@ -37,12 +38,12 @@ function PostEdit(props) {
     ).map((img) => img.getAttribute('src'));
 
     const needDelete = getUnused(uploadedImg, submittedImg); // return : 삭제해야 할 이미지 url
-    let boardId = props.location.state.detail;
+    let boardId = props.location.state.detail; // 수정필요 boardTitle
     let body = {
       title: value.title,
       content: value.content,
     };
-    postSave(body, needDelete, boardId.substring(1))
+    postSave(body, needDelete, 1)
       .then(() => {
         props.history.goBack();
         message.success('작성 완료');
