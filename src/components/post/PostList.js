@@ -104,7 +104,7 @@ export function TableBody({ currentList, match, loading }) {
               itemLayout="horizontal"
               dataSource={currentList}
               renderItem={(record) => (
-                <div style={{ cursor: 'pointer' }}>
+                <Link to={`${match.params.title}/${record.id}`}>
                   <List.Item
                     style={{
                       borderBottom: '.5px solid #e6e6e6',
@@ -115,7 +115,7 @@ export function TableBody({ currentList, match, loading }) {
                   >
                     <List.Item.Meta
                       title={
-                        <Link to={`${match.params.title}/${record.id}`}>
+                        <>
                           {record.title.length > 25
                             ? record.title.slice(0, 25)
                             : record.title}
@@ -126,11 +126,12 @@ export function TableBody({ currentList, match, loading }) {
                             </span>
                           ) : null}
                           {}
-                        </Link>
+                        </>
                       }
                     />
                   </List.Item>
-                </div>
+                </Link>
+
               )}
             />
             <Column

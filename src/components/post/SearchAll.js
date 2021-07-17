@@ -8,6 +8,7 @@ import useErrorHandling from '../../hooks/useErrorHandling';
 const { Option } = Select;
 const { Search } = Input;
 function SearchAll(props) {
+
   const history = useHistory();
   const errorHandling = useErrorHandling();
 

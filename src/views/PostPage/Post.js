@@ -10,8 +10,8 @@ function Post({ match }) {
     <>
       <Switch>
         <Route exact path={`${match.path}/:title`} component={PostList} />
-        <Route exact path={`${match.path}/:title/:id`} component={PostView} />
         <Route exact path={`${match.path}/:title/edit`} component={PostEdit} />
+        <Route exact path={`${match.path}/:title/:id`} component={PostView} />
         <Route
           exact
           path={`${match.path}/:title/:id/update`}
