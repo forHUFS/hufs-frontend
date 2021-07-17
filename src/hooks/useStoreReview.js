@@ -44,7 +44,7 @@ function useStoreReview (rstrnId) {
         }
       });
 
-    const { data, error } = useSWR(`${PUBLIC_IP}/store/${rstrnId}/review`, fetcher)
+    const { data, error } = useSWR(`${PUBLIC_IP}/store/${rstrnId}/reviews`, fetcher)
     let preResult = data;
 
     if (data !== undefined) {

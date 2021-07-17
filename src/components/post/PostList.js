@@ -131,6 +131,7 @@ export function TableBody({ currentList, match, loading }) {
                     />
                   </List.Item>
                 </Link>
+
               )}
             />
             <Column
