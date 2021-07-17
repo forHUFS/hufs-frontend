@@ -131,6 +131,10 @@ export function TableBody({ currentList, match, loading }) {
                     />
                   </List.Item>
                 </Link>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
               )}
             />
             <Column
