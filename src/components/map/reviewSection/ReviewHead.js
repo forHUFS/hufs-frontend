@@ -91,6 +91,7 @@ function ReviewHead({ match, history }) {
                     style={{ border: '1px solid navy' }}
 
                     onClick={(e) => {
+                        console.log(history)
                         if (reviewName(match?.url.substring(3, 15)) === '맛집 리뷰') {
                             history.push({
                                 pathname: '/store/review/register',

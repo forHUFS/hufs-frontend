@@ -9,7 +9,7 @@ const ReviewEdit = loadable(() => import('./Mapdetail/ReviewEdit'));
 const ReviewPage = loadable(() => import('./Mapdetail/ReviewPage'));
 const ReviewUpdate = loadable(() => import('./Mapdetail/ReviewUpdate'));
 const HouseReview = loadable(() => import('./Mapdetail/HouseReview'));
-const HouseReviewUpdate = loadable(() => import('./Mapdetail/HouseTrade'));
+const HouseReviewUpdate = loadable(() => import('./Mapdetail/HouseReviewUpdate'));
 
 function MapPage({ match }) {
 
@@ -30,7 +30,7 @@ function MapPage({ match }) {
         />
         <Route
           exact
-          path={`${match.path}/house/tradee/:id/ReviewPage`}
+          path={`${match.path}/house/tradee/:id/TradePage`}
           component={ReviewPage}
         />
         <Route path={`${match.path}/store/review/register`} component={ReviewEdit} />
