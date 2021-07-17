@@ -16,6 +16,7 @@ import styles from '../../css/Comment.module.css';
 import like from '../../image/recommend.png';
 import TextArea from 'antd/lib/input/TextArea';
 import { LikeOutlined } from '@ant-design/icons';
+
 import { commentRemove, commentSave } from '../../functions/commentFunctions';
 import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
@@ -218,6 +219,7 @@ function CommentList({ comments, history, match }) {
                           </button>
                         </div>{' '}
                       </Default>
+
                     </>
                   )}
                 </>

@@ -11,7 +11,6 @@ function LandingPage(props) {
   // const now_url = window.location.href;
   // console.log(now_url);
   const { Mobile, Default } = useResponsive();
-
   return (
     <>
       <Mobile>

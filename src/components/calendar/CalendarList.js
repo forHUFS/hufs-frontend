@@ -32,6 +32,7 @@ function CalendarList() {
             <Typography.Text>[{item.Campus.name}]</Typography.Text>{' '}
             <Typography.Text>[{item.ScholarshipOption.name}]</Typography.Text>{' '}
             <span
+
               style={{
                 display: 'inline-block',
                 fontWeight: 'bold',
