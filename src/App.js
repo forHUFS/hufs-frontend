@@ -17,6 +17,7 @@ import './css/User.css';
 import './css/Slide.css';
 import './css/Rule.css';
 import './css/Card.css';
+import './css/Career.css';
 const Post = loadable(() => import('./views/PostPage/Post'));
 const LandingPage = loadable(() => import('./views/LandingPage/LandingPage'));
 const MyPage = loadable(() => import('./views/MyPage/MyPage'));
@@ -33,6 +34,7 @@ const EmailAuthPage = loadable(() =>
 const MapPage = loadable(() => import('./views/MapPage/MapPage'));
 const SearchPage = loadable(() => import('./views/SearchPage/SearchPage'));
 const MajorPage = loadable(() => import('./views/MajorPage/MajorPage'));
+const CareerPage = loadable(() => import('./views/CareerPage/CareerPage'));
 
 function App() {
   return (
@@ -44,12 +46,10 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/register" component={SignUpModal} />
           <Route exact path="/search" component={SearchPage} />
-          <Route path="/1" component={Post} />
+          <Route path="/board" component={Post} />
           <Route path="/2" component={CalendarPage} />
           <Route path="/3" component={MapPage} />
-          <Route path="/4" component={Post} />
-          <Route path="/5" component={Post} />
-          <Route path="/6" component={Post} />
+          <Route path="/career" component={CareerPage} />
           <Route path="/major" component={MajorPage} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />

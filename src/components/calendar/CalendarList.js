@@ -32,12 +32,7 @@ function CalendarList() {
             <Typography.Text>[{item.Campus.name}]</Typography.Text>{' '}
             <Typography.Text>[{item.ScholarshipOption.name}]</Typography.Text>{' '}
             <span
-              style={{ cursor: 'pointer' }}
-              onClick={(e) => window.open(item.link)}
-            >
-              {item.title.substring(0, 18)}...
-            </span>{' '}
-            <span
+
               style={{
                 display: 'inline-block',
                 fontWeight: 'bold',
@@ -48,6 +43,12 @@ function CalendarList() {
                 ? null
                 : `D ${dDayCheck(item.ScholarshipDate.date)}`}
             </span>
+            <span
+              style={{ cursor: 'pointer' }}
+              onClick={(e) => window.open(item.link)}
+            >
+              {item.title.substring(0, 18)}...
+            </span>{' '}
           </List.Item>
         )}
       />

@@ -8,14 +8,16 @@ const PostUpdate = loadable(() => import('../../components/post/PostUpdate'));
 function Post({ match }) {
   return (
     <>
-
       <Switch>
-        <Route exact path={`${match.path}/edit`} component={PostEdit} />
-        <Route exact path={`${match.path}/:id`} component={PostView} />
-        <Route exact path={`${match.path}/:id/update`} component={PostUpdate} />
-        <Route exact path={match.path} component={PostList} />
+        <Route exact path={`${match.path}/:title`} component={PostList} />
+        <Route exact path={`${match.path}/:title/edit`} component={PostEdit} />
+        <Route exact path={`${match.path}/:title/:id`} component={PostView} />
+        <Route
+          exact
+          path={`${match.path}/:title/:id/update`}
+          component={PostUpdate}
+        />
       </Switch>
-
     </>
   );
 }

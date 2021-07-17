@@ -1,10 +1,8 @@
 import React from 'react';
 import {  Rate } from 'antd';
 import { useHistory } from 'react-router-dom';
-import star from './mapData/star.png'
 
-
-const Rank = ({title,content,score,createdAt,storeId,User,index,storeName,match}) => {
+const RecentReview = ({title,content,score,createdAt,storeId,User,index,storeName,match}) => {
     const history = useHistory();
     
      return (
@@ -33,4 +31,4 @@ const Rank = ({title,content,score,createdAt,storeId,User,index,storeName,match}
 
 }
 
-export default Rank;
+export default RecentReview;
