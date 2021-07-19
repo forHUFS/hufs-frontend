@@ -16,9 +16,11 @@ import {
 import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import useResponsive from '../../hooks/useResponsive';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 function PostView({ match, history }) {
+  const { Mobile, Default } = useResponsive();
   const postId = +match.params.id;
   const { postDetail, isLoading, isError } = usePostDetail(postId);
   const errorHandling = useErrorHandling();
@@ -58,81 +60,10 @@ function PostView({ match, history }) {
     return errorHandling(isError.response?.data.message);
   }
   return (
-    <div className={styles.communitymain}>
-      <div className={styles.communitybox}>
-        <Card
-          title={
-            <>
-              <div style={{ fontWeight: 'bold', fontSize: '22px' }}>
-                {postDetail.title}
-              </div>
-              <span className={styles.like}>
-                <img src={like} />
-                <span className={styles.recommend} onClick={onLike}>
-                  {postDetail.like}
-                </span>
-              </span>
-              <div className={styles.postinfo}>
-                {postDetail.User === null ? (
-                  <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
-                ) : (
-                  <span style={{ fontSize: '13px' }}>
-                    {postDetail.User.nickname}
-                  </span>
-                )}
-                <span style={{ marginLeft: '24px', fontSize: '12px' }}>
-                  {postDetail.createdAt?.slice(0, 10)}
-                </span>
-                <span style={{ marginLeft: '24px', fontSize: '12px' }}>
-                  글 번호 {postDetail.id}
-                </span>
-              </div>
-            </>
-          }
-        >
-          <div
-            dangerouslySetInnerHTML={{ __html: postDetail.content }}
-            className="board-content"
-          />
-          <div>
-            <div style={{ fontSize: '12px' }}>
-              <ReportModal type="postId" id={postDetail.id} history={history} />{' '}
-              <div>
-                <Popconfirm
-                  title="정말로 게시글을 삭제하시겠습니까?"
-                  onConfirm={onDelete}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <span
-                    style={{
-                      cursor: 'pointer',
-                      float: 'left',
-                      marginRight: '12px',
-                    }}
-                  >
-                    삭제
-                  </span>
-                </Popconfirm>
-                <span
-                  onClick={onScrap}
-                  style={{
-                    cursor: 'pointer',
-                    float: 'right',
-                    marginLeft: '12px',
-                  }}
-                >
-                  스크랩
-                </span>
-              </div>{' '}
-              <Link to={`${postDetail.id}/update`}>
-                <span>수정</span>
-              </Link>
-            </div>{' '}
-          </div>
-          <div>
-            <hr />
-          </div>
+    <>
+      <Mobile>
+        <Card style={{ marginTop: 40 }} title={insideCard()}>
+          {postBox()}
           <CommentList
             history={history}
             comments={postDetail.Replies ? postDetail.Replies : []}
@@ -140,9 +71,112 @@ function PostView({ match, history }) {
           />
           <CommentEdit history={history} match={match} />
         </Card>
-      </div>
-    </div>
+      </Mobile>
+      <Default>
+        <div className={styles.communitymain}>
+          <div className={styles.communitybox}>
+            <Card title={insideCard()}>
+              {postBox()}
+              <CommentList
+                history={history}
+                comments={postDetail.Replies ? postDetail.Replies : []}
+                match={match}
+              />
+              <CommentEdit history={history} match={match} />
+            </Card>
+          </div>
+        </div>{' '}
+      </Default>
+    </>
   );
+  function postBox() {
+    return (
+      <>
+        <div
+          style={{ padding: 10 }}
+          dangerouslySetInnerHTML={{ __html: postDetail.content }}
+          className="board-content"
+        />
+        <div>
+          <div style={{ fontSize: '12px' }}>
+            <ReportModal type="postId" id={postDetail.id} history={history} />{' '}
+            <div>
+              <Popconfirm
+                title="정말로 게시글을 삭제하시겠습니까?"
+                onConfirm={onDelete}
+                okText="Yes"
+                cancelText="No"
+              >
+                <span
+                  style={{
+                    cursor: 'pointer',
+                    float: 'left',
+                    marginRight: '12px',
+                  }}
+                >
+                  삭제
+                </span>
+              </Popconfirm>
+              <span
+                onClick={onScrap}
+                style={{
+                  cursor: 'pointer',
+                  float: 'right',
+                  marginLeft: '12px',
+                }}
+              >
+                스크랩
+              </span>
+            </div>{' '}
+            <Link to={`${postDetail.id}/update`}>
+              <span>수정</span>
+            </Link>
+          </div>{' '}
+        </div>
+        <div>
+          <hr />
+        </div>
+      </>
+    );
+  }
+  function insideCard() {
+    return (
+      <>
+        <div
+          style={{
+            display: 'inline-block',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: '22px',
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-line',
+            overflowWrap: 'break-word',
+          }}
+        >
+          <p>{postDetail.title}</p>
+        </div>
+        <span className={styles.like}>
+          <img src={like} />
+          <span className={styles.recommend} onClick={onLike}>
+            {postDetail.like}
+          </span>
+        </span>
+        <div className={styles.postinfo}>
+          {postDetail.User === null ? (
+            <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
+          ) : (
+            <span style={{ fontSize: '13px' }}>{postDetail.User.nickname}</span>
+          )}
+          <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+            {postDetail.createdAt?.slice(0, 10)}
+          </span>
+          <span style={{ marginLeft: '24px', fontSize: '12px' }}>
+            글 번호 {postDetail.id}
+          </span>
+        </div>
+      </>
+    );
+  }
 }
 
 export default withRouter(PostView);

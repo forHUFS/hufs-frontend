@@ -32,9 +32,12 @@ export const postSave = async (body, needDelete, boardId) => {
   }
 };
 export const postSearch = async (body) => {
-  await axios.get(`${PUBLIC_IP}/search`, {
-    params: body, // option = titleAndContent, title, content, nick
-  });
+  const response = await axios
+    .get(`${PUBLIC_IP}/search`, {
+      params: body, // option = titleAndContent, title, content, nick
+    })
+    .then((res) => res.data.data.reverse());
+  return response;
 };
 export const imageUpload = async (formData) => {
   await axios.post(`${PUBLIC_IP}/post/image`, formData, {

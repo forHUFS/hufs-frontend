@@ -73,6 +73,12 @@ const MapContainer = ({ match }) => {
 
   
   function sortScoreByAsc() {
+    for (var i = 0; i < data.data.length; i++) {
+      if (data.data[i].reviewAverage == null) {
+        data.data[i].reviewAverage = (0).toFixed(1);
+      }
+    }
+    
     setIshidden(true)
     const orderBy = _.orderBy(data.data, ['reviewAverage'], ['desc']);
     setRanker(orderBy);

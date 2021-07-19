@@ -10,7 +10,6 @@ function ReportModal({ type, id, history }) {
   const { TextArea } = Input;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [data, setData] = useState({ content: 1, detail: '', [type]: id });
-  console.log(data);
   const showModal = () => {
     setIsModalVisible(true);
   };

@@ -34,7 +34,7 @@ export const postView = async (postId) => {
 };
 // 완료
 export const postList = async (rstrnId) => {
-  const request = await axios.get(`${PUBLIC_IP}/store/${rstrnId}/review`, {
+  const request = await axios.get(`${PUBLIC_IP}/store/${rstrnId}/reviews`, {
     withCredentials: true,
   });
   if (request.status === 200) {
