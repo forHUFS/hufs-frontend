@@ -9,7 +9,7 @@ import { deleteScrap } from '../../functions/postFunctions';
 function UserScrap() {
   const { Column } = Table;
   const { scrapData, isLoading, isError } = useScrap();
-
+  console.log(scrapData);
   const onRemove = (recordId) => {
     deleteScrap(recordId)
       .then(() => {
@@ -47,7 +47,7 @@ function UserScrap() {
           title="제목"
           key="content"
           render={(text, record) => (
-            <Link to={`1/${record?.Post?.id}`}>
+            <Link to={`board/${record?.Post?.board.title}/${record?.Post?.id}`}>
               {record.Post ? (
                 record.Post?.title.slice(0, 25)
               ) : (
