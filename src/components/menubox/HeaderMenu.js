@@ -20,7 +20,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu1 = (
     <Menu>
       <Menu.Item>
-        <Link to="/board/떠들어Boo" onClick={onClose}>
+        <Link to="/board/자유공간" onClick={onClose}>
           자유 공간
         </Link>
       </Menu.Item>
@@ -29,7 +29,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu2 = (
     <Menu>
       <Menu.Item>
-        <Link to="/2" onClick={onClose}>
+        <Link to="/scholarship" onClick={onClose}>
           장학 공간
         </Link>
       </Menu.Item>
@@ -53,7 +53,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu4 = (
     <Menu>
       <Menu.Item>
-        <Link to="/board/학교떠난Boo" onClick={onClose}>
+        <Link to="/board/졸업생공간" onClick={onClose}>
           졸업생 공간
         </Link>
       </Menu.Item>
@@ -62,7 +62,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu5 = (
     <Menu>
       <Menu.Item>
-        <Link to="/board/정면승Boo" onClick={onClose}>
+        <Link to="/board/진로공간" onClick={onClose}>
           진로 공간
         </Link>
       </Menu.Item>
@@ -139,7 +139,7 @@ function HeaderMenu({ setLogin, login }) {
               </SubMenu>{' '}
               <SubMenu key="sub6" title="이거 모르면 바boo">
                 <Menu.Item key="6">
-                  <Link to="/board/이거모르면바Boo" onClick={onClose}>
+                  <Link to="/board/제휴공간" onClick={onClose}>
                     제휴 혜택 & 꿀팁
                   </Link>
                 </Menu.Item>
@@ -186,13 +186,13 @@ function HeaderMenu({ setLogin, login }) {
               <Menu mode="horizontal">
                 <Menu.Item key="mail">
                   <Dropdown overlay={menu1}>
-                    <Link to="/board/떠들어Boo">떠들어Boo</Link>
+                    <Link to="/board/자유공간">떠들어Boo</Link>
                     {/* {statusCheck()} */}
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item key="app">
                   <Dropdown overlay={menu2}>
-                    <Link to="/2">학교 해Boo</Link>
+                    <Link to="/scholarship">학교 해Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item>
@@ -202,16 +202,16 @@ function HeaderMenu({ setLogin, login }) {
                 </Menu.Item>
                 <Menu.Item key="setting:4">
                   <Dropdown overlay={menu4}>
-                    <Link to="/board/학교떠난Boo">학교 떠난 Boo</Link>
+                    <Link to="/board/졸업생공간">학교 떠난 Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item key="alipay">
                   <Dropdown overlay={menu5}>
-                    <Link to="/board/정면승Boo">정면승Boo</Link>
+                    <Link to="/board/진로공간">정면승Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link to="/board/이거모르면바Boo">이거 모르면 바Boo</Link>
+                  <Link to="/board/제휴공간">이거 모르면 바Boo</Link>
                 </Menu.Item>
               </Menu>
             </Space>
