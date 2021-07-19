@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Switch, withRouter } from 'react-router-dom';
-import { List, message, Skeleton, Pagination } from 'antd';
+import { List, message, Skeleton, Pagination, Spin } from 'antd';
 import { Button, Table } from 'antd';
 import PostSearch from './PostSearch';
 import PostSub from './PostSub';
@@ -8,6 +8,7 @@ import useResponsive from '../../hooks/useResponsive';
 import { findBoardName } from './PostSub';
 import useBoard from '../../hooks/useBoard';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import useUserInfo from '../../hooks/useUserInfo';
 const { Column } = Table;
 function PostList({ match, history }) {
   const { Mobile, Default } = useResponsive();
@@ -17,6 +18,8 @@ function PostList({ match, history }) {
   const [posts, setPosts] = useState([]);
   const [loading, setloading] = useState(false);
   const { board, isLoading, isError } = useBoard(match.params.title);
+  const { user } = useUserInfo();
+
   useEffect(() => {
     if (!isError && !isLoading) {
       const postKey = board.map((post, key) => {
@@ -34,8 +37,32 @@ function PostList({ match, history }) {
   // }, [posts, currentPage]);
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
-
-  if (isLoading) return <>loading..</>;
+  const majorAuthCheck = () => {
+    if (isMajorBoard === true && majorAuthenticated === false) {
+      message.warn('주 전공, 이중 전공이 아니시면 글 작성이 불가능합니다.');
+      return;
+    }
+    history.push({
+      pathname: `${match.params.title}/edit`,
+      state: { detail: match.params.title },
+    });
+  };
+  if (isLoading)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Spin style={{ paddingTop: 300 }} tip="로딩 중입니다."></Spin>
+      </div>
+    );
+  const isMajorBoard = match.url.substring(1, 6) === 'major';
+  const majorAuthenticated = [
+    user?.DoubleMajor.name,
+    user?.MainMajor.name,
+  ].includes(match.params.title);
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
@@ -54,12 +81,9 @@ function PostList({ match, history }) {
         </div>
         <Button
           style={{ float: 'right', marginTop: 8 }}
-          onClick={(e) =>
-            history.push({
-              pathname: `${match.params.title}/edit`,
-              state: { detail: match.params.title },
-            })
-          }
+          onClick={(e) => {
+            majorAuthCheck();
+          }}
         >
           글 작성
         </Button>
@@ -76,12 +100,9 @@ function PostList({ match, history }) {
             />
             <Button
               className="makepost"
-              onClick={(e) =>
-                history.push({
-                  pathname: `${match.params.title}/edit`,
-                  state: { detail: match.params.title },
-                })
-              }
+              onClick={(e) => {
+                majorAuthCheck();
+              }}
             >
               글 작성
             </Button>

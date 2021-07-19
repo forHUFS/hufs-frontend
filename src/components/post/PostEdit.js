@@ -18,6 +18,7 @@ function PostEdit(props) {
   const { isMobile, Default, Mobile } = useResponsive();
   const { Option } = Select;
   const { user, isError, isLoading } = useUserInfo();
+
   const isMajorBoard = props.match.url.substring(1, 6) === 'major';
   const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
@@ -69,6 +70,10 @@ function PostEdit(props) {
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
+  if (isLoading) {
+    return <>로딩</>;
+  }
+
   if (isMobile) {
     return (
       <>
@@ -98,7 +103,7 @@ function PostEdit(props) {
             {/* <Checkbox
               style={{ margin: 5 }}
               onChange={(e) => console.log(e.target.checked)}
-            >
+              >
               공지사항으로 등록
             </Checkbox> */}
           </div>
