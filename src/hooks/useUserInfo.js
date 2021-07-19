@@ -12,7 +12,6 @@ export default function useUserInfo(params) {
       .then((response) => response.data.data);
 
   const { data, error } = useSWR(`${PUBLIC_IP}/user`, fetcher);
-
   return {
     user: data,
     isLoading: !error && !data,

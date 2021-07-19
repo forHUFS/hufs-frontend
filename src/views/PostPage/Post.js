@@ -1,6 +1,7 @@
 import React from 'react';
 import loadable from '@loadable/component';
 import { Route, Switch } from 'react-router-dom';
+import majorAuth from '../../hoc/majorAuth';
 const PostEdit = loadable(() => import('../../components/post/PostEdit'));
 const PostView = loadable(() => import('../../components/post/PostView'));
 const PostList = loadable(() => import('../../components/post/PostList'));
