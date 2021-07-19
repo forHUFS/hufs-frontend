@@ -46,7 +46,7 @@ function App() {
           <Route exact path="/register" component={SignUpModal} />
           <Route exact path="/search" component={SearchPage} />
           <Route path="/board" component={Post} />
-          <Route path="/2" component={CalendarPage} />
+          <Route path="/scholarship" component={CalendarPage} />
           <Route path="/3" component={MapPage} />
           <Route path="/career" component={CareerPage} />
           <Route path="/major" component={Post} />

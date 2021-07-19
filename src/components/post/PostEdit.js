@@ -67,6 +67,13 @@ function PostEdit(props) {
         .catch(props.history.goBack());
     }
   };
+  const majorAuthenticated = [
+    user?.DoubleMajor.name,
+    user?.MainMajor.name,
+  ].includes(props.match.params.title);
+  if (isMajorBoard === true && majorAuthenticated === false) {
+    props.history.goBack();
+  }
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
@@ -174,7 +181,7 @@ function PostEdit(props) {
             </label>
 
             <Select
-              defaultValue="자유"
+              defaultValue="선택"
               style={{ width: 120 }}
               onChange={(e) => setvalue({ ...value, header: e })}
             >
