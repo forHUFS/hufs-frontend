@@ -160,13 +160,16 @@ table tr td:nth-child(5) {
 }
 .comment-textarea textarea {
   height: 100% !important;
-  min-height: 100% !important;
+  /* min-height: 100% !important; */
+  min-height: 80px !important;
   max-height: none !important;
   overflow-y: scroll !important;
 }
 .comment-input button {
   width: 10% !important ;
+  /* height: 90% !important; */
   height: 90% !important;
+  min-height: 80px !important;
 }
 hr {
   border: 1px solid var(--navy-color);
