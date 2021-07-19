@@ -12,7 +12,6 @@ const { Column } = Table;
 function PostList({ match, history }) {
   const { Mobile, Default } = useResponsive();
   const errorHandling = useErrorHandling();
-  const [currentList, setCurrentList] = useState([]);
   const [listPerPage, setListPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [posts, setPosts] = useState([]);
@@ -28,13 +27,14 @@ function PostList({ match, history }) {
     }
   }, [match.params.title, isLoading, board]);
 
-  useEffect(() => {
-    const sliced = posts.slice(firstIndex, lastIndex);
-    setCurrentList(sliced);
-  }, [posts, currentPage]);
-
+  // const [currentList, setCurrentList] = useState([]);
+  // useEffect(() => {
+  //   const sliced = posts.slice(firstIndex, lastIndex);
+  //   setCurrentList(sliced);
+  // }, [posts, currentPage]);
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
+
   if (isLoading) return <>loading..</>;
   if (isError) {
     return errorHandling(isError.response?.data.message);
@@ -52,6 +52,17 @@ function PostList({ match, history }) {
             loading={loading}
           />
         </div>
+        <Button
+          style={{ float: 'right', marginTop: 8 }}
+          onClick={(e) =>
+            history.push({
+              pathname: `${match.params.title}/edit`,
+              state: { detail: match.params.title },
+            })
+          }
+        >
+          글 작성
+        </Button>
       </Mobile>
       <Default>
         <table className="community-main">
@@ -131,7 +142,6 @@ export function TableBody({ currentList, match, loading }) {
                     />
                   </List.Item>
                 </Link>
-
               )}
             />
             <Column
