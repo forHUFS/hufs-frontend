@@ -11,7 +11,6 @@ function CommentEdit({ history, match, postDetail }) {
   const { Mobile, isMobile, Default } = useResponsive();
   const errorHandling = useErrorHandling();
   const [content, setContent] = useState();
-  console.log(isMobile);
   const onSubmit = (e) => {
     e.preventDefault();
     if (content.trim().length === 0) {

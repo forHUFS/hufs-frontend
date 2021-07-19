@@ -54,6 +54,9 @@ export default function useErrorHandling() {
       case 'QUERY_OPTION':
         message.error('옵션을 다시 선택해주세요.');
         break;
+      case 'RESOURCE_NOT_FOUND':
+        message.error('검색 결과가 존재하지 않습니다.');
+        break;
       default:
         message.error('알 수 없는 에러');
         break;

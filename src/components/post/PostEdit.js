@@ -4,18 +4,21 @@ import 'react-quill/dist/quill.snow.css';
 import { useBeforeunload } from 'react-beforeunload';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { imageUpload, postSave } from '../../functions/postFunctions';
-
+import { postSave } from '../../functions/postFunctions';
 import { PUBLIC_IP } from '../../config';
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Select } from 'antd';
 import imageCompression from 'browser-image-compression';
 import useUserInfo from '../../hooks/useUserInfo';
 import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import Checkbox from 'antd/lib/checkbox/Checkbox';
+import useResponsive from '../../hooks/useResponsive';
 let uploadedImg = [];
 function PostEdit(props) {
-  console.log(props);
+  const { isMobile, Default, Mobile } = useResponsive();
+  const { Option } = Select;
   const { user, isError, isLoading } = useUserInfo();
+  const isMajorBoard = props.match.url.substring(1, 6) === 'major';
   const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
     e.preventDefault();
@@ -23,7 +26,7 @@ function PostEdit(props) {
       axios.post(`${PUBLIC_IP}/post/back`, uploadedImg);
     };
   });
-  const [value, setvalue] = useState({ title: '', content: '' });
+  const [value, setvalue] = useState({ title: '', content: '', header: '' });
   const onSubmit = (e) => {
     e.preventDefault();
     if (value.title.trim().length === 0) {
@@ -38,12 +41,12 @@ function PostEdit(props) {
     ).map((img) => img.getAttribute('src'));
 
     const needDelete = getUnused(uploadedImg, submittedImg); // return : 삭제해야 할 이미지 url
-    let boardId = props.location.state.detail; // 수정필요 boardTitle
     let body = {
       title: value.title,
       content: value.content,
+      header: value.header,
     };
-    postSave(body, needDelete, 1)
+    postSave(body, needDelete, props.match.params.title)
       .then(() => {
         props.history.goBack();
         message.success('작성 완료');
@@ -66,9 +69,121 @@ function PostEdit(props) {
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
+  if (isMobile) {
+    return (
+      <>
+        {isMajorBoard ? (
+          <div
+            style={{
+              padding: 12,
+              paddingBottom: 0,
+            }}
+          >
+            <label
+              style={{
+                paddingRight: 20,
+              }}
+            >
+              카테고리
+            </label>
+
+            <Select
+              defaultValue="선택"
+              style={{ width: 120 }}
+              onChange={(e) => setvalue({ ...value, header: e })}
+            >
+              <Option value="자유">자유</Option>
+              <Option value="소식">소식</Option>
+            </Select>
+            {/* <Checkbox
+              style={{ margin: 5 }}
+              onChange={(e) => console.log(e.target.checked)}
+            >
+              공지사항으로 등록
+            </Checkbox> */}
+          </div>
+        ) : null}
+        <Input
+          className="title-bar"
+          type="text"
+          placeholder="제목"
+          style={{ marginTop: 20, marginBottom: 20 }}
+          value={value.title}
+          onChange={(e) => {
+            setvalue({ ...value, title: e.target.value });
+          }}
+        />
+        <ReactQuill
+          id="quill-editor"
+          placeholder="내용을 입력하세요"
+          theme="snow"
+          onChange={(content, delta, source, editor) => {
+            setvalue({ ...value, content: editor.getHTML() });
+          }}
+          onChangeSelection={(range, source, editor) => {
+            setvalue({ ...value, content: editor.getHTML() });
+          }}
+          modules={modules}
+          formats={formats}
+        ></ReactQuill>
+        <hr />
+        <div id="button-bar">
+          <Button
+            type="primary"
+            onClick={onSubmit}
+            style={{
+              marginLeft: '10px',
+            }}
+          >
+            등록
+          </Button>
+          <Button
+            type="primary"
+            onClick={onExit}
+            style={{
+              marginLeft: '10px',
+            }}
+          >
+            취소
+          </Button>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div id="community-main">
+        {isMajorBoard ? (
+          <div
+            style={{
+              padding: 12,
+              paddingBottom: 0,
+            }}
+          >
+            <label
+              style={{
+                paddingRight: 20,
+              }}
+            >
+              카테고리
+            </label>
+
+            <Select
+              defaultValue="자유"
+              style={{ width: 120 }}
+              onChange={(e) => setvalue({ ...value, header: e })}
+            >
+              <Option value="자유">자유</Option>
+              <Option value="소식">소식</Option>
+            </Select>
+            {/* <Checkbox
+              style={{ float: 'right' }}
+              onChange={(e) => console.log(e.target.checked)}
+            >
+              공지사항으로 등록
+            </Checkbox> */}
+          </div>
+        ) : null}
         <Input
           className="title-bar"
           type="text"
@@ -80,7 +195,7 @@ function PostEdit(props) {
         />
         <ReactQuill
           id="quill-editor"
-          placeholder="하이"
+          placeholder="내용을 입력하세요"
           theme="snow"
           onChange={(content, delta, source, editor) => {
             setvalue({ ...value, content: editor.getHTML() });
@@ -181,13 +296,13 @@ function imageHandler() {
         return;
       }
 
-      // await axios
-      //   .post(`${PUBLIC_IP}/post/img`, formData, {
-      //     header: {
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   })
-      imageUpload(formData)
+      await axios
+        .post(`${PUBLIC_IP}/post/img`, formData, {
+          header: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+
         .then((response) => {
           this.quill.editor.insertEmbed(
             range.index,
