@@ -52,6 +52,17 @@ function PostList({ match, history }) {
             loading={loading}
           />
         </div>
+        <Button
+          style={{ float: 'right', marginTop: 8 }}
+          onClick={(e) =>
+            history.push({
+              pathname: `${match.params.title}/edit`,
+              state: { detail: match.params.title },
+            })
+          }
+        >
+          글 작성
+        </Button>
       </Mobile>
       <Default>
         <table className="community-main">

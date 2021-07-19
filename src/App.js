@@ -33,7 +33,6 @@ const EmailAuthPage = loadable(() =>
 );
 const MapPage = loadable(() => import('./views/MapPage/MapPage'));
 const SearchPage = loadable(() => import('./views/SearchPage/SearchPage'));
-const MajorPage = loadable(() => import('./views/MajorPage/MajorPage'));
 const CareerPage = loadable(() => import('./views/CareerPage/CareerPage'));
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
           <Route path="/2" component={CalendarPage} />
           <Route path="/3" component={MapPage} />
           <Route path="/career" component={CareerPage} />
-          <Route path="/major" component={MajorPage} />
+          <Route path="/major" component={Post} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />
           <Route path="*" component={Page404} />

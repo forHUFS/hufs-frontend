@@ -15,22 +15,23 @@ function PostSub({ match }) {
 export default PostSub;
 
 export function findBoardName(boardTitle) {
-  switch (boardTitle) {
-    case '떠들어Boo':
-      return '떠들어Boo';
-    case '학교 해Boo':
-      return '학교 해Boo';
-    case '학교 간 Boo':
-      return '학교 간 Boo';
-    case '학교 떠난 Boo':
-      return '학교 떠난 Boo';
-    case '정면승Boo':
-      return '정면승Boo';
-    case '이거 모르면 바Boo':
-      return '이거 모르면 바Boo';
-    default:
-      break;
-  }
+  // switch (boardTitle) {
+  //   case '떠들어Boo':
+  //     return '떠들어Boo';
+  //   case '학교 해Boo':
+  //     return '학교 해Boo';
+  //   case '학교 간 Boo':
+  //     return '학교 간 Boo';
+  //   case '학교 떠난 Boo':
+  //     return '학교 떠난 Boo';
+  //   case '정면승Boo':
+  //     return '정면승Boo';
+  //   case '이거 모르면 바Boo':
+  //     return '이거 모르면 바Boo';
+  //   default:
+  //     break;
+  // }
+  return boardTitle;
 }
 
 export function findBoardSub(boardTitle) {

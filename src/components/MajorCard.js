@@ -14,7 +14,7 @@ function MajorCard({ major, match }) {
         extra={<Link to={`${match.path}/${major.name}`}>이동</Link>}
         style={{ width: '170px', marginBottom: '16px' }}
       >
-        {/* <p>{major.id}</p>
+        {/* <p>{major.id}</p>asdsa
         <p>{major.campusId}</p> */}
       </Card>
     </>

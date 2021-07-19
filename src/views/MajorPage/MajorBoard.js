@@ -4,7 +4,7 @@ import useBoard from '../../hooks/useBoard';
 import useErrorHandling from '../../hooks/useErrorHandling';
 
 function MajorBoard(props) {
-  const { board, isLoading, isError } = useBoard('24');
+  const { board, isLoading, isError } = useBoard(props.match.params.major);
   const errorHandling = useErrorHandling();
   // const [posts, setPosts] = useState([]);
   // const [listPerPage, setListPerPage] = useState(10);
@@ -20,8 +20,6 @@ function MajorBoard(props) {
   //   }
   // }, [props.match.params.major, isLoading, board]);
 
-  console.log(props);
-  console.log(board);
   if (isLoading) return <>loading..</>;
   if (isError) {
     return errorHandling(isError.response?.data.message);

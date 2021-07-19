@@ -186,3 +186,6 @@ hr {
 .ant-comment-content .report {
   opacity: 0.6;
 }
+#quill-editor > div.ql-container.ql-snow {
+  min-height: 200px;
+}

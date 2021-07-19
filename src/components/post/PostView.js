@@ -161,11 +161,13 @@ function PostView({ match, history }) {
             {postDetail.like}
           </span>
         </span>
-        <div className={styles.postinfo}>
+        <div>
           {postDetail.User === null ? (
             <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
           ) : (
-            <span style={{ fontSize: '13px' }}>{postDetail.User.nickname}</span>
+            <span style={{ fontSize: '13px' }}>
+              {postDetail.User.nickname}{' '}
+            </span>
           )}
           <span style={{ marginLeft: '24px', fontSize: '12px' }}>
             {postDetail.createdAt?.slice(0, 10)}

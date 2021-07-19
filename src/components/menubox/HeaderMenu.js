@@ -33,9 +33,11 @@ function HeaderMenu({ setLogin, login }) {
           장학 공간
         </Link>
       </Menu.Item>
-      {/* <Menu.Item>
-            <Link to="/major">과별 공간</Link>
-          </Menu.Item> */}
+      <Menu.Item>
+        <Link to="/major" onClick={onClose}>
+          과별 공간
+        </Link>
+      </Menu.Item>
     </Menu>
   );
   const menu3 = (
