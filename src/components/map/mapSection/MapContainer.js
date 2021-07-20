@@ -7,10 +7,12 @@ import Rank from './Rank'
 import sdata from './mapData/review-mock.json'
 import MoreRank from './MoreRank';
 import RecentReview from './RecentReview';
+import useResponsive from '../../../hooks/useResponsive'
 
 import { Button, Modal } from 'antd';
 
 const MapContainer = ({ match }) => {
+  const [reviewData,setReviewData] = useState();
   const [data, setData] = useState();
   const [lat, setLat] = useState(37.59732049638715); // default 서울캠
   const [lng, setLng] = useState(127.0588283395548);
@@ -19,11 +21,13 @@ const MapContainer = ({ match }) => {
 
   const [mdata, setMdata] = useState(sdata);
   const [sortt, setSortt] = useState();
+  const { isMobile,Mobile, Default } = useResponsive();
   
   const _ = require("lodash"); 
   const [ranker, setRanker] = useState();
   
   var check = true;
+  
  
 
   const handleValueChange = (e) => {
@@ -109,15 +113,16 @@ const MapContainer = ({ match }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  if (isMobile) {
+    return(
+      <>
+      <div className="Map">
+      
 
-  return (
-    <div className="Map">
-
-      <MapNavi setData={setData} setLng={setLng} setLat={setLat} setKeyword={setKeyword} />
-
-      <div className="Map-main">
+      <MapNavi setData={setData} setLng={setLng} setLat={setLat} setKeyword={setKeyword} setReviewData={setReviewData} />
+      <div className="Map-main" style = {{left:'3%', padding:'10px'}}>
         <div id="KaKaoMap">
-          <KaKaoMap lat={lat} lng={lng} />
+          <KaKaoMap  lat={lat} lng={lng} />
         </div>
         <div id="Food-list">
           <div className="Food-head">
@@ -144,7 +149,7 @@ const MapContainer = ({ match }) => {
           </div>
         </div>
       </div>
-      <div className="Map-bottom">
+      <div className="Map-bottom" style = {{padding:'10px'}}>
 
         <div className="Rank-list">
           <h2>음식점 랭킹</h2>
@@ -175,7 +180,7 @@ const MapContainer = ({ match }) => {
                         }
                         </Modal>
         </div>
-        <div className="Last-review">
+        <div className="Last-review" style = {{left:'40%'}}>
           <h2>최신순 리뷰</h2>
           {sortt?.map((d, index) => {
             if (index < 3) {
@@ -194,6 +199,101 @@ const MapContainer = ({ match }) => {
 
 
       </div>
+      
+    </div>
+      </>
+    )
+  }
+
+  return (
+    <div className="Map">
+      
+
+      <MapNavi setData={setData} setLng={setLng} setLat={setLat} setKeyword={setKeyword} setReviewData={setReviewData}/>
+      
+      <Default>
+
+
+<div className="Map-main">
+  <div id="KaKaoMap">
+    <KaKaoMap lat={lat} lng={lng} />
+  </div>
+  <div id="Food-list">
+    <div className="Food-head">
+      <SearchBar
+        placeholder="Search (영어는 소문자로)"
+        value={keyword}
+        onChange={handleValueChange}
+        style={{ width: '100 %' }}
+
+      />
+      <span
+        id="itemState"
+        onClick={fold}
+      >접기</span>
+    </div>
+    <div
+      id="itemContainer"
+
+    >
+      {data?.data ? searchData(data) :
+        data?.data?.map((d, index) => (
+          <Card id="aa" {...d} key={index} match={match} />
+        ))}
+    </div>
+  </div>
+</div>
+<div className="Map-bottom">
+
+  <div className="Rank-list">
+    <h2>음식점 랭킹</h2>
+    <Button size='small' onClick={() => sortScoreByAsc()}>별점 높은 순</Button> &nbsp;&nbsp;&nbsp;
+<Button size='small' onClick={() => sortReviewByAsc()}>리뷰 많은 순</Button> <h6>버튼을 클릭해주세요!</h6>
+    {ranker?.map((d, index) => {
+      if (index < 5) {
+        return <Rank id="bb" {...d} key={index} index={index} match={match} />
+                    }
+
+                  }
+                  
+
+     
+    )}
+      {ishidden && (
+  <Button type="primary" onClick={showModal}>
+  더보기
+  </Button>
+)}
+    {/* <Button type="primary" onClick={showModal}>
+더보기
+</Button> */}
+<Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+{ranker?.map((d, index) => ( <MoreRank id="bb" {...d} key={index} index={index} match={match} /> ))
+                    
+
+                  }
+                  </Modal>
+  </div>
+  <div className="Last-review">
+    <h2>최신순 리뷰</h2>
+    {sortt?.map((d, index) => {
+      if (index < 3) {
+        return <RecentReview id="cc" {...d} key={index} index={index} match={match} />
+                    }
+
+                  }
+                  
+
+     
+    )}
+
+  </div>
+
+
+
+
+</div>
+</Default>
 
     </div>
 
