@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 function UserComment({ replies }) {
   const { Column } = Table;
-
   return (
     <div>
       <Table pagination={true} dataSource={replies}>
@@ -17,7 +16,9 @@ function UserComment({ replies }) {
           title="내가 쓴 댓글"
           key="content"
           render={(text, record) => (
-            <Link to={`1/${record?.Post?.id}`}>
+            <Link
+              to={`/board/${record?.Post?.Board?.title}/${record?.Post?.id}`}
+            >
               {record.content.length > 25
                 ? record.content.slice(0, 25)
                 : record.content}

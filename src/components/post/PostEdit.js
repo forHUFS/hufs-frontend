@@ -179,7 +179,6 @@ function PostEdit(props) {
             >
               카테고리
             </label>
-
             <Select
               defaultValue="선택"
               style={{ width: 120 }}
