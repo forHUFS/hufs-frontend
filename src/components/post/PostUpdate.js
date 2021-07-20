@@ -6,16 +6,22 @@ import imageCompression from 'browser-image-compression';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../config';
-import { Skeleton, Button, message } from 'antd';
+import { Skeleton, Button, message, Input } from 'antd';
 import usePostDetail from '../../hooks/usePostDetail';
 import { imageUpload, postUpdate } from '../../functions/postFunctions';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import useResponsive from '../../hooks/useResponsive';
+import useMajorCheck from '../../hooks/useMajorCheck';
+import PostHeaderToolBar from './PostHeaderToolBar';
 let wholeImg = []; // 처음 이미지 + 업로드 되는 이미지 모두
 let uploadedImg = [];
 function PostUpdate({ match, history }) {
   const { postDetail, isLoading, isError } = usePostDetail(+match.params.id);
   const errorHandling = useErrorHandling();
   const [updated, setUpdated] = useState(false);
+  const { isMobile, Default, Mobile } = useResponsive();
+  const { isMajorBoard, notMyMajor } = useMajorCheck(match);
+
   useBeforeunload((e) => {
     e.preventDefault();
     window.onunload = function () {
@@ -32,6 +38,7 @@ function PostUpdate({ match, history }) {
       setUpdated({
         title: postDetail.title,
         content: postDetail.content,
+        header: postDetail.header ? postDetail.header : '',
       });
       wholeImg = wholeImg.concat(firstImg);
     }
@@ -70,63 +77,77 @@ function PostUpdate({ match, history }) {
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
+  if (isMobile) {
+    return (
+      <>
+        {isMajorBoard ? (
+          <PostHeaderToolBar value={updated} setvalue={setUpdated} />
+        ) : null}
+        {updated ? showEditor() : <Skeleton />}
+      </>
+    );
+  }
   return (
     <>
       <div id="community-main">
-        {updated ? (
-          <div>
-            <p>글 번호: {updated.id}</p>
-            <input
-              className="title-bar"
-              type="text"
-              placeholder="제목"
-              value={updated.title}
-              onChange={(e) =>
-                setUpdated({ ...updated, title: e.target.value })
-              }
-            />
-            <ReactQuill
-              className="1"
-              placeholder="하이"
-              theme="snow"
-              defaultValue={updated.content}
-              onChange={(content, delta, source, editor) => {
-                setUpdated({ ...updated, content: editor.getHTML() });
-              }}
-              onChangeSelection={(range, source, editor) => {
-                setUpdated({ ...updated, content: editor.getHTML() });
-              }}
-              modules={modules}
-              formats={formats}
-            ></ReactQuill>
-
-            <div id="button-bar">
-              <Button
-                type="primary"
-                onClick={onUpdate}
-                style={{
-                  margin: '10px',
-                }}
-              >
-                수정하기
-              </Button>
-              <Button
-                type="primary"
-                onClick={onExit}
-                style={{
-                  margin: '10px',
-                }}
-              >
-                취소하기
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <Skeleton />
-        )}
+        {' '}
+        {isMajorBoard ? (
+          <PostHeaderToolBar value={updated} setvalue={setUpdated} />
+        ) : null}
+        {updated ? showEditor() : <Skeleton />}
       </div>
     </>
   );
+  function showEditor() {
+    return (
+      <div>
+        <p>글 번호: {postDetail.id}</p>
+        <Input
+          className="title-bar"
+          type="text"
+          placeholder="제목"
+          style={isMobile ? { marginTop: 20, marginBottom: 20 } : null}
+          value={updated.title}
+          onChange={(e) => setUpdated({ ...updated, title: e.target.value })}
+        />
+        <ReactQuill
+          id="quill-editor"
+          placeholder="하이"
+          theme="snow"
+          defaultValue={updated.content}
+          onChange={(content, delta, source, editor) => {
+            setUpdated({ ...updated, content: editor.getHTML() });
+          }}
+          onChangeSelection={(range, source, editor) => {
+            setUpdated({ ...updated, content: editor.getHTML() });
+          }}
+          modules={modules}
+          formats={formats}
+        ></ReactQuill>
+
+        <div id="button-bar">
+          <Button
+            type="primary"
+            onClick={onUpdate}
+            style={{
+              margin: '10px',
+            }}
+          >
+            수정
+          </Button>
+          <Button
+            type="primary"
+            onClick={onExit}
+            style={{
+              margin: '10px',
+            }}
+          >
+            취소
+          </Button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default withRouter(PostUpdate);

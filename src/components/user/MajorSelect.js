@@ -10,10 +10,9 @@ function MajorSelect({ list, onChange, defaultMajor }) {
       <div>
         <Select
           defaultValue={defaultMajor}
-          style=
-          {{
+          style={{
             width: '200px',
-            height: '30px'
+            height: '30px',
           }}
           onChange={onChange}
         >
