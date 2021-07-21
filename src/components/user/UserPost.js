@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 function UserPost({ posts }) {
   const { Column } = Table;
-
   return (
     <div>
       <Table pagination={true} dataSource={posts}>
@@ -18,7 +17,7 @@ function UserPost({ posts }) {
           title="제목"
           key="title"
           render={(text, record) => (
-            <Link to={`1/${record.id}`}>
+            <Link to={`/board/${record.Board.title}/${record.id}`}>
               {record.title.length > 25
                 ? record.title.slice(0, 25)
                 : record.title}

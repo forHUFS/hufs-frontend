@@ -17,14 +17,15 @@ import { mutate } from 'swr';
 import { PUBLIC_IP } from '../../config';
 import useErrorHandling from '../../hooks/useErrorHandling';
 import useResponsive from '../../hooks/useResponsive';
+import useUserInfo from '../../hooks/useUserInfo';
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
 function PostView({ match, history }) {
   const { Mobile, Default } = useResponsive();
   const postId = +match.params.id;
+  const { user } = useUserInfo();
   const { postDetail, isLoading, isError } = usePostDetail(postId);
   const errorHandling = useErrorHandling();
-
   const onDelete = () =>
     postDelete(postDetail.id)
       .then(() => {
@@ -59,6 +60,7 @@ function PostView({ match, history }) {
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }
+
   return (
     <>
       <Mobile>
@@ -110,7 +112,7 @@ function PostView({ match, history }) {
                 <span
                   style={{
                     cursor: 'pointer',
-                    float: 'left',
+                    // float: 'left',
                     marginRight: '12px',
                   }}
                 >
@@ -127,10 +129,12 @@ function PostView({ match, history }) {
               >
                 스크랩
               </span>
-            </div>{' '}
-            <Link to={`${postDetail.id}/update`}>
-              <span>수정</span>
-            </Link>
+              {postDetail.userId === user.id ? (
+                <Link to={`${postDetail.id}/update`}>
+                  <span>수정</span>
+                </Link>
+              ) : null}
+            </div>
           </div>{' '}
         </div>
         <div>
@@ -161,11 +165,13 @@ function PostView({ match, history }) {
             {postDetail.like}
           </span>
         </span>
-        <div className={styles.postinfo}>
+        <div>
           {postDetail.User === null ? (
             <span style={{ fontSize: '8px' }}> 탈퇴한 사용자 </span>
           ) : (
-            <span style={{ fontSize: '13px' }}>{postDetail.User.nickname}</span>
+            <span style={{ fontSize: '13px' }}>
+              {postDetail.User.nickname}{' '}
+            </span>
           )}
           <span style={{ marginLeft: '24px', fontSize: '12px' }}>
             {postDetail.createdAt?.slice(0, 10)}
