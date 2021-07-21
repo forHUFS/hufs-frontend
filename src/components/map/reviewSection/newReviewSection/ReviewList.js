@@ -159,7 +159,7 @@ function ReviewList({ match, history }) {
 
                       onClick={(e) => {
                         history.push({
-                          pathname: '/3/edit',
+                          pathname: '/학교간Boo/edit',
                           state: {
                             name: item.name,
 
