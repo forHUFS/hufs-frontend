@@ -102,7 +102,11 @@ function HeaderMenu({ setLogin, login }) {
                 <Logout setLogin={setLogin} />
 
                 <Button type="text">
-                  <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
+                  <Link
+                    style={{ color: 'rgba(0, 0, 0, 0.85)' }}
+                    to="/mypage"
+                    onClick={onClose}
+                  >
                     My page
                   </Link>{' '}
                 </Button>

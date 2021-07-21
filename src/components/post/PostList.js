@@ -9,8 +9,10 @@ import { findBoardName } from './PostSub';
 import useBoard from '../../hooks/useBoard';
 import useErrorHandling from '../../hooks/useErrorHandling';
 import useUserInfo from '../../hooks/useUserInfo';
+import useMajorCheck from '../../hooks/useMajorCheck';
 const { Column } = Table;
 function PostList({ match, history }) {
+  const { notMyMajor } = useMajorCheck(match);
   const { Mobile, Default } = useResponsive();
   const errorHandling = useErrorHandling();
   const [listPerPage, setListPerPage] = useState(10);
@@ -19,7 +21,6 @@ function PostList({ match, history }) {
   const [loading, setloading] = useState(false);
   const { board, isLoading, isError } = useBoard(match.params.title);
   const { user } = useUserInfo();
-
   useEffect(() => {
     if (!isError && !isLoading) {
       const postKey = board.map((post, key) => {
@@ -38,7 +39,7 @@ function PostList({ match, history }) {
   const lastIndex = currentPage * listPerPage; // 10, 20, 30
   const firstIndex = currentPage * listPerPage - listPerPage; // 1, 11, 21..
   const majorAuthCheck = () => {
-    if (isMajorBoard === true && majorAuthenticated === false) {
+    if (notMyMajor) {
       message.warn('주 전공, 이중 전공이 아니시면 글 작성이 불가능합니다.');
       return;
     }
@@ -58,11 +59,6 @@ function PostList({ match, history }) {
         <Spin style={{ paddingTop: 300 }} tip="로딩 중입니다."></Spin>
       </div>
     );
-  const isMajorBoard = match.url.substring(1, 6) === 'major';
-  const majorAuthenticated = [
-    user?.DoubleMajor.name,
-    user?.MainMajor.name,
-  ].includes(match.params.title);
   if (isError) {
     return errorHandling(isError.response?.data.message);
   }

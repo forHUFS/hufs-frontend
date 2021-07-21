@@ -25,7 +25,7 @@ const CalendarPage = loadable(() =>
   import('./views/CalendarPage/CalendarPage'),
 );
 const SignUpModal = loadable(() =>
-  import('./components/login/modals/SignUpModal'),
+  import('./views/RegisterPage/SignUpPage'),
 );
 const Page404 = loadable(() => import('./views/Page404/Page404'));
 const EmailAuthPage = loadable(() =>

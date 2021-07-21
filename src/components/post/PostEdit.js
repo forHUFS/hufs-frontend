@@ -13,13 +13,15 @@ import { mutate } from 'swr';
 import useErrorHandling from '../../hooks/useErrorHandling';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import useResponsive from '../../hooks/useResponsive';
+import useMajorCheck from '../../hooks/useMajorCheck';
+import PostHeaderToolBar from './PostHeaderToolBar';
 let uploadedImg = [];
 function PostEdit(props) {
   const { isMobile, Default, Mobile } = useResponsive();
   const { Option } = Select;
   const { user, isError, isLoading } = useUserInfo();
+  const { isMajorBoard, notMyMajor } = useMajorCheck(props.match);
 
-  const isMajorBoard = props.match.url.substring(1, 6) === 'major';
   const errorHandling = useErrorHandling();
   useBeforeunload((e) => {
     e.preventDefault();
@@ -67,11 +69,7 @@ function PostEdit(props) {
         .catch(props.history.goBack());
     }
   };
-  const majorAuthenticated = [
-    user?.DoubleMajor.name,
-    user?.MainMajor.name,
-  ].includes(props.match.params.title);
-  if (isMajorBoard === true && majorAuthenticated === false) {
+  if (notMyMajor) {
     props.history.goBack();
   }
   if (isError) {
@@ -85,35 +83,7 @@ function PostEdit(props) {
     return (
       <>
         {isMajorBoard ? (
-          <div
-            style={{
-              padding: 12,
-              paddingBottom: 0,
-            }}
-          >
-            <label
-              style={{
-                paddingRight: 20,
-              }}
-            >
-              카테고리
-            </label>
-
-            <Select
-              defaultValue="선택"
-              style={{ width: 120 }}
-              onChange={(e) => setvalue({ ...value, header: e })}
-            >
-              <Option value="자유">자유</Option>
-              <Option value="소식">소식</Option>
-            </Select>
-            {/* <Checkbox
-              style={{ margin: 5 }}
-              onChange={(e) => console.log(e.target.checked)}
-              >
-              공지사항으로 등록
-            </Checkbox> */}
-          </div>
+          <PostHeaderToolBar value={value} setvalue={setvalue} />
         ) : null}
         <Input
           className="title-bar"
@@ -166,34 +136,7 @@ function PostEdit(props) {
     <>
       <div id="community-main">
         {isMajorBoard ? (
-          <div
-            style={{
-              padding: 12,
-              paddingBottom: 0,
-            }}
-          >
-            <label
-              style={{
-                paddingRight: 20,
-              }}
-            >
-              카테고리
-            </label>
-            <Select
-              defaultValue="선택"
-              style={{ width: 120 }}
-              onChange={(e) => setvalue({ ...value, header: e })}
-            >
-              <Option value="자유">자유</Option>
-              <Option value="소식">소식</Option>
-            </Select>
-            {/* <Checkbox
-              style={{ float: 'right' }}
-              onChange={(e) => console.log(e.target.checked)}
-            >
-              공지사항으로 등록
-            </Checkbox> */}
-          </div>
+          <PostHeaderToolBar value={value} setvalue={setvalue} />
         ) : null}
         <Input
           className="title-bar"
