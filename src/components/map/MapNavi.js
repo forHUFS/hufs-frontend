@@ -6,11 +6,13 @@ import { Button } from 'antd';
 import { withRouter } from 'react-router';
 // import housemock from './mapSection/mapData/housemock.json'
 
-function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
+function MapNavi({ setData, setLng, setLat, setKeyword, history, setReviewData }) {
     const [storeSeoul, setStoreSeoul] = useState();
     const [storeGlobal, setStoreGlobal] = useState();
     const [houseSeoul, setHouseSeoul] = useState();
     const [houseGlobal, setHouseGlobal] = useState();
+    const [storeSeoulReview, setStoreSeoulReview] = useState();
+    const [storeGlobalReview, setStoreGlobalReview] = useState();
 
     useEffect(async () => {
 
@@ -22,6 +24,15 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
         axios.get(`${PUBLIC_IP}/store/2`) //global
             .then((res) => {
                 setStoreGlobal(res.data)
+            })
+        axios.get(`${PUBLIC_IP}/store/reviews/1`)  //seoul
+            .then((res) => {
+                setReviewData(res)
+                setStoreSeoulReview(res)
+            })
+        axios.get(`${PUBLIC_IP}/store/reviews/2`) //global
+            .then((res) => {
+                setStoreGlobalReview(res)
             })
         // axios.get(`${PUBLIC_IP}/house/global`)
         //     .then((res) => {
@@ -45,6 +56,7 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                         <div type="text" id="button-head" key="1">Seoul</div>
                         <Button type="text" onClick={(e) => {
                             setData(storeSeoul);
+                            setReviewData(storeSeoulReview)
                             setKeyword('')
                             setLat(37.59732049638715);
                             setLng(127.0588283395548)
@@ -64,6 +76,7 @@ function MapNavi({ setData, setLng, setLat, setKeyword, history }) {
                         <div type="text" id="button-head" key="2">Global</div>
                         <Button type="text" onClick={(e) => {
                             setData(storeGlobal);
+                            setReviewData(storeGlobalReview);
                             setKeyword('')
                             setLat(37.336538181222245);
                             setLng(127.25253858610613);

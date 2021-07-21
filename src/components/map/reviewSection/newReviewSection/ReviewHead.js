@@ -92,7 +92,7 @@ function ReviewHead({ match, history }) {
 
                     onClick={(e) => {
                         history.push({
-                            pathname: '/3/register',
+                            pathname: '/학교간Boo/register',
                             //각 path에 맞게 수정해야함 .
                             state: {
                                 detail: match.path,
