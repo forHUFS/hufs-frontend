@@ -57,6 +57,11 @@ function HeaderMenu({ setLogin, login }) {
           졸업생 공간
         </Link>
       </Menu.Item>
+      <Menu.Item>
+        <Link to="/career" onClick={onClose}>
+          취/창업 공간
+        </Link>
+      </Menu.Item>
     </Menu>
   );
   const menu5 = (
