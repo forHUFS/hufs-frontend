@@ -8,7 +8,6 @@ import { reviewDetail } from '../../../_actions/reviewPost_action';
 const { kakao } = window;
 const { Text, Title } = Typography;
 
-
 const Rstrn = ({
   id,
   name,
@@ -26,34 +25,28 @@ const Rstrn = ({
   const [state, setstate] = useState();
   const history = useHistory();
 
-
-
   const getMarker = async () => {
     dispatch(reviewDetail(id))
       .then((response) => {
-
         if (response.payload.average === null) {
           displayMarker(parseFloat(0).toFixed(1), response.payload.count);
-        }
-        else {
+        } else {
           displayMarker(response.payload.average, response.payload.count);
-
         }
       })
-      .catch(((error) => {
+      .catch((error) => {
         switch (error.response?.status) {
           case 401:
-            alert('로그인을 하시면 서비스 이용이 가능합니다.')
+            alert('로그인을 하시면 서비스 이용이 가능합니다.');
             break;
           case 403:
-            alert('접근 권한 오류')
+            alert('접근 권한 오류');
             break;
           default:
             break;
         }
-      }));
+      });
   };
-
 
   var map = state;
   var markers = [];
@@ -84,8 +77,6 @@ const Rstrn = ({
       content: content,
       yAnchor: 1,
     });
-
-
 
     var content = document.createElement('div');
     content.className = 'wrap'; //
@@ -146,11 +137,9 @@ const Rstrn = ({
     content12.width = '15';
     content12.height = '15';
 
-
     var content13 = document.createTextNode(
       ' ' + average + ' (' + count + ') ',
     );
-
 
     content9.appendChild(content12);
     content9.appendChild(content13);
@@ -171,8 +160,6 @@ const Rstrn = ({
     content.appendChild(content1);
 
     customOverlay1.setContent(content);
-
-
 
     // 마커 이미지의 이미지 크기 입니다
     //var imageSize = new kakao.maps.Size(30, 35);
@@ -204,37 +191,36 @@ const Rstrn = ({
     marker.setMap(map);
   }
 
-
   const goReview = (e) => {
     // map/info -> map/info/:name 24시해장국
     history.push({
-      // map/info/:name/24시해장국/reviewpage   
+      // map/info/:name/24시해장국/reviewpage
       pathname: `${match.path}/store/review/${id}/ReviewPage`,
       state: {
         id: id,
         name: name,
       },
     });
-  }
+  };
   const houseReview = () => {
     history.push({
       pathname: `${match.path}/house/review/${id}/ReviewPage`,
       state: {
-        id: id
-      }
-    })
-  }
+        id: id,
+      },
+    });
+  };
 
   const houseTrade = () => {
     history.push({
       pathname: `${match.path}/house/tradee/${id}/TradePage`,
       state: {
-        id: id
-      }
-    })
-  }
+        id: id,
+      },
+    });
+  };
 
-/*   const goReview = (e) => {
+  /*   const goReview = (e) => {
     // map/info -> map/info/:name 24시해장국
     history.push({
       // map/info/:name/24시해장국/reviewpage
@@ -247,34 +233,29 @@ const Rstrn = ({
   } */
 
   return (
-
     <div>
       <div>
-        {StoreSubCategory !== undefined ?
-          (
-            <Card size="small" style={{ width: 300 }}>
-              <Title level={5}>{name}</Title>
-              <h6>{StoreSubCategory?.name}</h6>
-              <h5 className="Card-h5">{roadAddress}</h5>
-              <Button size="small" onClick={getMarker}>
-                위치 확인
+        {StoreSubCategory !== undefined ? (
+          <Card size="small" style={{ width: 300 }}>
+            <Title level={5}>{name}</Title>
+            <h6>{StoreSubCategory?.name}</h6>
+            <h5 className="Card-h5">{roadAddress}</h5>
+            <Button size="small" onClick={getMarker}>
+              위치 확인
             </Button>
-            </Card>
-          )
-          :
-          (
-            <Card size="small" style={{ width: 300 }}>
-              <Title level={5}>{name}</Title>
-              <h5 className="Card-h5">{roadAddress}</h5>
-              <Button size="small" onClick={houseReview}>
-                리뷰 공간
+          </Card>
+        ) : (
+          <Card size="small" style={{ width: 300 }}>
+            <Title level={5}>{name}</Title>
+            <h5 className="Card-h5">{roadAddress}</h5>
+            <Button size="small" onClick={houseReview}>
+              리뷰 공간
             </Button>
-              <Button size="small" onClick={houseTrade}>
-                거래 공간
+            <Button size="small" onClick={houseTrade}>
+              거래 공간
             </Button>
-            </Card>
-          )
-        }
+          </Card>
+        )}
       </div>
     </div>
 
