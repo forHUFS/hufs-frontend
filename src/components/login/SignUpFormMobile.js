@@ -5,13 +5,15 @@ import { withRouter } from 'react-router';
 import { PUBLIC_IP } from '../../config';
 import { InformationModal2 } from '../rule/InformationModal';
 import { UseModal2 } from '../rule/UseModal';
+import useResponsive from '../../hooks/useResponsive';
 import useMainMajor from '../../hooks/useMainMajor';
 import useDoubleMajor from '../../hooks/useDoubleMajor';
 
-function SignUpForm(props) {
+function SignUpFormMobile(props) {
   const { Option } = Select;
   const { mainMajor, isLoading } = useMainMajor();
-  const { doubleMajor, isLoading_d }= useDoubleMajor();
+  const { doubleMajor, isLoading_d } = useDoubleMajor();
+  const { Mobile } = useResponsive();
 
   const [ submit, setSubmit ] = useState({
     email: props.location.state.email,
@@ -83,11 +85,6 @@ function SignUpForm(props) {
       });
   };
 
-  // const layout = {
-  //   labelcol: { span: 8 },
-  //   wrapperCol: { span: 16 },
-  // };
-
   const tailLayout = {
     wrapperCol: { offset: 10, span: 16 },
   };
@@ -97,7 +94,7 @@ function SignUpForm(props) {
   }
 
   return (
-    <div className="ant-modal-body-revise">
+    <div className="ant-modal-body-revise-mobile">
       <Form 
         id="basic"
         initialValue={{ remember: true }}
@@ -117,20 +114,21 @@ function SignUpForm(props) {
         </Form.Item>
 
         <Form.Item
-          label="&nbsp;&nbsp;&nbsp;웹메일"
-          extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
+          label="웹메일"
           name="webMail"
           onChange={(event) => 
             setSubmit({ ...submit, webMail: event.target.value })
           }
-          style={{ width: '100%' }}
         >
           <Input
             style={{ textAlign: 'center' }}
             placeholder={isWebMail()}
-            disabled={inputAble}
             suffix="@hufs.ac.kr"
+            disabled={inputAble}
           />
+          <span style={{color: 'DarkGrey', fontSize: 'small',}}>
+            위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 <br/>(회원 가입 후 별도로 My page에서도 가능합니다)
+          </span>
         </Form.Item>
 
         <Form.Item
@@ -144,7 +142,7 @@ function SignUpForm(props) {
             onChange={(event) =>
               setSubmit({ ...submit, mainMajorId: +event[1] })
             }
-            placeholder='주전공을 선택하세요. 없으면 "미정"을 눌러주세요'
+            placeholder='주전공'
             options = {  [{
                 value: '서울캠퍼스',
                   label: '서울캠퍼스',
@@ -159,6 +157,9 @@ function SignUpForm(props) {
                 }
               ]}
           />
+          <span style={{color: 'DarkGrey', fontSize: 'small',}}>
+            주전공을 선택하세요. 없으면 "미정"을 눌러주세요
+          </span>
         </Form.Item>
 
         <Form.Item
@@ -169,10 +170,10 @@ function SignUpForm(props) {
           <Cascader
             showSearch={{filter}}
             style={{ width: '100%' }}
-            onChange={(event) => {
-              setSubmit({ ...submit, doubleMajorId: +event[1] });
-            }}
-            placeholder='이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요'
+            onChange={(event) => 
+              setSubmit({ ...submit, doubleMajorId: +event[1] })
+            }
+            placeholder='이중/ 부전공'
             options = { [{
               value: '서울캠퍼스',
                 label: '서울캠퍼스',
@@ -187,6 +188,9 @@ function SignUpForm(props) {
               }
             ]}
           />
+          <span style={{color: 'DarkGrey', fontSize: 'small',}}>
+            이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요
+          </span>
         </Form.Item>
 
         {/* 개인정보 */}
@@ -253,4 +257,4 @@ function SignUpForm(props) {
   );
 }
 
-export default withRouter((SignUpForm));
+export default withRouter((SignUpFormMobile));

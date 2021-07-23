@@ -8,8 +8,6 @@ import Popup from '../../components/Popup/Popup';
 import useResponsive from '../../hooks/useResponsive';
 import CalendarList from '../../components/calendar/CalendarList';
 function LandingPage(props) {
-  // const now_url = window.location.href;
-  // console.log(now_url);
   const { Mobile, Default } = useResponsive();
 
   return (

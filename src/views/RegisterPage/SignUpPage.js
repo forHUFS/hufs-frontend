@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { PUBLIC_IP } from '../../config';
 import SignUpForm from '../../components/login/SignUpForm';
+import SignUpFormMobile from '../../components/login/SignUpFormMobile';
 import useResponsive from '../../hooks/useResponsive';
 
 function SignUpPage({ setLogin }) {
@@ -10,7 +11,12 @@ function SignUpPage({ setLogin }) {
   
   return (
     <>
+    <Mobile>
+      <SignUpFormMobile />
+    </Mobile>
+    <Default>
       <SignUpForm />
+    </Default>
     </>
   );
 }

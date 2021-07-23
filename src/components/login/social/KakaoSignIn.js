@@ -66,8 +66,9 @@ function KakaoSignIn({ setModalVisible, setLogin }) {
         jsKey={'690082dcedf6efeca17e320160913cb3'}
         butonText='Kakao SignIn'
         onSuccess={responseKakao}
-        style = {{ padding: '0',
-          width: '280px',
+        style = {{
+          display: 'inline-block',
+          padding: '0',
           height: '45px',
           lineHeight: '44px',
           color: 'black',
