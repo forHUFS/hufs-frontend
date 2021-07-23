@@ -11,6 +11,8 @@ import Header1 from '../Common/Header';
 import styles from '../../css/MyPage.module.css';
 import useUserInfo from '../../hooks/useUserInfo';
 import useErrorHandling from '../../hooks/useErrorHandling';
+import Graduate from '../../components/user/Graduate';
+
 function MyPage(props) {
   const errorHandling = useErrorHandling();
   const { Header, Content, Footer } = Layout;
@@ -46,6 +48,7 @@ function MyPage(props) {
         <div className={styles.communitymain}>
           <Layout className={styles.layout}>
             <UserInfo user={user} isLoading={isLoading} />
+            {/* <Graduate /> */}
             <Header>
               <Menu
                 theme="dark"
