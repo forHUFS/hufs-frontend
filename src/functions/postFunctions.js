@@ -26,7 +26,7 @@ export const postUpdate = async (updated, needDelete, postId) => {
   }
 };
 export const postSave = async (body, needDelete, boardId) => {
-  await axios.post(`${PUBLIC_IP}/board/${boardId}/post`, body);
+  await axios.post(`${PUBLIC_IP}/board/${boardId}`, body);
   if (needDelete.length !== 0) {
     await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
   }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 import GoogleSignIn from '../../components/login/social/GoogleSignIn';
-
 import KakaoSignIn from '../../components/login/social/KakaoSignIn';
 
 function SignInPage({ setLogin }) {

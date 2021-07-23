@@ -128,8 +128,8 @@ function SignUpForm(props) {
           <Input
             style={{ textAlign: 'center' }}
             placeholder={isWebMail()}
-            disabled={inputAble}
             suffix="@hufs.ac.kr"
+            disabled={inputAble}
           />
         </Form.Item>
 
