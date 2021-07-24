@@ -17,7 +17,7 @@ function SignInPage({ setLogin }) {
       okButtonProps={{ style: { display: 'none' } }}
       visible={modalVisible}
       onOk={() => setModalVisible(false)}
-      okCancel={() => {setModalVisible(false)}}
+      onCancel={() => {setModalVisible(false)}}
     >
       <GoogleSignIn setLogin={setLogin} />
       <KakaoSignIn setLogin={setLogin} />

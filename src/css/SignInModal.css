@@ -32,6 +32,14 @@
   width: 1100px;
   left: 10%;
 }
+.ant-modal-body-revise-mobile {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  left: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
 .ant-modal-footer {
   height: 50px;
 }
@@ -41,7 +49,7 @@
 #signIn-kakao {
   display: inline-flex;
   padding: 0;
-  width: 280px;
+  /* width: 280px; */
   height: 45px;
   line-height: 44px;
   color: black;
@@ -70,3 +78,4 @@
     margin-right: 25%;
   }
 }
+/* @media (max-width: ) */
