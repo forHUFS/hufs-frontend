@@ -4,7 +4,6 @@ import Card from './Card.js';
 import SearchBar from './SearchBar.js';
 import MapNavi from '../MapNavi';
 import Rank from './Rank';
-import sdata from './mapData/review-mock.json';
 import MoreRank from './MoreRank';
 import RecentReview from './RecentReview';
 import useResponsive from '../../../hooks/useResponsive';
@@ -20,8 +19,6 @@ const MapContainer = ({ match }) => {
   const [keyword, setKeyword] = useState('');
   const [ishidden, setIshidden] = useState(false);
   const [isshown, setIsshown] = useState(false);
-
-  const [mdata, setMdata] = useState(sdata);
   const [sortt, setSortt] = useState();
   const { isMobile, Mobile, Default } = useResponsive();
 

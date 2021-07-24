@@ -20,11 +20,11 @@ function CareerNavi (){
         질문
         </Link>
       </Menu.Item>
-      <Menu.Item key="3" >
+{/*       <Menu.Item key="3" >
       <Link to="/career/careerInterview">
         인터뷰
         </Link>
-      </Menu.Item>
+      </Menu.Item> */}
       
       </Menu>
       </div>
