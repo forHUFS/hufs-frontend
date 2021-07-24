@@ -9,6 +9,7 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import imageCompression from 'browser-image-compression';
 import { Button, Rate, message, Input, Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 
 
@@ -76,21 +77,20 @@ function ReviewEdit(props) {
         }
     };
     const housePeriod = () => {
-        <Menu>
-            <Menu.Item>
-                3개월 미만
-            </Menu.Item>
-            <Menu.Item>
-                3~6개월
-            </Menu.Item>
-            <Menu.Item>
-                6개월~1년
-            </Menu.Item>
-            <Menu.Item>
-                1년 이상
-            </Menu.Item>
-        </Menu>
+        return (
+            <div>
+                <label for="period">입주기간</label>
+                <select className='period'>
+                    <option value='' selected>-- 선택 --</option>
+                    <option value='3'>3개월 미만</option>
+                    <option value='6'>3~6개월</option>
+                    <option value='9'>6개월~1년</option>
+                    <option value='12'>1년 이상</option>
+                </select>
+            </div>
+        )
     }
+
     return (
         <>
             <div id="community-main">
@@ -113,7 +113,8 @@ function ReviewEdit(props) {
 
                 <ReactQuill
                     id="quill-editor"
-                    placeholder="하이"
+                    defaultValue="입주 기간"
+
                     theme="snow"
                     style={{
                         height: '77%',
@@ -127,41 +128,7 @@ function ReviewEdit(props) {
                     modules={modules}
                     formats={formats}
                 >
-                    <div className="house-review">
-                        <div className="period">
-                            입주기간
-                            <Dropdown overlay={housePeriod} trigger={['click']} >
-                                입주기간
-                            </Dropdown>
-                        </div>
-                        <div className="cost">
-                            비용에 대한 의견
-                            <TextArea
-                                value={value}
-                                onChange={e => setvalue(e.target.value)}
-                                placeholder="Controlled autosize"
-                                autoSize={{ minRows: 3, maxRows: 5 }}
-                            />
-                        </div>
-                        <div className="pros">
-                            장점
-                            <TextArea
-                                value={value}
-                                onChange={e => setvalue(e.target.value)}
-                                placeholder="Controlled autosize"
-                                autoSize={{ minRows: 3, maxRows: 5 }}
-                            />
-                        </div>
-                        <div className="cons">
-                            단점
-                            <TextArea
-                                value={value}
-                                onChange={e => setvalue(e.target.value)}
-                                placeholder="Controlled autosize"
-                                autoSize={{ minRows: 3, maxRows: 5 }}
-                            />
-                        </div>
-                    </div>
+
                 </ReactQuill>
                 <hr />
                 <div

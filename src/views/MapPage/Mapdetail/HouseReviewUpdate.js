@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { postUpdate, postView } from '../../../_actions/reviewPost_action';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
-import { Button, Rate, message, Input, Menu, Dropdown } from 'antd';
+import { Skeleton, Button, Rate, message, Input, Menu, Dropdown } from 'antd';
 
 // 상세 게시글 보기
 // 게시글 내용 불러오기 ->
@@ -106,6 +106,22 @@ function ReviewUpdate({ match, history }) {
                 .catch(history.goBack());
         }
     };
+    const housePeriod = () => {
+        <Menu>
+            <Menu.Item>
+                3개월 미만
+            </Menu.Item>
+            <Menu.Item>
+                3~6개월
+            </Menu.Item>
+            <Menu.Item>
+                6개월~1년
+            </Menu.Item>
+            <Menu.Item>
+                1년 이상
+            </Menu.Item>
+        </Menu>
+    }
 
     useEffect(() => { }, [updated]);
 
@@ -155,7 +171,7 @@ function ReviewUpdate({ match, history }) {
                                 <div className="cost">
                                     비용에 대한 의견
                                     <TextArea
-                                        value={value}
+                                        value={updated}
                                         onChange={(e) => setUpdated({ ...updated, content: e.target.value })}
                                         placeholder="Controlled autosize"
                                         autoSize={{ minRows: 3, maxRows: 5 }}
@@ -164,7 +180,7 @@ function ReviewUpdate({ match, history }) {
                                 <div className="pros">
                                     장점
                                     <TextArea
-                                        value={value}
+                                        value={updated}
                                         onChange={(e) => setUpdated({ ...updated, content: e.target.value })}
                                         placeholder="Controlled autosize"
                                         autoSize={{ minRows: 3, maxRows: 5 }}
@@ -173,7 +189,7 @@ function ReviewUpdate({ match, history }) {
                                 <div className="cons">
                                     단점
                                     <TextArea
-                                        value={value}
+                                        value={updated}
                                         onChange={(e) => setUpdated({ ...updated, content: e.target.value })}
                                         placeholder="Controlled autosize"
                                         autoSize={{ minRows: 3, maxRows: 5 }}

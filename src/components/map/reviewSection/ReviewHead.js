@@ -91,10 +91,9 @@ function ReviewHead({ match, history }) {
                     style={{ border: '1px solid navy' }}
 
                     onClick={(e) => {
-                        console.log(history)
                         if (reviewName(match?.url.substring(3, 15)) === '맛집 리뷰') {
                             history.push({
-                                pathname: '/store/review/register',
+                                pathname: '/3/store/review/register',
                                 //각 path에 맞게 수정해야함 .
                                 state: {
                                     detail: match.path,
@@ -106,7 +105,7 @@ function ReviewHead({ match, history }) {
                         }
                         else {
                             history.push({
-                                pathname: '/house/register',
+                                pathname: '/3/house/register',
                                 //각 path에 맞게 수정해야함 .
                                 state: {
                                     detail: match.path,
