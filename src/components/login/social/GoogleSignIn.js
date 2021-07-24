@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import GoogleLogin from 'react-google-login';
-import GoogleButton from 'react-google-button';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
@@ -37,7 +36,9 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
             .catch((error) => {
               switch (error.response?.status) {
                 case 404:
-                  message.warning('회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.');
+                  message.warning(
+                    '회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.',
+                  );
                   history.push('/register', {
                     email: googleData.profileObj.email,
                     provider: 'google',
@@ -52,8 +53,8 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
         //buttonText='구글로 로그인하기'
-        >
-        <span style={{color: 'black'}}>구글로 로그인하기</span>
+      >
+        <span style={{ color: 'black' }}>구글로 로그인하기</span>
       </GoogleLogin>
     </>
   );

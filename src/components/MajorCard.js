@@ -7,16 +7,17 @@ function MajorCard({ major, match }) {
       <Card
         size="small"
         title={
-          <Tooltip title={major.name}>
-            <span>{major.name}</span>
+          <Tooltip
+            title={major.전공.map((m) => (
+              <div>{m}</div>
+            ))}
+          >
+            <span>{major.단과대학}</span>
           </Tooltip>
         }
-        extra={<Link to={`${match.path}/${major.name}`}>이동</Link>}
+        extra={<Link to={`${match.path}/${major.단과대학}`}>이동</Link>}
         style={{ width: '170px', marginBottom: '16px' }}
-      >
-        {/* <p>{major.id}</p>asdsa
-        <p>{major.campusId}</p> */}
-      </Card>
+      ></Card>
     </>
   );
 }

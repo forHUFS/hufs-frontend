@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useMainMajor from '../../hooks/useMainMajor';
-
+import majorCategory from './majorCategory.json';
 import MajorCard from '../../components/MajorCard';
 import useResponsive from '../../hooks/useResponsive';
 import { Input, Spin } from 'antd';
@@ -8,7 +8,7 @@ import { Input, Spin } from 'antd';
 function MajorList(props) {
   const { mainMajor, isLoading } = useMainMajor();
   const { Mobile, Default } = useResponsive();
-  const [campus, setCampus] = useState(1); // 1: seoul, 2: global
+  const [campus, setCampus] = useState('서울캠퍼스'); // 1: seoul, 2: global, 3: 융합
   if (isLoading) {
     return (
       <div
@@ -24,7 +24,20 @@ function MajorList(props) {
       </div>
     );
   }
-  const selectedCampus = mainMajor.filter((major) => major.campusId === campus);
+  const selectedCampus = majorCategory.filter(
+    (category) => category.캠퍼스 === campus,
+  );
+  const seoulCampus = majorCategory.filter(
+    (category) => category.캠퍼스 === '서울캠퍼스',
+  );
+  const globalCampus = majorCategory.filter(
+    (category) => category.캠퍼스 === '글로벌캠퍼스',
+  );
+  const yunghapMajor = majorCategory.filter(
+    (category) => category.캠퍼스 === '융합전공',
+  );
+  console.log(yunghapMajor);
+  // const selectedCampus = mainMajor.filter((major) => major.campusId === campus);
   return (
     <>
       <Mobile>
@@ -35,30 +48,14 @@ function MajorList(props) {
             margin: '12px',
           }}
         >
-          <a onClick={(e) => setCampus(1)}> 서울 </a>
+          <a onClick={(e) => setCampus('서울캠퍼스')}> 서울 </a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a onClick={(e) => setCampus(2)}> 글로벌 </a>
-          {/* <Input
-            type="text"
-            style={{
-              height: 30,
-              width: 120,
-              float: 'right',
-            }}
-            placeholder="전공 검색"
-            onChange={(e) => console.log(e.target.value)}
-          /> */}
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-          }}
-        >
-          {selectedCampus.map((major) => {
-            return <MajorCard major={major} match={props.match} />;
-          })}
+          <a onClick={(e) => setCampus('글로벌캠퍼스')}> 글로벌 </a>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {selectedCampus.map((major) => {
+              return <MajorCard major={major} match={props.match} />;
+            })}
+          </div>
         </div>
       </Mobile>
       <Default>
@@ -69,9 +66,7 @@ function MajorList(props) {
               margin: '12px',
             }}
           >
-            <a onClick={(e) => setCampus(1)}> 서울 </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a onClick={(e) => setCampus(2)}> 글로벌 </a>
+            <a onClick={(e) => setCampus('서울캠퍼스')}> 서울 </a>
           </div>
           <div
             style={{
@@ -80,7 +75,45 @@ function MajorList(props) {
               justifyContent: 'space-around',
             }}
           >
-            {selectedCampus.map((major) => {
+            {seoulCampus.map((major) => {
+              return <MajorCard major={major} match={props.match} />;
+            })}
+          </div>
+          <div
+            style={{
+              textAlign: 'center',
+              margin: '12px',
+            }}
+          >
+            <a onClick={(e) => setCampus('글로벌캠퍼스')}> 글로벌 </a>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+            }}
+          >
+            {globalCampus.map((major) => {
+              return <MajorCard major={major} match={props.match} />;
+            })}
+          </div>
+          <div
+            style={{
+              textAlign: 'center',
+              margin: '12px',
+            }}
+          >
+            <a onClick={(e) => setCampus('융합전공')}> 융합전공 </a>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+            }}
+          >
+            {yunghapMajor.map((major) => {
               return <MajorCard major={major} match={props.match} />;
             })}
           </div>
