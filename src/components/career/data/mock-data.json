@@ -11,7 +11,8 @@
       "userId": 1,
       "User": {
         "nickname": "하연"
-      }
+      },
+      "header" : "IT"
     },
     {
         "id": 2,
@@ -24,7 +25,8 @@
         "userId": 1,
         "User": {
           "nickname": "하연"
-        }
+        },
+        "header" : "창업"
       },
       {
         "id": 3,
@@ -37,7 +39,8 @@
         "userId": 1,
         "User": {
           "nickname": "하연"
-        }
+        },
+        "header" : "어문"
       }
     ],
     "message": ""

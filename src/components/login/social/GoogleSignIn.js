@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import GoogleLogin from 'react-google-login';
+import GoogleButton from 'react-google-button';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
@@ -9,16 +10,12 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
   const history = useHistory();
   const [modalState, setModalState] = useState(true);
 
-  console.log('Where are you', setModalVisible);
-  console.log('work?', modalState);
-
   return (
     <>
       <GoogleLogin
         clientId="13311386829-vlj3ciu02fu1tqriq8dqo0a3nsm4f90u.apps.googleusercontent.com"
         onSuccess={(googleData) => {
           axios
-
             .post(
               `${PUBLIC_IP}/user/sign-in`,
               {
@@ -35,23 +32,29 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
                 setLogin(true);
                 setModalState(false);
                 setModalVisible(false);
-                //console.log("::",modalState)
-                //console.log(":::", setModalVisible(false))
               }
             })
             .catch((error) => {
-              //setModalState(true);
-              if (error.response?.status === 404) {
-                history.push('/register', {
-                  email: googleData.profileObj.email,
-                  provider: 'google',
-                });
+              switch (error.response?.status) {
+                case 404:
+                  message.warning('회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.');
+                  history.push('/register', {
+                    email: googleData.profileObj.email,
+                    provider: 'google',
+                  });
+                  break;
+                case 499:
+                  console.log('body가 비어있는 상태입니다.');
+                  break;
               }
             });
         }}
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
-      />
+        //buttonText='구글로 로그인하기'
+        >
+        <span style={{color: 'black'}}>구글로 로그인하기</span>
+      </GoogleLogin>
     </>
   );
 }

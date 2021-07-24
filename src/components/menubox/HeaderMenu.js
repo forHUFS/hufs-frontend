@@ -43,7 +43,7 @@ function HeaderMenu({ setLogin, login }) {
   const menu3 = (
     <Menu>
       <Menu.Item>
-        <Link to="/3" onClick={onClose}>
+        <Link to="/학교간Boo" onClick={onClose}>
           맛집 공간
         </Link>
         {/* <Link to="/3">주거 공간</Link> */}
@@ -55,6 +55,11 @@ function HeaderMenu({ setLogin, login }) {
       <Menu.Item>
         <Link to="/board/졸업생공간" onClick={onClose}>
           졸업생 공간
+        </Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to="/career" onClick={onClose}>
+          취/창업 공간
         </Link>
       </Menu.Item>
     </Menu>
@@ -201,7 +206,7 @@ function HeaderMenu({ setLogin, login }) {
                 </Menu.Item>
                 <Menu.Item>
                   <Dropdown overlay={menu3}>
-                    <Link to="/3">학교 간 Boo</Link>
+                    <Link to="/학교간Boo">학교 간 Boo</Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item key="setting:4">

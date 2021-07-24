@@ -4,7 +4,7 @@ import { PUBLIC_IP } from '../../../config';
 import mdata from '../data/mock-data.json';
 import {PageHeader} from 'antd';
 
-function CareerReviewView(props) {
+function CareerQuestionView(props) {
     const {id} = props.match.params;
 
     const [data,setData] = useState(mdata.data);
@@ -33,10 +33,12 @@ function CareerReviewView(props) {
     } */
     return (
         <>
-         <PageHeader
-        title={'후기'}
+        <PageHeader
+        title={'질문'}
       />
+        
         <div className='Career-View'>
+        
           {data 
           ? <div>
 
@@ -58,4 +60,4 @@ function CareerReviewView(props) {
     )
 }
 
-export default CareerReviewView;
+export default CareerQuestionView;

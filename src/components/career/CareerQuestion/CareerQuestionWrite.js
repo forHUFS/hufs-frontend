@@ -1,29 +1,12 @@
 import React,{useState} from 'react';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
-import { Checkbox, Divider,PageHeader } from 'antd';
-const CheckboxGroup = Checkbox.Group;
+import { PageHeader } from 'antd';
 
-const plainOptions = ['인문', '예술', 'IT'];
-const defaultCheckedList = [];
-
-function CareerReviewWrite() {
+function CareerQuestionWrite() {
  const [state, setstate] = useState({title:"",contents:""});
- const [checkedList, setCheckedList] = useState(defaultCheckedList);
- const [indeterminate, setIndeterminate] = useState(true);
-const [checkAll, setCheckAll] = useState(false);
 
-  const onChange = list => {
-    setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
-  };
 
-  const onCheckAllChange = e => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
-  };
 
   const _submitBoard = async function () {
     const title = document.getElementsByName('title')[0].value.trim();
@@ -52,20 +35,13 @@ const [checkAll, setCheckAll] = useState(false);
   return (
     <>
      <PageHeader
-        title={'후기'}
+        title={'질문'}
       />
       <div className="Career-Write-Main">
         <div className="Career-Write">
           <input type="text" id="title_txt" name="title" placeholder="제목" />
           
         </div>
-        <div className="Career-Check">
-        <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-        Check all
-      </Checkbox>
-      <Divider />
-      <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
-      </div>
         <div>
           <textarea
             id="content_txt"
@@ -81,4 +57,4 @@ const [checkAll, setCheckAll] = useState(false);
 }
 
 
-export default CareerReviewWrite;
+export default CareerQuestionWrite;

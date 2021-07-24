@@ -25,7 +25,7 @@ const CalendarPage = loadable(() =>
   import('./views/CalendarPage/CalendarPage'),
 );
 const SignUpModal = loadable(() =>
-  import('./components/login/modals/SignUpModal'),
+  import('./views/RegisterPage/SignUpPage'),
 );
 const Page404 = loadable(() => import('./views/Page404/Page404'));
 const EmailAuthPage = loadable(() =>
@@ -47,7 +47,7 @@ function App() {
           <Route exact path="/search" component={SearchPage} />
           <Route path="/board" component={Post} />
           <Route path="/scholarship" component={CalendarPage} />
-          <Route path="/3" component={MapPage} />
+          <Route path="/학교간Boo" component={MapPage} />
           <Route path="/career" component={CareerPage} />
           <Route path="/major" component={Post} />
           <Route path="/mypage" component={MyPage} />
