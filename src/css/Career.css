@@ -5,14 +5,23 @@
     --black-color: #0a0a0a;
   }
   .Career {
+    margin-left:30px;
+    padding-right: 20px;
     float:left;
-    height: 200px;
+    height: 1000px;
+    
+    
   }
   .Career-Menu {
-    width: 200px;
+    width: 150px;
+    margin-top: 10px;
+    
   }
   .Career-Main{
     height: 1000px;
+    width: 80%;
+    border:2px solid;
+    margin-left:20px;
   }
   .Career-Write-Main{
     float:left;
@@ -57,17 +66,20 @@
 }
 
 .list_tit {
+  padding-left: 30px;
   border-bottom: solid 1px #ababab;
-  color : #ababab;
+  color : var(--navy-color);
+  font-weight: bold;
 }
 
 .list_grid {
   display: grid;
-  grid-template-columns: 70% 15% 15%;
+  grid-template-columns: 10% 30% 15% 15%;
 }
 
 .list_data {
-  line-height: 40px;
+  padding-left: 30px;
+  line-height: 50px;
 }
 
 .acenter {
@@ -96,4 +108,5 @@
   padding: 20px;
   padding-left: 30px;
 }
+
 

@@ -39,7 +39,7 @@ function KakaoSignIn({ setModalVisible, setLogin }) {
               console.log('error?', error.response.request.status);
               switch (error.response?.request.status) {
                 case 404:
-                  message.error('회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.');
+                  message.warning('회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.');
                   history.push(`/register`, {
                   email: response.kakao_account.email,
                   provider: 'kakao',
@@ -66,8 +66,9 @@ function KakaoSignIn({ setModalVisible, setLogin }) {
         jsKey={'690082dcedf6efeca17e320160913cb3'}
         butonText='Kakao SignIn'
         onSuccess={responseKakao}
-        style = {{ padding: '0',
-          width: '280px',
+        style = {{
+          display: 'inline-block',
+          padding: '0',
           height: '45px',
           lineHeight: '44px',
           color: 'black',

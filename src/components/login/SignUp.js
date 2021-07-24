@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import SignInModal from './modals/SignInModal';
-import SignUpModal from './modals/SignUpModal';
+import SignInModal from '../../views/RegisterPage/SignInPage';
+import SignUpModal from '../../views/RegisterPage/SignUpPage';
 
 const SignUp = ({ setLogin }) => {
   const [signUpModalOn, setSignUpModalOn] = useState(false);
