@@ -46,7 +46,11 @@ function MyPage(props) {
         <div className={styles.main}>
           <div className={styles.communitymain}>
             <Layout className={styles.layout}>
-              <UserInfo user={user} isLoading={isLoading} />
+              {user ? (
+                <>
+                  <UserInfo user={user} isLoading={isLoading} />
+                </>
+              ) : null}
               <Header>
                 <Menu
                   theme="dark"
