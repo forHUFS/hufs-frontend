@@ -6,10 +6,20 @@ import SignUp from '../../components/login/SignUp';
 import Logout from '../../components/login/Logout';
 import useResponsive from '../../hooks/useResponsive';
 import { MenuOutlined } from '@ant-design/icons';
+import useUserInfo from '../../hooks/useUserInfo';
 const { SubMenu } = Menu;
-function HeaderMenu({ setLogin, login }) {
+function HeaderMenu(props) {
   const { Mobile, Default } = useResponsive();
   const [visible, setVisible] = useState(false);
+  const { user, isLoading, isError } = useUserInfo();
+
+  const authenticated = user ? user?.Token.isEmailAuthenticated : null;
+  const authCheckMessage = () => {
+    if (!authenticated) {
+      message.warn('해당 기능을 이용하시려면 이메일 인증이 필요합니다!', 1);
+      return;
+    }
+  };
   const showDrawer = () => {
     setVisible(true);
   };
@@ -39,7 +49,13 @@ function HeaderMenu({ setLogin, login }) {
   const menu2 = (
     <Menu>
       <Menu.Item>
-        <Link to="/scholarship" onClick={onClose}>
+        <Link
+          to={authenticated ? `/scholarship` : ''}
+          onClick={() => {
+            authCheckMessage();
+            onClose();
+          }}
+        >
           장학 공간
         </Link>
       </Menu.Item>
@@ -83,11 +99,11 @@ function HeaderMenu({ setLogin, login }) {
       </Menu.Item>
     </Menu>
   );
-  //   const signInCheck = (login) => {
-  //     if (login === true) {
-  //       return <Logout setLogin={setLogin} />;
-  //     } else if (login === false) {
-  //       return <SignUp setLogin={setLogin} />;
+  //   const signInCheck = (isError) => {
+  //     if (isError === true) {
+  //       return <Logout  />;
+  //     } else if (isError === false) {
+  //       return <SignUp  />;
   //     }
   //   };
   return (
@@ -112,9 +128,9 @@ function HeaderMenu({ setLogin, login }) {
             onClose={onClose}
             visible={visible}
           >
-            {login ? (
+            {!isError ? (
               <>
-                <Logout setLogin={setLogin} />
+                <Logout />
 
                 <Button type="text">
                   <Link
@@ -127,7 +143,7 @@ function HeaderMenu({ setLogin, login }) {
                 </Button>
               </>
             ) : (
-              <SignUp setLogin={setLogin} />
+              <SignUp />
             )}
             <Menu
               style={{
@@ -181,15 +197,9 @@ function HeaderMenu({ setLogin, login }) {
           </div>
 
           <span className="loginbar">
+            <span>{!isError ? <Logout /> : <SignUp />}</span>
             <span>
-              {login ? (
-                <Logout setLogin={setLogin} />
-              ) : (
-                <SignUp setLogin={setLogin} />
-              )}
-            </span>
-            <span>
-              {login ? (
+              {!isError ? (
                 <Button type="text">
                   <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
                     My page
@@ -211,7 +221,14 @@ function HeaderMenu({ setLogin, login }) {
                 </Menu.Item>
                 <Menu.Item key="app">
                   <Dropdown overlay={menu2}>
-                    <Link to="/scholarship">학교 해Boo</Link>
+                    <Link
+                      to={authenticated ? '/scholarship' : ''}
+                      onClick={() => {
+                        authCheckMessage();
+                      }}
+                    >
+                      학교 해Boo
+                    </Link>
                   </Dropdown>
                 </Menu.Item>
                 <Menu.Item>
