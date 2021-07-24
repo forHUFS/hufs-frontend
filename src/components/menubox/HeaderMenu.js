@@ -24,6 +24,16 @@ function HeaderMenu({ setLogin, login }) {
           자유 공간
         </Link>
       </Menu.Item>
+      <Menu.Item>
+        <Link to="/board/질문공간" onClick={onClose}>
+          질문 공간
+        </Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to="/board/공구공간" onClick={onClose}>
+          공구 공간
+        </Link>
+      </Menu.Item>
     </Menu>
   );
   const menu2 = (

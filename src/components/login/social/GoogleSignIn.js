@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GoogleLogin from 'react-google-login';
-import GoogleButton from 'react-google-button';
+
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
@@ -51,9 +51,9 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
         }}
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
-        //buttonText='구글로 로그인하기'
-        >
-        <span style={{color: 'black'}}>구글로 로그인하기</span>
+      //buttonText='구글로 로그인하기'
+      >
+        <span style={{ color: 'black' }}>구글로 로그인하기</span>
       </GoogleLogin>
     </>
   );
