@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router';
-import { Badge, Alert } from 'antd';
+import { Badge, Alert, message } from 'antd';
 import { List, Typography, PageHeader, Tag } from 'antd';
 import PostSub from '../../components/post/PostSub';
 import axios from 'axios';
@@ -11,12 +11,22 @@ import CalendarComponent, {
 import useScholarship from '../../hooks/useScholarship';
 import useScholarshipTags from '../../hooks/useScholarshipTags';
 import useResponsive from '../../hooks/useResponsive';
+import useUserInfo from '../../hooks/useUserInfo';
 
 function CalendarPage(props) {
   const { Mobile, Default } = useResponsive();
+
+  const { user, isError } = useUserInfo();
+  const authenticated = user ? user?.Token.isEmailAuthenticated : null;
+  const authCheckMessage = () => {
+    if (!authenticated) {
+      message.warn('해당 기능을 이용하시려면 이메일 인증이 필요합니다!', 1);
+      return;
+    }
+  };
   const [selectedOptionTag, setSelectedOptionTag] = useState({ optionId: [] });
   const [selectedCampusTag, setSelectedCampusTag] = useState({ campusId: [] });
-  const { scholarshipData, isError, isLoading } = useScholarship(
+  const { scholarshipData, isLoading } = useScholarship(
     selectedCampusTag,
     selectedOptionTag,
   );
@@ -26,6 +36,11 @@ function CalendarPage(props) {
   useEffect(() => {
     setDataList(scholarshipData);
   }, [isLoading, scholarshipData]);
+  if (isError || !authenticated) {
+    props.history.push('/');
+    authCheckMessage();
+    return <></>;
+  }
   const onOptionTag = (event, tag) => {
     if (event) {
       setSelectedOptionTag({

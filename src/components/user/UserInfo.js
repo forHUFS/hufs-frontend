@@ -13,10 +13,14 @@ import useResponsive from '../../hooks/useResponsive';
 function UserInfo(props) {
   const [mainMajorList, setMainMajorList] = useState([]);
   const [doubleMajorList, setDoubleMajorList] = useState([]);
-  const [change, setChange] = useState({});
-  const [webMailInput, setWebMailInput] = useState('');
-  const { Mobile, Default } = useResponsive();
   let user = props.user;
+  const [change, setChange] = useState({
+    nickname: user.nickName,
+    mainMajorId: user.MainMajor.id,
+    doubleMajorId: user.DoubleMajor.id,
+  });
+  const [webMailInput, setWebMailInput] = useState('');
+  const { isMobile, Mobile, Default } = useResponsive();
   let isLoading = props.isLoading;
   useEffect(async () => {
     await axios
@@ -29,15 +33,15 @@ function UserInfo(props) {
         setDoubleMajorList(response[1].data.data);
       });
   }, []);
-  useEffect(() => {
-    if (!isLoading) {
-      setChange({
-        nickname: user.nickName,
-        mainMajorId: user.MainMajor.id,
-        doubleMajorId: user.DoubleMajor.id,
-      });
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     setChange({
+  //       nickname: user.nickName,
+  //       mainMajorId: user.MainMajor.id,
+  //       doubleMajorId: user.DoubleMajor.id,
+  //     });
+  //   }
+  // }, []);
   const onSubmit = async () => {
     const answer = window.confirm(
       '다음 변경은 30일 이후에 가능합니다. 변경하시겠습니까?',
@@ -92,7 +96,7 @@ function UserInfo(props) {
 
   const getChangedInfo = () => {
     let toBeSubmitted;
-    if (user.nickName !== change.nickname) {
+    if (change.nickname !== user.nickName) {
       toBeSubmitted = { ...toBeSubmitted, nickname: change.nickname };
     }
     if (change.mainMajorId !== user.MainMajor.id) {
@@ -128,9 +132,10 @@ function UserInfo(props) {
       });
   };
   if (isLoading) return <>loading..</>;
-  return (
-    <div>
-      <Mobile>
+  if (isMobile) {
+    return (
+      // <Mobile>
+      <>
         <div
           style={{
             display: 'flex',
@@ -205,91 +210,96 @@ function UserInfo(props) {
             </Button>
           </div>
         </div>{' '}
-      </Mobile>
-      <Default>
-        <div className={styles.card}>
-          <div className={styles.image}>
-            <img src={profile} />
-          </div>
-          <div className={styles.info}>
-            <div className={styles.email}>
-              <label>이메일</label>
-              <div>
-                <Input
-                  value={user.Providers[0].email}
-                  style={{ width: '200px' }}
-                  disabled={true}
-                ></Input>
-              </div>
+        {/* </Mobile> */}
+      </>
+    );
+  }
+  return (
+    // <Default>
+    <>
+      <div className={styles.card}>
+        <div className={styles.image}>
+          <img src={profile} />
+        </div>
+        <div className={styles.info}>
+          <div className={styles.email}>
+            <label>이메일</label>
+            <div>
+              <Input
+                value={user.Providers[0].email}
+                style={{ width: '200px' }}
+                disabled={true}
+              ></Input>
             </div>
-            <div className={styles.webMail}>
-              <label>웹메일</label>
-              <div>
-                {user.Token?.isEmailAuthenticated ? (
+          </div>
+          <div className={styles.webMail}>
+            <label>웹메일</label>
+            <div>
+              {user.Token?.isEmailAuthenticated ? (
+                <Input
+                  disabled
+                  value={user.webMail}
+                  style={{ width: '200px' }}
+                  suffix={<>@hufs.ac.kr</>}
+                ></Input>
+              ) : (
+                <>
                   <Input
-                    disabled
-                    value={user.webMail}
+                    defaultValue={user.webMail}
+                    value={webMailInput}
+                    onChange={(e) => setWebMailInput(e.target.value)}
                     style={{ width: '200px' }}
                     suffix={<>@hufs.ac.kr</>}
                   ></Input>
-                ) : (
-                  <>
-                    <Input
-                      defaultValue={user.webMail}
-                      value={webMailInput}
-                      onChange={(e) => setWebMailInput(e.target.value)}
-                      style={{ width: '200px' }}
-                      suffix={<>@hufs.ac.kr</>}
-                    ></Input>
-                    <Button
-                      onClick={onAuth}
-                      // style={{ marginLeft: '8px' }}
-                    >
-                      인증하기
-                    </Button>
-                  </>
-                )}
-              </div>
+                  <Button
+                    onClick={onAuth}
+                    // style={{ marginLeft: '8px' }}
+                  >
+                    인증하기
+                  </Button>
+                </>
+              )}
+            </div>
 
-              {/* 인증 하기, 인증 여부에 따른 disabled 작성 필요 */}
-            </div>
-            <div className={styles.nickName}>
-              <label>닉네임</label>
-              <div>
-                <Input
-                  style={{ width: '200px' }}
-                  type="nickName"
-                  defaultValue={user.nickName}
-                  placeholder={user.nickName}
-                  onChange={(e) => {
-                    setChange({ ...change, nickname: e.target.value });
-                  }}
-                />
-              </div>
-            </div>
-            <div className={styles.mainMajor}>
-              <label>주전공</label>
-              <MajorSelect
-                list={mainMajorList}
-                defaultMajor={user.MainMajor.name}
-                onChange={MainMajorChange}
-              />
-            </div>
-            <div className={styles.secondMajor}>
-              <label>이중/부전공</label>
-              <SecondMajorSelect
-                list={doubleMajorList}
-                defaultSecondMajor={user.DoubleMajor.name}
-                onChange={DoubleMajorChange}
-              />
-            </div>
-            <Button style={{ height: '28px' }} onClick={onSubmit}>
-              수정하기
-            </Button>
+            {/* 인증 하기, 인증 여부에 따른 disabled 작성 필요 */}
           </div>
+          <div className={styles.nickName}>
+            <label>닉네임</label>
+            <div>
+              <Input
+                style={{ width: '200px' }}
+                type="nickName"
+                value={change.nickname}
+                placeholder={user.nickName}
+                onChange={(e) => {
+                  setChange({ ...change, nickname: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.mainMajor}>
+            <label>주전공</label>
+            <MajorSelect
+              list={mainMajorList}
+              defaultMajor={user.MainMajor.name}
+              onChange={MainMajorChange}
+            />
+          </div>
+          <div className={styles.secondMajor}>
+            <label>이중/부전공</label>
+            <SecondMajorSelect
+              list={doubleMajorList}
+              defaultSecondMajor={user.DoubleMajor.name}
+              onChange={DoubleMajorChange}
+            />
+          </div>
+          <Button style={{ height: '28px' }} onClick={onSubmit}>
+            수정하기
+          </Button>
         </div>
-      </Default>
-    </div>
+      </div>
+    </>
+    // </Default>
   );
 }
 

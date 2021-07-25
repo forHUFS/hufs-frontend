@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react';
 import useSWR from 'swr';
 import { PUBLIC_IP } from '../config';
 

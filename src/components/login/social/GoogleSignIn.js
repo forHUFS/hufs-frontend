@@ -4,8 +4,9 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import { message } from 'antd';
+import { mutate } from 'swr';
 
-function GoogleSignIn({ setModalVisible, setLogin }) {
+function GoogleSignIn({ setModalVisible }) {
   const history = useHistory();
   const [modalState, setModalState] = useState(true);
 
@@ -26,9 +27,9 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
 
             .then((response) => {
               if (response.status === 200) {
+                mutate(`${PUBLIC_IP}/user`);
                 message.success('로그인이 정상 완료 되었습니다.');
                 history.push('/');
-                setLogin(true);
                 setModalState(false);
                 setModalVisible(false);
               }
@@ -36,7 +37,9 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
             .catch((error) => {
               switch (error.response?.status) {
                 case 404:
-                  message.warning('회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.');
+                  message.warning(
+                    '회원가입이 되지 않은 사용자입니다. 회원가입 페이지로 넘어갑니다.',
+                  );
                   history.push('/register', {
                     email: googleData.profileObj.email,
                     provider: 'google',
@@ -50,7 +53,10 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
         }}
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
-      />
+        //buttonText='구글로 로그인하기'
+      >
+        <span style={{ color: 'black' }}>구글로 로그인하기</span>
+      </GoogleLogin>
     </>
   );
 }

@@ -21,12 +21,11 @@ import './css/Career.css';
 const Post = loadable(() => import('./views/PostPage/Post'));
 const LandingPage = loadable(() => import('./views/LandingPage/LandingPage'));
 const MyPage = loadable(() => import('./views/MyPage/MyPage'));
+const HeaderMenu = loadable(() => import('./components/menubox/HeaderMenu'));
 const CalendarPage = loadable(() =>
   import('./views/CalendarPage/CalendarPage'),
 );
-const SignUpModal = loadable(() =>
-  import('./views/RegisterPage/SignUpPage'),
-);
+const SignUpModal = loadable(() => import('./views/RegisterPage/SignUpPage'));
 const Page404 = loadable(() => import('./views/Page404/Page404'));
 const EmailAuthPage = loadable(() =>
   import('./views/EmailAuthPage/EmailAuthPage'),
@@ -39,7 +38,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header />
+        <HeaderMenu />
         <Quick />
         <Switch>
           <Route exact path="/" component={LandingPage} />
