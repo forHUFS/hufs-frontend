@@ -13,7 +13,8 @@ function HeaderMenu(props) {
   const [visible, setVisible] = useState(false);
   const { user, isLoading, isError } = useUserInfo();
 
-  const authenticated = user ? user?.Token.isEmailAuthenticated : null;
+  // const authenticated = user ? user?.Token.isEmailAuthenticated : null;
+  const authenticated = user ? user?.Token : null;
   const authCheckMessage = () => {
     if (!authenticated) {
       message.warn('해당 기능을 이용하시려면 이메일 인증이 필요합니다!', 1);
@@ -34,7 +35,7 @@ function HeaderMenu(props) {
           자유 공간
         </Link>
       </Menu.Item>
-      {/* <Menu.Item>
+      <Menu.Item>
         <Link to="/board/질문공간" onClick={onClose}>
           질문 공간
         </Link>
@@ -43,7 +44,7 @@ function HeaderMenu(props) {
         <Link to="/board/공구공간" onClick={onClose}>
           공구 공간
         </Link>
-      </Menu.Item> */}
+      </Menu.Item>
     </Menu>
   );
   const menu2 = (

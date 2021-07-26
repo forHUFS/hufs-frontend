@@ -4,11 +4,13 @@ import useMainMajor from '../../hooks/useMainMajor';
 import MajorCard from '../../components/MajorCard';
 import useResponsive from '../../hooks/useResponsive';
 import { Input, Spin } from 'antd';
+import PostSub from '../../components/post/PostSub';
 
 function MajorList(props) {
   const { mainMajor, isLoading } = useMainMajor();
   const { Mobile, Default } = useResponsive();
   const [campus, setCampus] = useState(1); // 1: seoul, 2: global
+
   if (isLoading) {
     return (
       <div
@@ -62,7 +64,10 @@ function MajorList(props) {
         </div>
       </Mobile>
       <Default>
-        <div className="community-main">
+        <div className="community-main" style={{
+          height: '1000px'
+        }}>
+          <PostSub match={props.match} />
           <div
             style={{
               textAlign: 'center',

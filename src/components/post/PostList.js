@@ -123,6 +123,7 @@ export default withRouter(PostList);
 
 export function TableBody({ currentList, match, loading }) {
   const { Default, Mobile } = useResponsive();
+
   return (
     <>
       <Mobile>
@@ -153,7 +154,7 @@ export function TableBody({ currentList, match, loading }) {
                               &nbsp;&nbsp;&nbsp;&nbsp;({record.repliesCount})
                             </span>
                           ) : null}
-                          {}
+                          { }
                         </>
                       }
                     />
