@@ -3,7 +3,8 @@ import { message, Button } from 'antd';
 import { useHistory } from 'react-router';
 import { PUBLIC_IP } from '../../config';
 import axios from 'axios';
-function Logout({ setLogin }) {
+import { mutate } from 'swr';
+function Logout() {
   const history = useHistory();
   const onLogout = async () => {
     await axios
@@ -12,7 +13,7 @@ function Logout({ setLogin }) {
       })
       .then(() => {
         message.success('로그아웃 성공!');
-        setLogin(false);
+        mutate(`${PUBLIC_IP}/user`);
         history.push('/');
       })
       .catch((error) => {

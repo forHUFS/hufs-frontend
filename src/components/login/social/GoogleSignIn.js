@@ -4,8 +4,9 @@ import { useHistory } from 'react-router';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import { message } from 'antd';
+import { mutate } from 'swr';
 
-function GoogleSignIn({ setModalVisible, setLogin }) {
+function GoogleSignIn({ setModalVisible }) {
   const history = useHistory();
   const [modalState, setModalState] = useState(true);
 
@@ -26,9 +27,9 @@ function GoogleSignIn({ setModalVisible, setLogin }) {
 
             .then((response) => {
               if (response.status === 200) {
+                mutate(`${PUBLIC_IP}/user`);
                 message.success('로그인이 정상 완료 되었습니다.');
                 history.push('/');
-                setLogin(true);
                 setModalState(false);
                 setModalVisible(false);
               }
