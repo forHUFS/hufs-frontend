@@ -9,7 +9,6 @@ import { deleteScrap } from '../../functions/postFunctions';
 function UserScrap() {
   const { Column } = Table;
   const { scrapData, isLoading, isError } = useScrap();
-  console.log(scrapData);
   const onRemove = (recordId) => {
     deleteScrap(recordId)
       .then(() => {
