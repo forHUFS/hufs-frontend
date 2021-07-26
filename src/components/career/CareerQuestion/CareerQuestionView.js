@@ -3,9 +3,11 @@ import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
 import mdata from '../data/mock-data.json';
 import {PageHeader} from 'antd';
+import useResponsive from '../../../hooks/useResponsive'
 
 function CareerQuestionView(props) {
     const {id} = props.match.params;
+    const { isMobile, Default, Mobile } = useResponsive();
 
     const [data,setData] = useState(mdata.data);
 
@@ -33,12 +35,11 @@ function CareerQuestionView(props) {
     } */
     return (
         <>
-        <PageHeader
+        <Mobile>
+         <PageHeader
         title={'질문'}
       />
-        
-        <div className='Career-View'>
-        
+        <div className='Career-View' style = {{marginTop:"-900px", width:"500px"}}>
           {data 
           ? <div>
 
@@ -56,6 +57,30 @@ function CareerQuestionView(props) {
             </div>
           : null}
         </div>
+        </Mobile>
+        <Default>
+        <PageHeader
+        title={'질문'}
+      />
+        <div className='Career-View'>
+          {data 
+          ? <div>
+
+              <div className='top_title'>
+                <input type='text' id='title_txt' name='title' defaultValue={data.title} readOnly/>
+
+                <div className='date_div'>
+                  {data.createdAt}
+                </div>
+              </div>
+              
+              <div>
+                <div id='content_txt' name='contents' dangerouslySetInnerHTML = {{ __html: data.content }} readOnly></div>
+              </div>
+            </div>
+          : null}
+        </div>
+        </Default>
         </>
     )
 }
