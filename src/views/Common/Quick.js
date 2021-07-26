@@ -8,14 +8,13 @@ const { SubMenu } = Menu;
 function Quick() {
   const { Default } = useResponsive();
 
-  const handleClick = (e) => {};
+  const handleClick = (e) => { };
 
   if (
     window.document.location.href === 'http://localhost:3000' ||
     window.document.location.href === 'http://hufspace.com'
   ) {
   }
-  // console.log(window.document.location)
   return (
     <Default>
       <Menu onClick={handleClick} mode="inline">

@@ -2,8 +2,7 @@ import React from 'react';
 import { PageHeader } from 'antd';
 
 function PostSub({ match }) {
-  console.log(match.params?.title)
-  console.log(match.path)
+
   return (
     <>
       {match.params?.title !== undefined ? (
