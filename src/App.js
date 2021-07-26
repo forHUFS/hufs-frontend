@@ -44,10 +44,10 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/register" component={SignUpModal} />
           <Route exact path="/search" component={SearchPage} />
+          <Route exact path="/board/:id" component={CareerPage} />
           <Route path="/board" component={Post} />
           <Route path="/scholarship" component={CalendarPage} />
           <Route path="/학교간Boo" component={MapPage} />
-          <Route path="/career" component={CareerPage} />
           <Route path="/major" component={Post} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />
