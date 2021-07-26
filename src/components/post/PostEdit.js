@@ -70,7 +70,7 @@ function PostEdit(props) {
     }
   };
   if (notMyMajor) {
-    props.history.goBack();
+    props.history.push('/');
   }
   if (isError) {
     return errorHandling(isError.response?.data.message);

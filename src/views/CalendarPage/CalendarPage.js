@@ -74,14 +74,14 @@ function CalendarPage(props) {
       캠퍼스
       {campusTags
         ? campusTags.map((tag) => (
-            <CheckableTag
-              key={tag.id}
-              checked={selectedCampusTag.campusId.indexOf(tag.id) > -1}
-              onChange={(event) => onCampusTag(event, tag.id)}
-            >
-              {tag.name}
-            </CheckableTag>
-          ))
+          <CheckableTag
+            key={tag.id}
+            checked={selectedCampusTag.campusId.indexOf(tag.id) > -1}
+            onChange={(event) => onCampusTag(event, tag.id)}
+          >
+            {tag.name}
+          </CheckableTag>
+        ))
         : null}
     </div>
   );
@@ -90,18 +90,18 @@ function CalendarPage(props) {
       유형
       {optionTags
         ? optionTags.map((tag) => (
-            <CheckableTag
-              style={{
-                marginLeft: '12px',
-                marginRight: '0px',
-              }}
-              key={tag.id}
-              checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
-              onChange={(event) => onOptionTag(event, tag.id)}
-            >
-              {tag.name}
-            </CheckableTag>
-          ))
+          <CheckableTag
+            style={{
+              marginLeft: '12px',
+              marginRight: '0px',
+            }}
+            key={tag.id}
+            checked={selectedOptionTag.optionId.indexOf(tag.id) > -1}
+            onChange={(event) => onOptionTag(event, tag.id)}
+          >
+            {tag.name}
+          </CheckableTag>
+        ))
         : null}
     </div>
   );
