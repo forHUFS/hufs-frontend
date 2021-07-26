@@ -53,7 +53,7 @@ function GoogleSignIn({ setModalVisible }) {
         }}
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
-        //buttonText='구글로 로그인하기'
+      //buttonText='구글로 로그인하기'
       >
         <span style={{ color: 'black' }}>구글로 로그인하기</span>
       </GoogleLogin>
