@@ -18,14 +18,14 @@ function PostSearch({ setPosts, match }) {
     const body = {
       keyword: keyword,
       option: searchType,
-      board: 1,
+      board: match.params.title,
     };
     postSearch(body)
       .then((response) => {
         history.push({
           pathname: `/search`,
           state: { detail: response },
-          BoardId: match.path.substring(1),
+          board: match.params.title,
         });
       })
       .catch((error) => {
