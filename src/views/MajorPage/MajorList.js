@@ -36,7 +36,6 @@ function MajorList(props) {
   const yunghapMajor = majorCategory.filter(
     (category) => category.캠퍼스 === '융합전공',
   );
-  console.log(yunghapMajor);
   // const selectedCampus = mainMajor.filter((major) => major.campusId === campus);
   return (
     <>
@@ -51,6 +50,8 @@ function MajorList(props) {
           <a onClick={(e) => setCampus('서울캠퍼스')}> 서울 </a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <a onClick={(e) => setCampus('글로벌캠퍼스')}> 글로벌 </a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a onClick={(e) => setCampus('융합전공')}> 융합전공 </a>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {selectedCampus.map((major) => {
               return <MajorCard major={major} match={props.match} />;
@@ -67,43 +68,9 @@ function MajorList(props) {
             }}
           >
             <a onClick={(e) => setCampus('서울캠퍼스')}> 서울 </a>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-            }}
-          >
-            {seoulCampus.map((major) => {
-              return <MajorCard major={major} match={props.match} />;
-            })}
-          </div>
-          <div
-            style={{
-              textAlign: 'center',
-              margin: '12px',
-            }}
-          >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a onClick={(e) => setCampus('글로벌캠퍼스')}> 글로벌 </a>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-            }}
-          >
-            {globalCampus.map((major) => {
-              return <MajorCard major={major} match={props.match} />;
-            })}
-          </div>
-          <div
-            style={{
-              textAlign: 'center',
-              margin: '12px',
-            }}
-          >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a onClick={(e) => setCampus('융합전공')}> 융합전공 </a>
           </div>
           <div
@@ -113,7 +80,7 @@ function MajorList(props) {
               justifyContent: 'space-around',
             }}
           >
-            {yunghapMajor.map((major) => {
+            {selectedCampus.map((major) => {
               return <MajorCard major={major} match={props.match} />;
             })}
           </div>

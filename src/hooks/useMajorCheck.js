@@ -1,6 +1,5 @@
 import useUserInfo from './useUserInfo';
 import majorCategory from '../views/MajorPage/majorCategory.json';
-import { useState } from 'react';
 export default function useMajorCheck(match) {
   const { user } = useUserInfo();
   const isMajorBoard = match.url.substring(1, 6) === 'major';
