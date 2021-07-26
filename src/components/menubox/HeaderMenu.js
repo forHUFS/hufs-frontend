@@ -14,10 +14,14 @@ function HeaderMenu(props) {
   const { user, isLoading, isError } = useUserInfo();
 
   const authenticated = user ? user?.Token.isEmailAuthenticated : null;
+  //const authenticated = user ? user?.Token : null;
   const authCheckMessage = () => {
     if (!authenticated) {
+      console.log("d:", user?.Token, "sdf:", authenticated);
       message.warn('해당 기능을 이용하시려면 이메일 인증이 필요합니다!', 1);
       return;
+    } else {
+      console.log("hmm:", user, "sdf:", authenticated);
     }
   };
   const showDrawer = () => {
