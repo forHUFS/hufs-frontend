@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import user from '../data/mock-data.json'
-import { Button, PageHeader } from 'antd';
+import { Button, PageHeader, message } from 'antd';
 import MaterialTable from "material-table";
 import useResponsive from '../../../hooks/useResponsive'
+import { useDispatch } from 'react-redux';
+import useBoard from '../../../hooks/useBoard'
+import PostSub from '../../post/PostSub'
 
-function CareerQuestion({ history, match }) {
+
+import {
+  careerList,
+  postRemove,
+} from '../../../_actions/reviewPost_action'
+
+function CareerQuestion(props) {
   const { isMobile, Default, Mobile } = useResponsive();
   const user1 = user.data;
-  const [list, setList] = useState(user1);
+
+  const [list, setList] = useState()
+  const { board, isLoading, isError } = useBoard(props.location.pathname.substring(7, 15));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setList(board);
+
+  }, [board])
   var columns = [
 
     {
@@ -17,7 +35,7 @@ function CareerQuestion({ history, match }) {
       }
     },
     {
-      title: "제목", field: "title", render: rowData => <Link to={`/board/취창업공간/질문/view/${rowData.id}`}>{rowData.title}</Link>,
+      title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
       headerStyle: {
         color: '#030a66', fontWeight: 'bold'
       }
@@ -42,7 +60,7 @@ function CareerQuestion({ history, match }) {
 
 
       {
-        title: "제목", field: "title", render: rowData => <Link to={`/board/취창업공간/질문/view/${rowData.id}`}>{rowData.title}</Link>,
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
@@ -59,13 +77,15 @@ function CareerQuestion({ history, match }) {
         }
       },
       {
-        title: "제목", field: "title", render: rowData => <Link to={`/board/취창업공간/질문/view/${rowData.id}`}>{rowData.title}</Link>,
+
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
+
       },
       {
-        title: "작성자", field: "User.nickname", headerStyle: {
+        title: "작성자", field: "nickname", headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
       },
@@ -77,37 +97,19 @@ function CareerQuestion({ history, match }) {
           color: '#030a66', fontWeight: 'bold'
         }
       }
+
     ];
 
   }
 
 
 
-
-
-  /* const _getListData = async function() {
-      const data_list = await axios(`${PUBLIC_IP}/board/${8}`, {
-        method : 'GET',
-        headers: new Headers()
-      })
-  
-      setData(data_list)
-    }
-    console.log(data); */
-
-
-  useEffect(() => {
-    /* _getListData() */
-  }, [])
-
-
   return (
     <>
       <Mobile>
         <div style={{ float: 'left' }}>
-          <PageHeader
-            title={'질문'}
-          /></div>
+          <PostSub match={props.match} />
+        </div>
         <div>
 
           <MaterialTable
@@ -138,7 +140,7 @@ function CareerQuestion({ history, match }) {
             });
           }} */
           >
-            <Link to="/board/취창업공간/질문/write">
+            <Link to="/취창업공간/취창업공간-질문/write">
               글 작성
             </Link>
           </Button></div>
@@ -146,11 +148,11 @@ function CareerQuestion({ history, match }) {
       </Mobile>
       <Default>
         <div>
-          <PageHeader
-            title={'질문'}
-          /></div>
+          <PostSub match={props.match} />
+        </div>
 
         <MaterialTable
+
 
           columns={columns}
           data={list}
@@ -178,7 +180,7 @@ function CareerQuestion({ history, match }) {
         }} */
         >
 
-          <Link to="/board/취창업공간/질문/write">
+          <Link to="/취창업공간/취창업공간-질문/write">
             글 작성
           </Link>
         </Button></div>

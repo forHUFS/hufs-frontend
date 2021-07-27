@@ -46,7 +46,7 @@ function GoogleSignIn({ setModalVisible }) {
                   });
                   break;
                 case 499:
-                  console.log('body가 비어있는 상태입니다.');
+
                   break;
               }
             });
