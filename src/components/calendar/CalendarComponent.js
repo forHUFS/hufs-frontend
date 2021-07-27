@@ -1,6 +1,7 @@
 import { Badge, Calendar } from 'antd';
 import moment from 'moment';
 import React from 'react';
+
 function CalendarComponent({ setDataList, scholar }) {
   function getListData(value) {
     let day = value._d.getUTCDate();
@@ -57,6 +58,7 @@ function CalendarComponent({ setDataList, scholar }) {
 
   return (
     <>
+
       <Calendar
         dateCellRender={scholar ? dateCellRender : null}
         // monthCellRender={monthCellRender}
