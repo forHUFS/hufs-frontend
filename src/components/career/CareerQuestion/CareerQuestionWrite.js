@@ -1,7 +1,7 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
-import { Divider,PageHeader,message } from 'antd';
+import { Divider, PageHeader, message } from 'antd';
 import {
   careerSave
 } from '../../../_actions/reviewPost_action'
@@ -9,13 +9,13 @@ import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
 
 
-function CareerQuestionWrite({location,history},props) {
+function CareerQuestionWrite({ location, history }, props) {
   console.log(history)
   const { isMobile, Default, Mobile } = useResponsive();
- const [state, setState] = useState({title: '',content: ''});
-const dispatch = useDispatch();
+  const [state, setState] = useState({ title: '', content: '' });
+  const dispatch = useDispatch();
 
- 
+
   const onSubmit = (e) => {
 
     console.log(state)
@@ -30,11 +30,12 @@ const dispatch = useDispatch();
       content: state.content,
     };
     console.log(body)
-    console.log(location.pathname.substring(7,12))
-    dispatch(careerSave(body, history.location.state.detail))
+    console.log(location.pathname.substring(7, 12))
+    dispatch(careerSave(body, escape("취창업공간-질문")))
       .then((response) => {
         if (response.status === 200) {
-          props.history.goBack();
+          console.log(props.history)
+          history.goBack();
         }
       })
       .catch((error) => {
@@ -80,59 +81,61 @@ const dispatch = useDispatch();
 
   return (
     <>
-    <Mobile>
-     <PageHeader
-        title={'질문'}
-      />
-      <div className="Career-Write-Main" style = {{marginTop:"-900px", width:"500px"}}>
-        <div className="Career-Write">
-          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-            console.log(e.target.value)
-            setState({...state,title: e.target.value });
-          }} placeholder="제목" />
-          
-        </div>
-      
-        <div>
-          <textarea
-            id="content_txt"
-            name="contents"
-            placeholder="내용을 입력하시오."
-            value={state.content} onChange={(e) => {
+      <Mobile>
+        <PageHeader
+          title={'질문'}
+        />
+        <div className="Career-Write-Main" style={{ marginTop: "-900px", width: "500px" }}>
+          <div className="Career-Write">
+            <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
               console.log(e.target.value)
-              setState({...state,content: e.target.value });}}
-          ></textarea>
-        </div>
+              setState({ ...state, title: e.target.value });
+            }} placeholder="제목" />
 
-        <button style={{marginLeft:"10px"}} onClick={onSubmit}>포스트 등록</button>
-      </div>
+          </div>
+
+          <div>
+            <textarea
+              id="content_txt"
+              name="contents"
+              placeholder="내용을 입력하시오."
+              value={state.content} onChange={(e) => {
+                console.log(e.target.value)
+                setState({ ...state, content: e.target.value });
+              }}
+            ></textarea>
+          </div>
+
+          <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
+        </div>
       </Mobile>
-    <Default>
-     <PageHeader
-        title={'질문'}
-      />
-      <div className="Career-Write-Main">
-        <div className="Career-Write">
-          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-            console.log(e.target.value)
-            setState({...state,title: e.target.value });
-          }} placeholder="제목" />
-          
-        </div>
-       
-        <div>
-          <textarea
-            id="content_txt"
-            name="contents"
-            placeholder="내용을 입력하시오."
-            value={state.content} onChange={(e) => {
+      <Default>
+        <PageHeader
+          title={'질문'}
+        />
+        <div className="Career-Write-Main">
+          <div className="Career-Write">
+            <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
               console.log(e.target.value)
-              setState({...state,content: e.target.value });}}
-          ></textarea>
-        </div>
+              setState({ ...state, title: e.target.value });
+            }} placeholder="제목" />
 
-       <button onClick={onSubmit}>포스트 등록</button>
-      </div>
+          </div>
+
+          <div>
+            <textarea
+              id="content_txt"
+              name="contents"
+              placeholder="내용을 입력하시오."
+              value={state.content} onChange={(e) => {
+                console.log(e.target.value)
+                setState({ ...state, content: e.target.value });
+              }}
+            ></textarea>
+          </div>
+
+          <button onClick={onSubmit}>포스트 등록</button>
+        </div>
       </Default>
     </>
   );

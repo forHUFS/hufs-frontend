@@ -46,7 +46,6 @@ function HeaderMenu(props) {
         <Link to="/board/공구공간" onClick={onClose}>
           공구 공간
         </Link>
-
       </Menu.Item>
 
     </Menu>
@@ -89,7 +88,7 @@ function HeaderMenu(props) {
         </Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/board/취창업공간" onClick={onClose}>
+        <Link to="/career" onClick={onClose}>
           취/창업 공간
         </Link>
       </Menu.Item>
