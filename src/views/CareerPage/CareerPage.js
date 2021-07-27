@@ -15,6 +15,7 @@ const CareerReviewEdit = loadable(() => import('../../components/career/CareerRe
 function CareerPage({ match }) {
   return (
     <>
+
     <Router>
 <CareerNavi/>
 <div className="Career-Main">
@@ -30,6 +31,7 @@ function CareerPage({ match }) {
          {/*  <Route path={`${match.path}/careerInterview`} component={CareerInterview} /> */}
       </Switch>
       </div>
+
       </Router>
 
     </>

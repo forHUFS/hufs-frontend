@@ -18,7 +18,7 @@ export default function useMajorCheck(match) {
       }),
     )
     .flat();
-  console.log(x);
+
   return {
     notMyMajor: isMajorBoard === true && majorAuthenticated === false,
     isMajorBoard: isMajorBoard,
