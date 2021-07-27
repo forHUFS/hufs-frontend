@@ -1,54 +1,66 @@
-import React, { useState, useEffect } from 'react';
-
-import { Checkbox, Divider, message,PageHeader } from 'antd';
-
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
+import { PUBLIC_IP } from '../../../config';
+import { Divider,PageHeader,message, Input,Checkbox } from 'antd';
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
-import { postSave1 } from '../../../functions/postFunctions'
-import PostSub from '../../post/PostSub'
+import { postUpdate1 } from '../../../functions/postFunctions'
+import usePostDetail from '../../../hooks/usePostDetail';
+
 
 const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ['어문', '창업', 'IT'];
 const defaultCheckedList = [];
 
-function CareerReviewWrite(props) {
-
+function CareerQuestionEdit(props) {
   const { isMobile, Default, Mobile } = useResponsive();
-  const [state, setState] = useState({ title: '', content: '', header: '' });
+ const { postDetail, isLoading, isError } = usePostDetail(+props.match.params.id);
+ const [updated, setUpdated] = useState(false);
+ 
+
+ useEffect(() => {
+    if (postDetail) {
+      setUpdated({
+        title: postDetail.title,
+        content: postDetail.content,
+        header:postDetail.header,
+      });
+    }
+  }, []);
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
   const [indeterminate, setIndeterminate] = useState(true);
-  const [checkAll, setCheckAll] = useState(false);
-  const dispatch = useDispatch();
+ const [checkAll, setCheckAll] = useState(false);
+ 
+   const onChange = list => {
+     setCheckedList(list);
+     setIndeterminate(!!list.length && list.length < plainOptions.length);
+     setCheckAll(list.length === plainOptions.length);
+     setUpdated({...updated,header:list})
+   };
+ 
+   const onCheckAllChange = e => {
+     setCheckedList(e.target.checked ? plainOptions : []);
+     setIndeterminate(false);
+     setCheckAll(e.target.checked);
+     setUpdated({...updated,header:checkedList})
+   };
 
-  const onChange = list => {
-    setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
-    setState({ ...state, header: list })
-  };
-
-  const onCheckAllChange = e => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
-    setState({ ...state, header: checkedList })
-  };
-
+ 
   const onSubmit = (e) => {
 
     /* e.preventDefault(); */
-    if (state.title.trim().length === 0) {
+    if (updated.title.trim().length === 0) {
       // 공백 제목 검사
       message.info('제목을 적어주세요');
       return;
     }
     let body = {
-      title: state.title,
-      content: state.content,
-      header: state.header,
+      title: updated.title,
+      content: updated.content,
+      header:updated.header,
     };
-    postSave1(body, props.location.pathname.substring(7,15))
+    postUpdate1(body,+props.match.params.id)
     .then(() => {
       window.location.replace("/")
       message.success('작성 완료');
@@ -68,17 +80,17 @@ function CareerReviewWrite(props) {
     })
   }
 
-  if (isMobile) {
-
-    return (
-      <>
-       <PageHeader
+  if (isMobile)
+ {
+   return (
+     <>
+     <PageHeader
         title={'후기'}
       />
       <div className="Career-Write-Main" style = {{marginTop:"-900px", width:"500px"}}>
         <div className="Career-Write">
-          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-            setState({...state,title: e.target.value });
+          <input type="text" id="title_txt" name="title" value={updated.title} onChange={(e) => {
+            setUpdated({...updated,title: e.target.value });
           }} placeholder="제목" />
           
         </div>
@@ -94,8 +106,8 @@ function CareerReviewWrite(props) {
             id="content_txt"
             name="contents"
             placeholder="내용을 입력하시오."
-            value={state.content} onChange={(e) => {
-              setState({...state,content: e.target.value });}}
+            value={updated.content} onChange={(e) => {
+              setUpdated({...updated,content: e.target.value });}}
           ></textarea>
         </div>
 
@@ -113,39 +125,32 @@ function CareerReviewWrite(props) {
       />
       <div className="Career-Write-Main">
         <div className="Career-Write">
-          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-            setState({...state,title: e.target.value });
+          <input type="text" id="title_txt" name="title" value={updated.title} onChange={(e) => {
+            setUpdated({...updated,title: e.target.value });
           }} placeholder="제목" />
           
-
         </div>
         <div className="Career-Check">
-          <Checkbox name="header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-            Check all
-          </Checkbox>
-          <Divider />
-          <CheckboxGroup options={plainOptions} value={checkedList || ""} onChange={onChange} />
-        </div>
+        <Checkbox name= "header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+        Check all
+      </Checkbox>
+      <Divider />
+      <CheckboxGroup options={plainOptions} value={checkedList || ""} onChange={onChange} />
+      </div>
         <div>
           <textarea
             id="content_txt"
             name="contents"
             placeholder="내용을 입력하시오."
-            value={state.content} onChange={(e) => {
-
-              setState({ ...state, content: e.target.value });
-            }}
-
+            value={updated.content} onChange={(e) => {
+              setUpdated({...updated,content: e.target.value });}}
           ></textarea>
         </div>
 
-
        <button onClick={onSubmit}>포스트 등록</button>
-      </div>
-
-    </>
-  );
-}
+      </div></>
+   )
+ }
 
 
-export default CareerReviewWrite;
+export default CareerQuestionEdit;

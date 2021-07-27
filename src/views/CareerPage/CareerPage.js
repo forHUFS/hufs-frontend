@@ -9,24 +9,29 @@ const CareerQuestion = loadable(() => import('../../components/career/CareerQues
 const CareerReviewWrite = loadable(() => import('../../components/career/CareerReview/CareerReviewWrite'));
 const CareerQuestionView = loadable(() => import('../../components/career/CareerQuestion/CareerQuestionView'));
 const CareerQuestionWrite = loadable(() => import('../../components/career/CareerQuestion/CareerQuestionWrite'));
+const CareerQuestionEdit = loadable(() => import('../../components/career/CareerQuestion/CareerQuestionEdit'))
+const CareerReviewEdit = loadable(() => import('../../components/career/CareerReview/CareerReviewEdit'))
 
 function CareerPage({ match }) {
   return (
     <>
+
     <Router>
 <CareerNavi/>
 <div className="Career-Main">
       <Switch>
       <Route exact path={`${match.path}`} component={CareerReview} />
-      
-      <Route exact path={`${match.path}/취창업공간-질문`} component={CareerQuestion} />
-        <Route  exact path={`${match.path}/취창업공간-후기/write`} component={CareerReviewWrite}/>
-        <Route  path={`${match.path}/취창업공간-후기/view/:id`} component={CareerReviewView}/>
-        <Route  path={`${match.path}/취창업공간-질문/write`} component={CareerQuestionWrite}/>
-        <Route  path={`${match.path}/취창업공간-질문/view/:id`} component={CareerQuestionView}/>
+      <Route exact path={`${match.path}/취창업공간-후기/write`} component={CareerReviewWrite}/>
+      <Route exact path={`${match.path}/취창업공간-후기/view/:id`} component={CareerReviewView}/>
+      <Route exact path={`${match.path}/취창업공간-후기/view/:id/edit`} component={CareerReviewEdit}/>
+      <Route exact path={`${match.path}/question`} component={CareerQuestion} />
+      <Route exact path={`${match.path}/question/write`} component={CareerQuestionWrite}/>
+      <Route exact path={`${match.path}/question/view/:id`} component={CareerQuestionView}/>
+      <Route exact path={`${match.path}/question/view/:id/edit`} component={CareerQuestionEdit}/>
          {/*  <Route path={`${match.path}/careerInterview`} component={CareerInterview} /> */}
       </Switch>
       </div>
+
       </Router>
 
     </>

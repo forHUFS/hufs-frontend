@@ -158,12 +158,14 @@ export const careerList = async (title) => {
   }
 };
 //완료
+
 export const careerSave = async (body,title) => {
+
   const request = await axios.post(`${PUBLIC_IP}/board/${title}`, body);
-/* 
-  if (needDelete.length !== 0) {
-    await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
-  } */
+  /* 
+    if (needDelete.length !== 0) {
+      await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
+    } */
   if (request.status === 200) {
     return {
       type: POST_SAVE,
@@ -178,11 +180,11 @@ export const careerSave = async (body,title) => {
 };
 // 완료
 export const careerUpdate = async (updated, needDelete, postId) => {
-  const request = await axios.put(`${PUBLIC_IP}/post/${postId}`, updated);
+  const request = await axios.put(`${PUBLIC_IP}/carrer/question/${postId}`, updated);
 
-/*   if (needDelete.length !== 0) {
-    await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
-  } */
+  /*   if (needDelete.length !== 0) {
+      await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });
+    } */
   if (request.status === 200) {
     return {
       type: POST_UPDATE,

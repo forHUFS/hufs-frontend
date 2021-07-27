@@ -4,7 +4,6 @@ import { Typography, Input, Button, message } from 'antd';
 import useUserInfo from '../../hooks/useUserInfo';
 import styles from '../../css/Graduate.module.css';
 
-
 function Graduate() {
   const { Title, Text } = Typography;
   const { user, isLoading } = useUserInfo();
@@ -20,7 +19,7 @@ function Graduate() {
     )
   }
   const onSubmit = async (e) => {
-    submit.id==='' ? message.info('아이디를 입력하세요') : 
+    submit.id === '' ? message.info('아이디를 입력하세요') : 
       submit.password === '' ? message.info('비밀번호를 입력하세요') :
       submit.pk === '' ? message.error('알 수 없는 에러입니다') : 
     e.preventDefault();
@@ -36,7 +35,7 @@ function Graduate() {
             message.error("아이디와 비밀번호를 정확히 입력했는지 확인해 주세요");
             break;
           case "UNGRADUATED" :
-            message.error("아직 졸업생이 아닙니다. 졸업 후 이용해 주세요:)");
+            message.info("아직 졸업생이 아닙니다. 졸업 후 이용해 주세요:)");
             break;
           default:
             break;
