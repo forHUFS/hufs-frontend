@@ -158,8 +158,9 @@ export const careerList = async (title) => {
   }
 };
 //완료
-export const careerSave = async (body, title) => {
-  console.log(title)
+
+export const careerSave = async (body,title) => {
+
   const request = await axios.post(`${PUBLIC_IP}/board/${title}`, body);
   /* 
     if (needDelete.length !== 0) {
@@ -179,7 +180,7 @@ export const careerSave = async (body, title) => {
 };
 // 완료
 export const careerUpdate = async (updated, needDelete, postId) => {
-  const request = await axios.put(`${PUBLIC_IP}/post/${postId}`, updated);
+  const request = await axios.put(`${PUBLIC_IP}/carrer/question/${postId}`, updated);
 
   /*   if (needDelete.length !== 0) {
       await axios.post(`${PUBLIC_IP}/post/back`, { url: needDelete });

@@ -1,0 +1,58 @@
+.main {
+    position: absolute;
+    border: 1px solid black;
+    left: 600px;
+    width: 498px;
+    height: 260px;
+    display: inline-flex;
+}
+
+.name {
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 20px;
+    color: #191970;
+}
+
+.info {
+    font-size: small;
+    font-weight: lighter;
+    color: rgb(167, 167, 167);
+}
+
+.idcontent {
+    position: absolute;
+    display: flex;
+    margin-top: 16%;
+    left: 20px;
+}
+
+.idInput {
+    display: block;
+    margin-top: 1%;
+    width: 200px;
+    /*left: 15%;*/
+    left: 35px;
+}
+
+.pwdcontent {
+    position: absolute;
+    display: flex;
+    margin-top: 31%;
+    left: 20px;
+}
+
+.pwdInput {
+    /*display: block;*/
+    margin-top: 1%;
+    width: 200px;
+    height: 32.56px;
+    left: 21px;
+}
+
+.btn {
+   position: absolute;
+    height : 28px;
+    bottom: 5%;
+    right: 2%;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
-import note from '../../image/note.png'
+import note from '../../image/notation2.png'
 import Cookies from 'js-cookie'
 
 
@@ -46,7 +46,7 @@ function Popup() {
 
 
 
-            "모든 서비스는 현재, 회원가입과 웹메일 인증을 한 유저에 한해서 이용이 가능합니다."
+                    "모든 서비스는 현재, 회원가입과 웹메일 인증을 한 유저에 한해서 이용이 가능합니다."
                 </Modal>)
                 : null}
 
