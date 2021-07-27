@@ -13,20 +13,20 @@ const CareerQuestionWrite = loadable(() => import('../../components/career/Caree
 function CareerPage({ match }) {
   return (
     <>
-    <Router>
-<CareerNavi/>
-<div className="Career-Main">
-      <Switch>
-      <Route exact path={`${match.path}`} component={CareerReview} />
-      
-      <Route exact path={`${match.path}/취창업공간-질문`} component={CareerQuestion} />
-        <Route  exact path={`${match.path}/취창업공간-후기/write`} component={CareerReviewWrite}/>
-        <Route  path={`${match.path}/취창업공간-후기/view/:id`} component={CareerReviewView}/>
-        <Route  path={`${match.path}/취창업공간-질문/write`} component={CareerQuestionWrite}/>
-        <Route  path={`${match.path}/취창업공간-질문/view/:id`} component={CareerQuestionView}/>
-         {/*  <Route path={`${match.path}/careerInterview`} component={CareerInterview} /> */}
-      </Switch>
-      </div>
+      <Router>
+        <CareerNavi />
+        <div className="Career-Main">
+          <Switch>
+            <Route exact path={`${match.path}`} component={CareerReview} />
+
+            <Route exact path={`${match.path}/취창업공간-질문`} component={CareerQuestion} />
+            <Route exact path={`${match.path}/취창업공간-후기/write`} component={CareerReviewWrite} />
+            <Route path={`${match.path}/취창업공간-후기/view/:id`} component={CareerReviewView} />
+            <Route path={`${match.path}/취창업공간-질문/write`} component={CareerQuestionWrite} />
+            <Route path={`${match.path}/취창업공간-질문/view/:id`} component={CareerQuestionView} />
+            {/*  <Route path={`${match.path}/careerInterview`} component={CareerInterview} /> */}
+          </Switch>
+        </div>
       </Router>
 
     </>

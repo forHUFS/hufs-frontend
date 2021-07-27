@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { PUBLIC_IP } from '../../../config';
-import { Checkbox, Divider, PageHeader, message } from 'antd';
-import {
-  careerSave,
-  postRemove,
-} from '../../../_actions/reviewPost_action'
+import { Checkbox, Divider, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
-
 import { postSave1 } from '../../../functions/postFunctions'
+import PostSub from '../../post/PostSub'
 
 
 const CheckboxGroup = Checkbox.Group;
@@ -76,9 +70,7 @@ function CareerReviewWrite(props) {
   return (
     <>
       <Mobile>
-        <PageHeader
-          title={'후기'}
-        />
+        <PostSub match={props.match} />
         <div className="Career-Write-Main" style={{ marginTop: "-900px", width: "500px" }}>
           <div className="Career-Write">
             <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
@@ -108,9 +100,7 @@ function CareerReviewWrite(props) {
         </div>
       </Mobile>
       <Default>
-        <PageHeader
-          title={'후기'}
-        />
+        <PostSub match={props.match} />
         <div className="Career-Write-Main">
           <div className="Career-Write">
             <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
@@ -150,7 +140,6 @@ function CareerReviewWrite(props) {
             name="contents"
             placeholder="내용을 입력하시오."
             value={state.content} onChange={(e) => {
-              console.log(e.target.value)
               setState({ ...state, content: e.target.value });
             }}
           ></textarea>

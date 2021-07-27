@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from "react-router-dom";
-import { PUBLIC_IP } from '../../../config';
 import user from '../data/mock-data.json'
 import { Button, PageHeader, message } from 'antd';
 import MaterialTable from "material-table";
 import useResponsive from '../../../hooks/useResponsive'
 import { useDispatch } from 'react-redux';
 import useBoard from '../../../hooks/useBoard'
+import PostSub from '../../post/PostSub'
 
 import {
   careerList,
@@ -104,9 +103,8 @@ function CareerQuestion(props) {
     <>
       <Mobile>
         <div style={{ float: 'left' }}>
-          <PageHeader
-            title={'질문'}
-          /></div>
+          <PostSub match={props.match} />
+        </div>
         <div>
 
           <MaterialTable
@@ -145,9 +143,8 @@ function CareerQuestion(props) {
       </Mobile>
       <Default>
         <div>
-          <PageHeader
-            title={'질문'}
-          /></div>
+          <PostSub match={props.match} />
+        </div>
 
         <MaterialTable
 
