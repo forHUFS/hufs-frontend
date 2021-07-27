@@ -17,7 +17,7 @@ function CareerNavi() {
           </Link>
         </Menu.Item>
         <Menu.Item key="2" >
-          <Link to="/취창업공간/취창업공간-질문">
+          <Link to="/취창업공간/question">
             커리어 질문
           </Link>
         </Menu.Item>

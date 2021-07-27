@@ -24,10 +24,10 @@ function CareerPage({ match }) {
       <Route exact path={`${match.path}/취창업공간-후기/write`} component={CareerReviewWrite}/>
       <Route exact path={`${match.path}/취창업공간-후기/view/:id`} component={CareerReviewView}/>
       <Route exact path={`${match.path}/취창업공간-후기/view/:id/edit`} component={CareerReviewEdit}/>
-      <Route exact path={`${match.path}/취창업공간-질문`} component={CareerQuestion} />
-      <Route exact path={`${match.path}/취창업공간-질문/write`} component={CareerQuestionWrite}/>
-      <Route exact path={`${match.path}/취창업공간-질문/view/:id`} component={CareerQuestionView}/>
-      <Route exact path={`${match.path}/취창업공간-질문/view/:id/edit`} component={CareerQuestionEdit}/>
+      <Route exact path={`${match.path}/question`} component={CareerQuestion} />
+      <Route exact path={`${match.path}/question/write`} component={CareerQuestionWrite}/>
+      <Route exact path={`${match.path}/question/view/:id`} component={CareerQuestionView}/>
+      <Route exact path={`${match.path}/question/view/:id/edit`} component={CareerQuestionEdit}/>
          {/*  <Route path={`${match.path}/careerInterview`} component={CareerInterview} /> */}
       </Switch>
       </div>

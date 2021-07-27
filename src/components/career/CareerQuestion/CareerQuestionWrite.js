@@ -31,28 +31,24 @@ function CareerQuestionWrite(props) {
       title: state.title,
       content: state.content,
     };
-
-
-    postSave1(body, props.location.pathname.substring(7, 15))
-      .then(() => {
-        props.history.goBack();
-        message.success('작성 완료');
-
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            props.history.push('/');
-          case 403:
-            message.error('접근 권한 오류');
-            props.history.push('/');
-            break;
-          default:
-            break;
-        }
-      })
-
+    postSave1(body, "취창업공간-질문")
+    .then(() => {
+      window.location.replace("/")
+      message.success('작성 완료');
+    })
+    .catch((error) => {
+      switch (error.response?.status) {
+        case 401:
+          message.error('로그인이 필요합니다.');
+          window.location.replace("/")
+        case 403:
+          message.error('접근 권한 오류');
+          window.location.replace("/")
+          break;
+        default:
+          break;
+      }
+    })
   }
 
   if (isMobile)
@@ -87,30 +83,7 @@ function CareerQuestionWrite(props) {
   return (
     <>
  
-     <PageHeader
-        title={'질문'}
-      />
-      <div className="Career-Write-Main">=
-        <div className="Career-Write">
-          <Input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-            setState({...state,title: e.target.value });
-          }} placeholder="제목" />
-          
-        </div>
-       
-        <div>
-          <textarea
-            id="content_txt"
-            name="contents"
-            placeholder="내용을 입력하시오."
-            value={state.content} onChange={(e) => {
-              setState({...state,content: e.target.value });}}
-          ></textarea>
-
-        </div>
-      </Mobile>
-      <Default>
-        <PageHeader
+             <PageHeader
           title={'질문'}
         />
         <div className="Career-Write-Main">
@@ -122,6 +95,15 @@ function CareerQuestionWrite(props) {
             }} placeholder="제목" />
 
           </div>
+          <div>
+          <textarea
+            id="content_txt"
+            name="contents"
+            placeholder="내용을 입력하시오."
+            value={state.content} onChange={(e) => {
+              setState({...state,content: e.target.value });}}
+          ></textarea>
+        </div>
 
        <button onClick={onSubmit}>포스트 등록</button>
       </div>

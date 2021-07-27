@@ -20,7 +20,7 @@ function CareerQuestion(props) {
   const { isMobile, Default, Mobile } = useResponsive();
 
     const [list, setList] = useState()
-    const { board, isLoading, isError } = useBoard(props.location.pathname.substring(7,15));
+    const { board, isLoading, isError } = useBoard("취창업공간-질문");
     
 const dispatch = useDispatch();
     
@@ -39,7 +39,7 @@ const dispatch = useDispatch();
     },
     {
 
-      title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
+      title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/question/view/${rowData.id}`}>{rowData.title}</Link>,
 
       headerStyle: {
         color: '#030a66', fontWeight: 'bold'
@@ -66,7 +66,7 @@ const dispatch = useDispatch();
 
       {
 
-        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/question/view/${rowData.id}`}>{rowData.title}</Link>,
 
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
@@ -87,7 +87,7 @@ const dispatch = useDispatch();
       {
 
 
-        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/question/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
@@ -154,7 +154,7 @@ const dispatch = useDispatch();
           }} */
           >
 
-            <Link to="/취창업공간/취창업공간-질문/write">
+            <Link to="/취창업공간/question/write">
 
               글 작성
             </Link>
@@ -198,7 +198,7 @@ const dispatch = useDispatch();
         >
 
 
-          <Link to="/취창업공간/취창업공간-질문/write">
+          <Link to="/취창업공간/question/write">
 
             글 작성
           </Link>

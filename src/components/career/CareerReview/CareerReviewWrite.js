@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Checkbox, Divider, message } from 'antd';
+import { Checkbox, Divider, message,PageHeader } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
@@ -48,26 +48,24 @@ function CareerReviewWrite(props) {
       content: state.content,
       header: state.header,
     };
-
-    postSave1(body, props.location.pathname.substring(7, 15))
-      .then(() => {
-        props.history.goBack();
-        message.success('작성 완료');
-
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인이 필요합니다.');
-            history.push('/');
-          case 403:
-            message.error('접근 권한 오류');
-            history.push('/');
-            break;
-          default:
-            break;
-        }
-      })
+    postSave1(body, props.location.pathname.substring(7,15))
+    .then(() => {
+      window.location.replace("/")
+      message.success('작성 완료');
+    })
+    .catch((error) => {
+      switch (error.response?.status) {
+        case 401:
+          message.error('로그인이 필요합니다.');
+          window.location.replace("/")
+        case 403:
+          message.error('접근 권한 오류');
+          window.location.replace("/")
+          break;
+        default:
+          break;
+      }
+    })
   }
 
   if (isMobile) {

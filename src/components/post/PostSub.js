@@ -49,7 +49,7 @@ export function findNoBoardName(path) {
       return '과별공간'
     case '/취창업공간':
       return '커리어 후기'
-    case '/취창업공간/취창업공간-질문':
+    case '/취창업공간/question':
       return '커리어 질문'
     default:
       break;
@@ -70,7 +70,7 @@ export function findBoardSub(boardTitle) {
       return '본인 전공 잘 찾아가기!'
     case '/취창업공간':
       return '부엉이들의 커리어 후기는 여기서 보자!'
-    case '/취창업공간/취창업공간-질문':
+    case '/취창업공간/question':
       return '커리어에 대한 질문은 여기서 !'
     case '졸업생공간':
       return '졸업생들 여기 모여~~!';
