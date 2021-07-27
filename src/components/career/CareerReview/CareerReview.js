@@ -7,6 +7,8 @@ import CheckBox from './CheckBox';
 import { Button, PageHeader, message}  from 'antd';
 import MaterialTable from "material-table";
 import useResponsive from '../../../hooks/useResponsive'
+
+import useBoard from '../../../hooks/useBoard'
 import {
   careerList,
   postRemove,
@@ -14,9 +16,42 @@ import {
 import { useDispatch } from 'react-redux';
 
 
-function CareerReview({history,match}) {
-  console.log(match.params.id)
+function CareerReview(props) {
   const dispatch = useDispatch();
+  const { isMobile, Default, Mobile } = useResponsive();
+  const [filtering, setFiltering] = useState({
+      header:[],
+  })
+  const { board, isLoading, isError } = useBoard("취창업공간-후기");
+  
+  const mData = board;
+  
+  const [dataList, setDataList] = useState(mData);
+  useEffect(() => {
+    setDataList(board);
+   /*  dispatch(careerList(props.location.pathname.substring(7,15)))
+      .then((response) => {
+        if (response.status === 200) {
+          let result = response.payload.reverse();
+          setList(result.data)
+        }
+      })
+      .catch((error) => {
+        switch (error.response?.status) {
+          case 401:
+            message.error('로그인하지 않은 사용자');
+            props.history.push('/');
+            break;
+          case 403:
+
+            message.error('접근 권한 오류');
+            props.history.push('/');
+            break;
+          default:
+            break;
+        } */
+    
+  }, [board])
   //const [user1, setUser1] = useState([]); // result
 
  /*  useEffect(() => {
@@ -45,12 +80,7 @@ function CareerReview({history,match}) {
       });
 
   }, []) */
-  const mData = mdata.data;
-  const { isMobile, Default, Mobile } = useResponsive();
-  const [dataList, setDataList] = useState(mData);
-  const [filtering, setFiltering] = useState({
-      header:[],
-  })
+ 
   const columns = [
     
     {
@@ -64,7 +94,7 @@ function CareerReview({history,match}) {
       }
     },
     {
-        title: "제목", field: "title", render: rowData => <Link to={`/board/취창업공간/view/${rowData.id}`}>{rowData.title}</Link>,
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color : '#030a66',fontWeight: 'bold'
         }
@@ -120,7 +150,7 @@ if (isMobile) {
   
     
     {
-        title: "제목", field: "title", render: rowData => <Link to={`/board/취창업공간/view/${rowData.id}`}>{rowData.title}</Link>,
+        title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color : '#030a66',fontWeight: 'bold'
         },
@@ -163,9 +193,9 @@ return (
      <div> <Button
       style={{  marginTop: 20, marginLeft: 180 }}
       onClick = {()=>{
-        history.push({
-          pathname: `${match.params.id}/write`,
-          state: { detail: match.params.id },
+        props.history.push({
+          pathname: `취창업공간/취창업공간-후기/write`,
+          state: { detail: "취창업공간-후기" },
         });
       }}
     >
@@ -204,9 +234,9 @@ return (
                  <Button
           style={{  marginLeft: '70%', marginTop: 20 }}
           onClick = {()=>{
-            history.push({
-              pathname: `${match.params.id}/write`,
-              state: { detail: match.params.title },
+            props.history.push({
+              pathname: `취창업공간/취창업공간-후기/write`,
+              state: { detail: "취창업공간-후기"},
             });
           }}
         >
