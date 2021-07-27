@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
 import { Checkbox, Divider, message } from 'antd';
+
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
 import { postSave1 } from '../../../functions/postFunctions'
@@ -11,6 +13,7 @@ const plainOptions = ['어문', '창업', 'IT'];
 const defaultCheckedList = [];
 
 function CareerReviewWrite(props) {
+
   const { isMobile, Default, Mobile } = useResponsive();
   const [state, setState] = useState({ title: '', content: '', header: '' });
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
@@ -50,15 +53,16 @@ function CareerReviewWrite(props) {
       .then(() => {
         props.history.goBack();
         message.success('작성 완료');
+
       })
       .catch((error) => {
         switch (error.response?.status) {
           case 401:
             message.error('로그인이 필요합니다.');
-            props.history.push('/');
+            history.push('/');
           case 403:
             message.error('접근 권한 오류');
-            props.history.push('/');
+            history.push('/');
             break;
           default:
             break;
@@ -69,10 +73,12 @@ function CareerReviewWrite(props) {
   return (
     <>
       <Mobile>
+
         <PostSub match={props.match} />
         <div className="Career-Write-Main" style={{ marginTop: "-900px", width: "500px" }}>
           <div className="Career-Write">
             <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
+
               setState({ ...state, title: e.target.value });
             }} placeholder="제목" />
 
@@ -90,10 +96,12 @@ function CareerReviewWrite(props) {
               name="contents"
               placeholder="내용을 입력하시오."
               value={state.content} onChange={(e) => {
+
                 setState({ ...state, content: e.target.value });
               }}
             ></textarea>
           </div>
+
 
 
           <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
@@ -150,6 +158,7 @@ function CareerReviewWrite(props) {
         </div>
 
         <button onClick={onSubmit}>포스트 등록</button>
+
 
       </Default>
     </>

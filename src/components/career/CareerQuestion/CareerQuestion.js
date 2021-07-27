@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import user from '../data/mock-data.json'
+
 import { Button, PageHeader, message } from 'antd';
+
 import MaterialTable from "material-table";
 import useResponsive from '../../../hooks/useResponsive'
 import { useDispatch } from 'react-redux';
 import useBoard from '../../../hooks/useBoard'
 import PostSub from '../../post/PostSub'
+
 
 
 import {
@@ -27,6 +30,7 @@ function CareerQuestion(props) {
     setList(board);
 
   }, [board])
+
   var columns = [
 
     {
@@ -35,7 +39,9 @@ function CareerQuestion(props) {
       }
     },
     {
+
       title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
+
       headerStyle: {
         color: '#030a66', fontWeight: 'bold'
       }
@@ -60,7 +66,9 @@ function CareerQuestion(props) {
 
 
       {
+
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
+
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
@@ -79,6 +87,7 @@ function CareerQuestion(props) {
       },
       {
 
+
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
@@ -87,6 +96,7 @@ function CareerQuestion(props) {
       },
       {
         title: "작성자", field: "nickname", headerStyle: {
+
           color: '#030a66', fontWeight: 'bold'
         }
       },
@@ -99,6 +109,7 @@ function CareerQuestion(props) {
         }
       }
 
+
     ];
 
   }
@@ -109,8 +120,10 @@ function CareerQuestion(props) {
     <>
       <Mobile>
         <div style={{ float: 'left' }}>
+
           <PostSub match={props.match} />
         </div>
+
         <div>
 
           <MaterialTable
@@ -141,7 +154,9 @@ function CareerQuestion(props) {
             });
           }} */
           >
+
             <Link to="/취창업공간/취창업공간-질문/write">
+
               글 작성
             </Link>
           </Button></div>
@@ -149,6 +164,7 @@ function CareerQuestion(props) {
       </Mobile>
       <Default>
         <div>
+
           <PostSub match={props.match} />
         </div>
 
@@ -182,7 +198,9 @@ function CareerQuestion(props) {
         }} */
         >
 
+
           <Link to="/취창업공간/취창업공간-질문/write">
+
             글 작성
           </Link>
         </Button></div>
