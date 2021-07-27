@@ -61,7 +61,7 @@ const dispatch = useDispatch();
         {
             title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
             headerStyle: {
-              color : '#030a66',fontWeight: 'bold'
+              color : '#030a66',fontWeight: 'bold',paddingLeft:'48%'
             }
         },
        
@@ -72,7 +72,7 @@ const dispatch = useDispatch();
     
         {
           title: "번호", field: "id", headerStyle: {
-            color : '#030a66',fontWeight: 'bold'
+            color : '#030a66',fontWeight: 'bold', paddingLeft:'11%'
           }
       },
         {
@@ -83,7 +83,7 @@ const dispatch = useDispatch();
         },
         {
             title: "작성자", field: "nickname",headerStyle: {
-              color : '#030a66',fontWeight: 'bold'
+              color : '#030a66',fontWeight: 'bold', paddingLeft:'10%'
             }
         },
         {
@@ -91,7 +91,7 @@ const dispatch = useDispatch();
               ? rowData.createdAt.slice(0, 10)
               : 'none'}</div>,
               headerStyle: {
-                color : '#030a66',fontWeight: 'bold'
+                color : '#030a66',fontWeight: 'bold', paddingLeft:'10%'
               }
         }
     ];
@@ -120,8 +120,8 @@ const dispatch = useDispatch();
        style={{
         marginTop:'110px',
         height:'500px',
-        width:'450px',
-        right:'200px',
+        width:'550px',
+        right:'220px',
         marginLeft:'220px'
       
        }}

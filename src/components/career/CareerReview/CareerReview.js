@@ -85,7 +85,7 @@ function CareerReview(props) {
     
     {
       title: "번호", field: "id", headerStyle: {
-        color : '#030a66',fontWeight: 'bold'
+        color : '#030a66',fontWeight: 'bold',paddingLeft:'5%'
       }
   },
     {
@@ -96,12 +96,12 @@ function CareerReview(props) {
     {
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
-          color : '#030a66',fontWeight: 'bold'
+          color : '#030a66',fontWeight: 'bold',paddingLeft:'5%'
         }
     },
     {
         title: "작성자", field: "User.nickname", headerStyle: {
-          color : '#030a66',fontWeight: 'bold'
+          color : '#030a66',fontWeight: 'bold',paddingLeft:'10%'
         }
     },
     {
@@ -109,7 +109,7 @@ function CareerReview(props) {
           ? rowData.createdAt.slice(0, 10)
           : 'none'}</div>,
           headerStyle: {
-            color : '#030a66',fontWeight: 'bold'
+            color : '#030a66',fontWeight: 'bold',paddingLeft:'7%'
           }
     }
 ];
@@ -127,7 +127,6 @@ const handleFilters = (filters, category) => {
 }
 
 const showFilterResults = (filters) => {
-  console.log(filters.header.length)
   if(filters.header.length === 0) {
       setDataList(mData)
   } else {
@@ -144,7 +143,7 @@ if (isMobile) {
     
     {
       title: "분야", field:"header",  headerStyle: {
-        color : '#030a66',fontWeight: 'bold', paddingLeft:"20%"
+        color : '#030a66',fontWeight: 'bold',paddingLeft:'10%'
       }
     },
   
@@ -152,7 +151,7 @@ if (isMobile) {
     {
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
-          color : '#030a66',fontWeight: 'bold'
+          color : '#030a66',fontWeight: 'bold',paddingLeft:'10%'
         },
         cellStyle : {
           wordBreak : 'break-word'
@@ -181,8 +180,8 @@ return (
        style={{
         marginTop:'50px',
         height:'500px',
-        width:'450px',
-        right:'200px',
+        width:'550px',
+        right:'220px',
         marginLeft:'220px'
       
        }}
@@ -207,22 +206,6 @@ return (
 } 
 
 
-
-  
-   
-    
-/*     
-
-    const _getListData = async function() {
-        const data_list = await axios(`${PUBLIC_IP}/board/careerReview`, {
-          method : 'GET',
-          headers: new Headers()
-        })
-    
-        setList(data_list);
-        
-      console.log(data_list)
-      } */
   
         return (
             <>

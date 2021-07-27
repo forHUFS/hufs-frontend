@@ -109,4 +109,26 @@
   padding-left: 30px;
 }
 
+.MuiInputAdornment-root>span.material-icons.MuiIcon-root {
+  width:90px;
+  font-size: 15px;
+}
 
+.MuiTableRow-root>span.material-icons.MuiIcon-root{
+  padding-right: 2px;
+}
+.MuiIconButton-label>span.material-icons.MuiIcon-root{ 
+  width: 90px;
+  font-size: 15px;
+  height: 20px;
+}
+
+
+
+.MuiButtonBase-root {
+  width:100px;
+  text-align: left;
+}
+.MuiButtonBase-root{
+  padding: 50px;
+}
