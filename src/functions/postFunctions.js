@@ -48,3 +48,7 @@ export const imageUpload = async (formData) => {
 };
 
 /////////
+
+export const postSave1 = async (body, boardId) => {
+  await axios.post(`${PUBLIC_IP}/board/${boardId}`, body);
+};
