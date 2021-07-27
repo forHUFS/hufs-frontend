@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { message, Button, Input } from 'antd';
+import { message, Button, Input, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router';
 import { PUBLIC_IP } from '../../config';
@@ -243,21 +243,26 @@ function UserInfo(props) {
                   suffix={<>@hufs.ac.kr</>}
                 ></Input>
               ) : (
-                <>
+                <Form style={{ width:'200px', display: 'flex'}}>
                   <Input
                     defaultValue={user.webMail}
                     value={webMailInput}
                     onChange={(e) => setWebMailInput(e.target.value)}
-                    style={{ width: '200px' }}
+                    style={{ width: '200px', height: '30px', }}
                     suffix={<>@hufs.ac.kr</>}
                   ></Input>
                   <Button
+                    size='small'
                     onClick={onAuth}
-                    // style={{ marginLeft: '8px' }}
+                    style={{ 
+                      position: 'absolute', 
+                      marginLeft: '204px', 
+                      width:'66px', height: '30px', fontSize:'small',
+                    }}
                   >
                     인증하기
                   </Button>
-                </>
+                </Form>
               )}
             </div>
 
