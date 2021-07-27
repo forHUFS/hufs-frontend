@@ -46,14 +46,14 @@ function GoogleSignIn({ setModalVisible }) {
                   });
                   break;
                 case 499:
-                  console.log('body가 비어있는 상태입니다.');
+
                   break;
               }
             });
         }}
         onFailure={(e) => console.log(e)}
         cookiePolicy={'single_host_origin'}
-      //buttonText='구글로 로그인하기'
+
       >
         <span style={{ color: 'black' }}>구글로 로그인하기</span>
       </GoogleLogin>

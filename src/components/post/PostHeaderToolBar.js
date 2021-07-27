@@ -25,12 +25,7 @@ function PostHeaderToolBar({ value, setvalue }) {
         <Option value="자유">자유</Option>
         <Option value="소식">소식</Option>
       </Select>
-      {/* <Checkbox
-      style={{ float: 'right' }}
-      onChange={(e) => console.log(e.target.checked)}
-    >
-      공지사항으로 등록
-    </Checkbox> */}
+
     </div>
   );
 }

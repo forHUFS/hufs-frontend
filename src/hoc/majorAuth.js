@@ -29,7 +29,7 @@ export default function (SpecificComponent, match, option, adminRoute = null) {
     user.DoubleMajor.name,
     user.MainMajor.name,
   ].includes(match.params.title);
-  // console.log(majorAuthenticated);
+
 
   if (isMajorBoard && !majorAuthenticated) {
     message.warn('주 전공, 이중 전공이 아니면 게시글 작성이 불가합니다.');
