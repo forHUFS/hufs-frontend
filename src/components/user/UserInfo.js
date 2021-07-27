@@ -252,6 +252,7 @@ function UserInfo(props) {
                     suffix={<>@hufs.ac.kr</>}
                   ></Input>
                   <Button
+                    size='small'
                     onClick={onAuth}
                     style={{ 
                       position: 'absolute', 
