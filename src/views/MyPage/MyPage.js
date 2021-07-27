@@ -10,8 +10,10 @@ import Page404 from '../Page404/Page404';
 import Header1 from '../Common/Header';
 import styles from '../../css/MyPage.module.css';
 import useUserInfo from '../../hooks/useUserInfo';
+import Graduate from '../../components/user/Graduate';
 import useErrorHandling from '../../hooks/useErrorHandling';
 import useResponsive from '../../hooks/useResponsive';
+
 function MyPage(props) {
   const errorHandling = useErrorHandling();
   const { Header, Content, Footer } = Layout;
@@ -51,6 +53,7 @@ function MyPage(props) {
                   <UserInfo user={user} isLoading={isLoading} />
                 </>
               ) : null}
+              <Graduate />
               <Header>
                 <Menu
                   theme="dark"
