@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PUBLIC_IP } from '../../../config';
+
 import { Divider, PageHeader, message, Input } from 'antd';
+
 import {
   careerSave
 } from '../../../_actions/reviewPost_action'
@@ -28,6 +30,7 @@ function CareerQuestionWrite(props) {
       title: state.title,
       content: state.content,
     };
+
     postSave1(body, props.location.pathname.substring(7, 15))
       .then(() => {
         props.history.goBack();
@@ -46,10 +49,12 @@ function CareerQuestionWrite(props) {
             break;
         }
       })
+
   }
 
   return (
     <>
+
       <Mobile>
         <PageHeader
           title={'질문'}
@@ -74,6 +79,7 @@ function CareerQuestionWrite(props) {
           </div>
 
           <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
+
         </div>
       </Mobile>
       <Default>

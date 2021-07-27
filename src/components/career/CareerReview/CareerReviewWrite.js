@@ -5,6 +5,8 @@ import useResponsive from '../../../hooks/useResponsive'
 import { postSave1 } from '../../../functions/postFunctions'
 import PostSub from '../../post/PostSub'
 
+import { postSave1 } from '../../../functions/postFunctions'
+
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -46,6 +48,7 @@ function CareerReviewWrite(props) {
       content: state.content,
       header: state.header,
     };
+
     postSave1(body, props.location.pathname.substring(7, 15))
       .then(() => {
         props.history.goBack();
@@ -96,9 +99,11 @@ function CareerReviewWrite(props) {
             ></textarea>
           </div>
 
+
           <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
         </div>
       </Mobile>
+
       <Default>
         <PostSub match={props.match} />
         <div className="Career-Write-Main">
@@ -126,6 +131,7 @@ function CareerReviewWrite(props) {
             ></textarea>
           </div>
 
+
         </div>
         <div className="Career-Check">
           <Checkbox name="header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
@@ -140,8 +146,10 @@ function CareerReviewWrite(props) {
             name="contents"
             placeholder="내용을 입력하시오."
             value={state.content} onChange={(e) => {
+
               setState({ ...state, content: e.target.value });
             }}
+
           ></textarea>
         </div>
 

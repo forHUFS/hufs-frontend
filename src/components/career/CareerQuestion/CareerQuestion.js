@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import useBoard from '../../../hooks/useBoard'
 import PostSub from '../../post/PostSub'
 
+
 import {
   careerList,
   postRemove,
@@ -16,6 +17,7 @@ import {
 function CareerQuestion(props) {
   const { isMobile, Default, Mobile } = useResponsive();
   const user1 = user.data;
+
   const [list, setList] = useState()
   const { board, isLoading, isError } = useBoard(props.location.pathname.substring(7, 15));
 
@@ -69,16 +71,19 @@ function CareerQuestion(props) {
   } else {
     columns = [
 
+
       {
         title: "번호", field: "id", headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
       },
       {
+
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-질문/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold'
         }
+
       },
       {
         title: "작성자", field: "nickname", headerStyle: {
@@ -93,6 +98,7 @@ function CareerQuestion(props) {
           color: '#030a66', fontWeight: 'bold'
         }
       }
+
     ];
 
   }
@@ -148,10 +154,12 @@ function CareerQuestion(props) {
 
         <MaterialTable
 
+
           columns={columns}
           data={list}
           options={{
             showTitle: false,
+
             minBodyHeight: '500px'
           }}
           style={{
@@ -182,6 +190,7 @@ function CareerQuestion(props) {
 
 
         {/* <div className='List'>
+
       
               <div className='list_grid list_tit'>
                 <div> 번호</div>

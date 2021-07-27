@@ -21,6 +21,7 @@ function CareerReview(props) {
   const dispatch = useDispatch();
   const { isMobile, Default, Mobile } = useResponsive();
   const [filtering, setFiltering] = useState({
+
     header: [],
   })
   const { board, isLoading, isError } = useBoard("취창업공간-후기");
@@ -82,11 +83,14 @@ function CareerReview(props) {
  
    }, []) */
 
+
   const columns = [
 
     {
       title: "번호", field: "id", headerStyle: {
+
         color: '#030a66', fontWeight: 'bold', paddingLeft: '5%'
+
       }
     },
     {
@@ -95,6 +99,7 @@ function CareerReview(props) {
       }
     },
     {
+
       title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
       headerStyle: {
         color: '#030a66', fontWeight: 'bold', paddingLeft: '5%'
@@ -112,6 +117,7 @@ function CareerReview(props) {
       headerStyle: {
         color: '#030a66', fontWeight: 'bold', paddingLeft: '7%'
       }
+
     }
   ];
 
@@ -127,8 +133,10 @@ function CareerReview(props) {
     }
   }
 
+
   const showFilterResults = (filters) => {
     if (filters.header.length === 0) {
+
       setDataList(mData)
     } else {
       const filteredResult = Array.from(mData).filter((mData) => {
@@ -137,6 +145,7 @@ function CareerReview(props) {
       setDataList(filteredResult);
     }
   }
+
 
 
   if (isMobile) {
@@ -153,6 +162,7 @@ function CareerReview(props) {
         title: "제목", field: "title", render: rowData => <Link to={`/취창업공간/취창업공간-후기/view/${rowData.id}`}>{rowData.title}</Link>,
         headerStyle: {
           color: '#030a66', fontWeight: 'bold', paddingLeft: '10%'
+
         },
         cellStyle: {
           wordBreak: 'break-word'
@@ -236,6 +246,7 @@ function CareerReview(props) {
           data={dataList}
           options={{
             showTitle: false,
+
             minBodyHeight: '500px'
           }}
           style={{
@@ -244,6 +255,7 @@ function CareerReview(props) {
             marginRight: '20px',
             height: '500px',
             width: '800px'
+
           }}
         >
 
