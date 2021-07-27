@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { PUBLIC_IP } from '../../../config';
-import mdata from '../data/mock-data.json'
 import CheckBox from './CheckBox';
 import { Button, PageHeader, message } from 'antd';
 import MaterialTable from "material-table";

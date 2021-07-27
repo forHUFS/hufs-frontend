@@ -70,71 +70,55 @@ function CareerReviewWrite(props) {
       })
   }
 
+  if (isMobile) {
+
+    return (
+      <>
+       <PageHeader
+        title={'후기'}
+      />
+      <div className="Career-Write-Main" style = {{marginTop:"-900px", width:"500px"}}>
+        <div className="Career-Write">
+          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
+            setState({...state,title: e.target.value });
+          }} placeholder="제목" />
+          
+        </div>
+        <div className="Career-Check">
+        <Checkbox name= "header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+        Check all
+      </Checkbox>
+      <Divider />
+      <CheckboxGroup options={plainOptions} value={checkedList || ""} onChange={onChange} />
+      </div>
+        <div>
+          <textarea
+            id="content_txt"
+            name="contents"
+            placeholder="내용을 입력하시오."
+            value={state.content} onChange={(e) => {
+              setState({...state,content: e.target.value });}}
+          ></textarea>
+        </div>
+
+        <button style={{marginLeft:"10px"}} onClick={onSubmit}>포스트 등록</button>
+      </div></>
+    )
+
+  }
+  
+
   return (
     <>
-      <Mobile>
-
-        <PostSub match={props.match} />
-        <div className="Career-Write-Main" style={{ marginTop: "-900px", width: "500px" }}>
-          <div className="Career-Write">
-            <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-
-              setState({ ...state, title: e.target.value });
-            }} placeholder="제목" />
-
-          </div>
-          <div className="Career-Check">
-            <Checkbox name="header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-              Check all
-            </Checkbox>
-            <Divider />
-            <CheckboxGroup options={plainOptions} value={checkedList || ""} onChange={onChange} />
-          </div>
-          <div>
-            <textarea
-              id="content_txt"
-              name="contents"
-              placeholder="내용을 입력하시오."
-              value={state.content} onChange={(e) => {
-
-                setState({ ...state, content: e.target.value });
-              }}
-            ></textarea>
-          </div>
-
-
-
-          <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
-        </div>
-      </Mobile>
-
-      <Default>
-        <PostSub match={props.match} />
-        <div className="Career-Write-Main">
-          <div className="Career-Write">
-            <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-              setState({ ...state, title: e.target.value });
-            }} placeholder="제목" />
-
-          </div>
-          <div className="Career-Check">
-            <Checkbox name="header" indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
-              Check all
-            </Checkbox>
-            <Divider />
-            <CheckboxGroup options={plainOptions} value={checkedList || ""} onChange={onChange} />
-          </div>
-          <div>
-            <textarea
-              id="content_txt"
-              name="contents"
-              placeholder="내용을 입력하시오."
-              value={state.content} onChange={(e) => {
-                setState({ ...state, content: e.target.value });
-              }}
-            ></textarea>
-          </div>
-
+     <PageHeader
+        title={'후기'}
+      />
+      <div className="Career-Write-Main">
+        <div className="Career-Write">
+          <input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
+            setState({...state,title: e.target.value });
+          }} placeholder="제목" />
+          
 
         </div>
         <div className="Career-Check">
@@ -157,10 +141,10 @@ function CareerReviewWrite(props) {
           ></textarea>
         </div>
 
-        <button onClick={onSubmit}>포스트 등록</button>
 
+       <button onClick={onSubmit}>포스트 등록</button>
+      </div>
 
-      </Default>
     </>
   );
 }

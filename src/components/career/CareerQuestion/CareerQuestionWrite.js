@@ -13,13 +13,10 @@ import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
 import { postSave1 } from '../../../functions/postFunctions'
 
-
-
 function CareerQuestionWrite(props) {
 
   const { isMobile, Default, Mobile } = useResponsive();
-  const [state, setState] = useState({ title: '', content: '' });
-  const dispatch = useDispatch();
+ const [state, setState] = useState({title: '',content: ''});
 
 
   const onSubmit = (e) => {
@@ -58,36 +55,57 @@ function CareerQuestionWrite(props) {
 
   }
 
+  if (isMobile)
+ {
+   return (
+     <>
+     <PageHeader
+        title={'질문'}
+      />
+      <div className="Career-Write-Main" style = {{marginTop:"-900px", width:"500px"}}>
+        <div className="Career-Write">
+          <Input id="title_txt" name="title" value={state.title} onChange={(e) => {
+            setState({...state,title: e.target.value });
+          }} placeholder="제목" />
+          
+        </div>
+      
+        <div>
+          <textarea
+            id="content_txt"
+            name="contents"
+            placeholder="내용을 입력하시오."
+            value={state.content} onChange={(e) => {
+              setState({...state,content: e.target.value });}}
+          ></textarea>
+        </div>
+
+        <button style={{marginLeft:"10px"}} onClick={onSubmit}>포스트 등록</button>
+      </div></>
+   )
+ }
   return (
     <>
-
-
-      <Mobile>
-        <PageHeader
-          title={'질문'}
-        />
-        <div className="Career-Write-Main" style={{ marginTop: "-900px", width: "500px" }}>
-          <div className="Career-Write">
-            <Input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
-              setState({ ...state, title: e.target.value });
-            }} placeholder="제목" />
-
-
-          </div>
-
-          <div>
-            <textarea
-              id="content_txt"
-              name="contents"
-              placeholder="내용을 입력하시오."
-              value={state.content} onChange={(e) => {
-
-                setState({ ...state, content: e.target.value });
-              }}
-            ></textarea>
-          </div>
-
-          <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
+ 
+     <PageHeader
+        title={'질문'}
+      />
+      <div className="Career-Write-Main">=
+        <div className="Career-Write">
+          <Input type="text" id="title_txt" name="title" value={state.title} onChange={(e) => {
+            setState({...state,title: e.target.value });
+          }} placeholder="제목" />
+          
+        </div>
+       
+        <div>
+          <textarea
+            id="content_txt"
+            name="contents"
+            placeholder="내용을 입력하시오."
+            value={state.content} onChange={(e) => {
+              setState({...state,content: e.target.value });}}
+          ></textarea>
 
         </div>
       </Mobile>
@@ -105,21 +123,9 @@ function CareerQuestionWrite(props) {
 
           </div>
 
-          <div>
-            <textarea
-              id="content_txt"
-              name="contents"
-              placeholder="내용을 입력하시오."
-              value={state.content} onChange={(e) => {
+       <button onClick={onSubmit}>포스트 등록</button>
+      </div>
 
-                setState({ ...state, content: e.target.value });
-              }}
-            ></textarea>
-          </div>
-
-          <button onClick={onSubmit}>포스트 등록</button>
-        </div>
-      </Default>
     </>
   );
 }

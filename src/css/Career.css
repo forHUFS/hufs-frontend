@@ -110,7 +110,7 @@
 }
 
 .MuiInputAdornment-root>span.material-icons.MuiIcon-root {
-  width:90px;
+  width:30px;
   font-size: 15px;
 }
 
@@ -118,7 +118,7 @@
   padding-right: 2px;
 }
 .MuiIconButton-label>span.material-icons.MuiIcon-root{ 
-  width: 90px;
+  width: 80px;
   font-size: 15px;
   height: 20px;
 }
@@ -126,9 +126,6 @@
 
 
 .MuiButtonBase-root {
-  width:100px;
+  width:90px;
   text-align: left;
-}
-.MuiButtonBase-root{
-  padding: 50px;
 }

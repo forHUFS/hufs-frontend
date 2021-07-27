@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import user from '../data/mock-data.json'
-
-import { Button, PageHeader, message } from 'antd';
-
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
+import {Link} from "react-router-dom";
+import { PUBLIC_IP } from '../../../config';
+import {Button,PageHeader,message} from 'antd';
 import MaterialTable from "material-table";
 import useResponsive from '../../../hooks/useResponsive'
 import { useDispatch } from 'react-redux';
@@ -19,12 +18,12 @@ import {
 
 function CareerQuestion(props) {
   const { isMobile, Default, Mobile } = useResponsive();
-  const user1 = user.data;
 
-  const [list, setList] = useState()
-  const { board, isLoading, isError } = useBoard(props.location.pathname.substring(7, 15));
-
-  const dispatch = useDispatch();
+    const [list, setList] = useState()
+    const { board, isLoading, isError } = useBoard(props.location.pathname.substring(7,15));
+    
+const dispatch = useDispatch();
+    
 
   useEffect(() => {
     setList(board);
