@@ -25,20 +25,20 @@ function CareerReviewView(props) {
       postDelete(postDetail.id)
       .then(() => {
         message.success('게시글 삭제가 완료되었습니다.');
-        props.history.goBack();
+        window.location.replace("/")
       })
       .catch((error) => {
         switch (error.response.status) {
           case 401:
             message.error('로그인하지 않은 사용자');
-            props.history.push('/');
+            window.location.replace("/")
             break;
           case 403:
             message.error('접근 권한 오류');
             break;
           case 404:
             message.error('존재하지 않는 게시글입니다');
-            props.history.push('/');
+            window.location.replace("/")
             break;
           default:
             break;
@@ -46,30 +46,12 @@ function CareerReviewView(props) {
           
     })
   };
- 
-  }
+}
 
-
-
-
-  }, [])
-
-
-
-
-  /* const _getData = async function(){
-      const board_id = props.match.params.data;
-
-      const getData = await axios(`${PUBLIC_IP}/post/${board_id}`,{
-          method:'GET',
-          headers:new Headers(),
-          data:{id:board_id}
-      });
-  } */
+if (isMobile) {
   return (
-    <>
-      <Mobile>
-        <PostSub match={props.match} />
+    <> 
+     <PostSub match={props.match} />
         <div className='Career-View' style={{ marginTop: "-900px", width: "500px" }}>
           {data
             ? <div>
@@ -123,9 +105,25 @@ function CareerReviewView(props) {
                       }}
                       onClick={onDelete}>삭제 </Button>
 
-        </div>
-      </Mobile>
-      <Default>
+        </div></>
+  )
+}
+
+
+
+
+  /* const _getData = async function(){
+      const board_id = props.match.params.data;
+
+      const getData = await axios(`${PUBLIC_IP}/post/${board_id}`,{
+          method:'GET',
+          headers:new Headers(),
+          data:{id:board_id}
+      });
+  } */
+  return (
+    <>
+     
         <PostSub match={props.match} />
         <div className='Career-View'>
           {data
@@ -180,7 +178,6 @@ function CareerReviewView(props) {
                       onClick={onDelete}>삭제 </Button>
 
         </div>
-      </Default>
     </>
   )
 }

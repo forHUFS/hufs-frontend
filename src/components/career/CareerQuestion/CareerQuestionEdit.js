@@ -37,17 +37,17 @@ function CareerQuestionEdit(props) {
     };
     postUpdate1(body,+props.match.params.id)
     .then(() => {
-      props.history.goBack();
+      window.location.replace("/")
       message.success('작성 완료');
     })
     .catch((error) => {
       switch (error.response?.status) {
         case 401:
           message.error('로그인이 필요합니다.');
-          props.history.push('/');
+          window.location.replace("/")
         case 403:
           message.error('접근 권한 오류');
-          props.history.push('/');
+          window.location.replace("/")
           break;
         default:
           break;

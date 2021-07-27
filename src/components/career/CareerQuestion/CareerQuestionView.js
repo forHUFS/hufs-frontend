@@ -9,6 +9,7 @@ import {
 } from '../../../functions/postFunctions';
 
 function CareerQuestionView(props) {
+  console.log(props.match.params.id)
     const { isMobile, Default, Mobile } = useResponsive();
     const { postDetail, isLoading, isError } = usePostDetail(props.match.params.id);
 
@@ -21,20 +22,20 @@ function CareerQuestionView(props) {
         postDelete(props.match.params.id)
         .then(() => {
           message.success('게시글 삭제가 완료되었습니다.');
-          props.history.goBack();
+          window.location.replace("/")
         })
         .catch((error) => {
           switch (error.response.status) {
             case 401:
               message.error('로그인하지 않은 사용자');
-              props.history.push('/');
+              window.location.replace("/")
               break;
             case 403:
               message.error('접근 권한 오류');
               break;
             case 404:
               message.error('존재하지 않는 게시글입니다');
-              props.history.push('/');
+              window.location.replace("/")
               break;
             default:
               break;
@@ -44,12 +45,17 @@ function CareerQuestionView(props) {
     };
    
     }
+    if (isLoading) return <>loading...</>;
+    if (isError) {
+      console.log("isEroor")
+      return 
+    }
 
-    
-    return (
+    if (isMobile) {
+
+      return (
         <>
-        <Mobile>
-         <PageHeader
+      <PageHeader
         title={'질문'}
       />
         <div className='Career-View' style = {{marginTop:"-900px", width:"500px"}}>
@@ -105,8 +111,15 @@ function CareerQuestionView(props) {
                       }}
                       onClick={onDelete}>삭제 </Button>
         </div>
-        </Mobile>
-        <Default>
+        </>
+      )
+
+    }
+
+    
+    return (
+        <>
+      
         <PageHeader
         title={'질문'}
       />
@@ -162,7 +175,6 @@ function CareerQuestionView(props) {
                       }}
                       onClick={onDelete}>삭제 </Button>
         </div>
-        </Default>
         </>
     )
 }
