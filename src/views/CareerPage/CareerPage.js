@@ -11,7 +11,6 @@ const CareerQuestionView = loadable(() => import('../../components/career/Career
 const CareerQuestionWrite = loadable(() => import('../../components/career/CareerQuestion/CareerQuestionWrite'));
 
 function CareerPage({ match }) {
-  console.log(match.path)
   return (
     <>
     <Router>

@@ -159,7 +159,6 @@ export const careerList = async (title) => {
 };
 //완료
 export const careerSave = async (body,title) => {
-  console.log(title)
   const request = await axios.post(`${PUBLIC_IP}/board/${title}`, body);
 /* 
   if (needDelete.length !== 0) {

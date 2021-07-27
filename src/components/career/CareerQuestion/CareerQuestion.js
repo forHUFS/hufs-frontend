@@ -23,29 +23,7 @@ function CareerQuestion(props) {
 const dispatch = useDispatch();
     
   useEffect(() => {
-    console.log(props.location.pathname.substring(7,15))
     setList(board);
-   /*  dispatch(careerList(props.location.pathname.substring(7,15)))
-      .then((response) => {
-        if (response.status === 200) {
-          let result = response.payload.reverse();
-          setList(result.data)
-        }
-      })
-      .catch((error) => {
-        switch (error.response?.status) {
-          case 401:
-            message.error('로그인하지 않은 사용자');
-            props.history.push('/');
-            break;
-          case 403:
-
-            message.error('접근 권한 오류');
-            props.history.push('/');
-            break;
-          default:
-            break;
-        } */
     
   }, [board])
     var columns = [
@@ -119,25 +97,7 @@ const dispatch = useDispatch();
     ];
 
     }
-   
-
-    
-    
-
-    /* const _getListData = async function() {
-        const data_list = await axios(`${PUBLIC_IP}/board/${8}`, {
-          method : 'GET',
-          headers: new Headers()
-        })
-    
-        setData(data_list)
-      }
-      console.log(data); */
-
-      
-useEffect(() => {
-    /* _getListData() */
- }, [])
+  
 
   
         return (
