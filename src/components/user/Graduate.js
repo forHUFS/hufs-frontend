@@ -23,11 +23,9 @@ function Graduate() {
       submit.password === '' ? message.info('비밀번호를 입력하세요') :
       submit.pk === '' ? message.error('알 수 없는 에러입니다') : 
     e.preventDefault();
-    console.log("submit:", submit);
     const request = await axios
       .post(`https://2wsdsvvxij.execute-api.ap-northeast-2.amazonaws.com/get-info/`, submit, )
       .then((res) => {
-        console.log(res);
         message.success("졸업생 인증에 성공했습니다")
       })
       .catch((err) => {
