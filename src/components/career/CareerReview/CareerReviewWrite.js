@@ -5,9 +5,6 @@ import useResponsive from '../../../hooks/useResponsive'
 import { postSave1 } from '../../../functions/postFunctions'
 import PostSub from '../../post/PostSub'
 
-import { postSave1 } from '../../../functions/postFunctions'
-
-
 const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ['어문', '창업', 'IT'];
@@ -68,7 +65,6 @@ function CareerReviewWrite(props) {
         }
       })
   }
-
 
   return (
     <>

@@ -3,13 +3,13 @@ import useResponsive from '../../../hooks/useResponsive'
 import usePostDetail from '../../../hooks/usePostDetail';
 import PostSub from '../../post/PostSub'
 
-import usePostDetail from '../../../hooks/usePostDetail';
 
 function CareerReviewView(props) {
 
   const { id } = props.match.params;
   const { isMobile, Default, Mobile } = useResponsive();
   const { postDetail, isLoading, isError } = usePostDetail(id);
+
 
   const [data, setData] = useState(postDetail);
 
@@ -21,8 +21,8 @@ function CareerReviewView(props) {
        } */
 
 
-  }, [])
 
+  }, [])
 
 
 
