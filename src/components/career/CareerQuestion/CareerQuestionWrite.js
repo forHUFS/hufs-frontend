@@ -79,6 +79,7 @@ function CareerQuestionWrite(props) {
           </div>
 
           <button style={{ marginLeft: "10px" }} onClick={onSubmit}>포스트 등록</button>
+
         </div>
       </Mobile>
       <Default>

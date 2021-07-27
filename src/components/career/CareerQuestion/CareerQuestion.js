@@ -71,6 +71,7 @@ function CareerQuestion(props) {
   } else {
     columns = [
 
+
       {
         title: "번호", field: "id", headerStyle: {
           color: '#030a66', fontWeight: 'bold'
@@ -158,6 +159,7 @@ function CareerQuestion(props) {
           data={list}
           options={{
             showTitle: false,
+
             minBodyHeight: '500px'
           }}
           style={{
@@ -188,6 +190,7 @@ function CareerQuestion(props) {
 
 
         {/* <div className='List'>
+
       
               <div className='list_grid list_tit'>
                 <div> 번호</div>
