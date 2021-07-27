@@ -90,7 +90,7 @@ function HeaderMenu(props) {
         </Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/board/취창업공간" onClick={onClose}>
+        <Link to="/취창업공간" onClick={onClose}>
           취/창업 공간
         </Link>
       </Menu.Item>

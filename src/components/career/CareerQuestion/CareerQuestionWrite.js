@@ -7,10 +7,10 @@ import {
 } from '../../../_actions/reviewPost_action'
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
+import { postSave1 } from '../../../functions/postFunctions'
 
 
-function CareerQuestionWrite({location,history},props) {
-  console.log(history)
+function CareerQuestionWrite(props) {
   const { isMobile, Default, Mobile } = useResponsive();
  const [state, setState] = useState({title: '',content: ''});
 const dispatch = useDispatch();
@@ -30,11 +30,20 @@ const dispatch = useDispatch();
       content: state.content,
     };
     console.log(body)
-    console.log(location.pathname.substring(7,12))
-    dispatch(careerSave(body, history.location.state.detail))
+    console.log(props.location.pathname.substring(7,15))
+    postSave1(body, props.location.pathname.substring(7,15))
+    .then(() => {
+      props.history.goBack();
+      message.success('작성 완료');
+    })
+    .catch((error) => {
+      //errorHandling(error.response?.data.message);
+    });
+   /*  dispatch(careerSave(body,(props.location.pathname.substring(7,15))))
       .then((response) => {
         if (response.status === 200) {
-          props.history.goBack();
+          console.log(props.history)
+          props.history.goBack('/');
         }
       })
       .catch((error) => {
@@ -49,7 +58,7 @@ const dispatch = useDispatch();
           default:
             break;
         }
-      });
+      }); */
   };
 
 

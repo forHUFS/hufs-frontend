@@ -9,14 +9,16 @@ import {
 import { useDispatch } from 'react-redux';
 import useResponsive from '../../../hooks/useResponsive'
 
+import { postSave1 } from '../../../functions/postFunctions'
+
 
 const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ['어문', '창업', 'IT'];
 const defaultCheckedList = [];
 
-function CareerReviewWrite({location,history},props) {
-  console.log(history)
+function CareerReviewWrite(props) {
+  console.log(props.location)
   const { isMobile, Default, Mobile } = useResponsive();
  const [state, setState] = useState({title: '',content: '',header: ''});
  const [checkedList, setCheckedList] = useState(defaultCheckedList);
@@ -54,8 +56,46 @@ const dispatch = useDispatch();
       header: state.header,
     };
     console.log(body)
-    console.log(location.pathname.substring(7,12))
-    dispatch(careerSave(body, history.location.state.detail))
+    console.log(props.location.pathname.substring(7,15))
+    postSave1(body, props.location.pathname.substring(7,15))
+    .then(() => {
+      props.history.goBack();
+      message.success('작성 완료');
+    })
+    .catch((error) => {
+      switch (error.response?.status) {
+        case 401:
+          message.error('로그인이 필요합니다.');
+          props.history.push('/');
+        case 403:
+          message.error('접근 권한 오류');
+          props.history.push('/');
+          break;
+        default:
+          break;
+      }
+    })
+   /*  dispatch(careerSave(body,(props.location.pathname.substring(7,15))))
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(props.history)
+          props.history.goBack('/');
+        }
+      })
+      .catch((error) => {
+        switch (error.response?.status) {
+          case 401:
+            message.error('로그인이 필요합니다.');
+            props.history.push('/');
+          case 403:
+            message.error('접근 권한 오류');
+            props.history.push('/');
+            break;
+          default:
+            break;
+        }
+      }); */
+   /*  dispatch(careerSave(body,props.location.pathname.substring(7,15)))
       .then((response) => {
         if (response.status === 200) {
           props.history.goBack();
@@ -73,7 +113,7 @@ const dispatch = useDispatch();
           default:
             break;
         }
-      });
+      }); */
   };
 
 

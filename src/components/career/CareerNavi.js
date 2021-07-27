@@ -11,12 +11,12 @@ function CareerNavi (){
         defaultSelectedKeys={['1']}
       >
         <Menu.Item key="1" >
-            <Link to = "/board/취창업공간">
+            <Link to = "/취창업공간">
         후기
         </Link>
       </Menu.Item>
       <Menu.Item key="2" >
-      <Link to = "/board/취창업공간/질문">
+      <Link to = "/취창업공간/취창업공간-질문">
         질문
         </Link>
       </Menu.Item>
