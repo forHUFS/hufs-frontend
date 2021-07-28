@@ -26,8 +26,8 @@ export default function (SpecificComponent, match, option, adminRoute = null) {
     );
   }
   const majorAuthenticated = [
-    user.DoubleMajor.name,
-    user.MainMajor.name,
+    user.SecondMajor.name,
+    user.FirstMajor.name,
   ].includes(match.params.title);
 
 

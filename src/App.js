@@ -46,9 +46,9 @@ function App() {
           <Route exact path="/search" component={SearchPage} />
           <Route exact path="/취창업공간" component={CareerPage} />
           <Route path="/board" component={Post} />
+          <Route path="/major" component={Post} />
           <Route path="/scholarship" component={CalendarPage} />
           <Route path="/학교간Boo" component={MapPage} />
-          <Route path="/major" component={Post} />
           <Route path="/mypage" component={MyPage} />
           <Route path="/email" component={EmailAuthPage} />
           <Route path="*" component={Page404} />

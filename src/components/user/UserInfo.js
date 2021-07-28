@@ -16,8 +16,8 @@ function UserInfo(props) {
   let user = props.user;
   const [change, setChange] = useState({
     nickname: user.nickName,
-    mainMajorId: user.MainMajor.id,
-    doubleMajorId: user.DoubleMajor.id,
+    firstMajorId: user.FirstMajor.id,
+    doubleMajorId: user.SecondMajor.id,
   });
   const [webMailInput, setWebMailInput] = useState('');
   const { isMobile, Mobile, Default } = useResponsive();
@@ -25,8 +25,8 @@ function UserInfo(props) {
   useEffect(async () => {
     await axios
       .all([
-        axios.get(`${PUBLIC_IP}/major/main-major`),
-        axios.get(`${PUBLIC_IP}/major/double-major`),
+        axios.get(`${PUBLIC_IP}/major`, { params: { type: 'first' } }),
+        axios.get(`${PUBLIC_IP}/major`, { params: { type: 'second' } }),
       ])
       .then((response) => {
         setMainMajorList(response[0].data.data);
@@ -37,8 +37,8 @@ function UserInfo(props) {
   //   if (!isLoading) {
   //     setChange({
   //       nickname: user.nickName,
-  //       mainMajorId: user.MainMajor.id,
-  //       doubleMajorId: user.DoubleMajor.id,
+  //       firstMajorId: user.FirstMajor.id,
+  //       doubleMajorId: user.SecondMajor.id,
   //     });
   //   }
   // }, []);
@@ -88,7 +88,7 @@ function UserInfo(props) {
     }
   };
   function MainMajorChange(value) {
-    setChange({ ...change, mainMajorId: value });
+    setChange({ ...change, firstMajorId: value });
   }
   function DoubleMajorChange(value) {
     setChange({ ...change, doubleMajorId: value });
@@ -99,10 +99,10 @@ function UserInfo(props) {
     if (change.nickname !== user.nickName) {
       toBeSubmitted = { ...toBeSubmitted, nickname: change.nickname };
     }
-    if (change.mainMajorId !== user.MainMajor.id) {
-      toBeSubmitted = { ...toBeSubmitted, mainMajorId: change.mainMajorId };
+    if (change.firstMajorId !== user.FirstMajor.id) {
+      toBeSubmitted = { ...toBeSubmitted, firstMajorId: change.firstMajorId };
     }
-    if (change.doubleMajorId !== user.DoubleMajor.id) {
+    if (change.doubleMajorId !== user.SecondMajor.id) {
       toBeSubmitted = { ...toBeSubmitted, doubleMajorId: change.doubleMajorId };
     }
     return toBeSubmitted;
@@ -192,12 +192,12 @@ function UserInfo(props) {
             />
             <MajorSelect
               list={mainMajorList}
-              defaultMajor={user.MainMajor.name}
+              defaultMajor={user.FirstMajor.name}
               onChange={MainMajorChange}
             />{' '}
             <SecondMajorSelect
               list={doubleMajorList}
-              defaultSecondMajor={user.DoubleMajor.name}
+              defaultSecondMajor={user.SecondMajor.name}
               onChange={DoubleMajorChange}
             />
             <Button
@@ -286,7 +286,7 @@ function UserInfo(props) {
             <label>주전공</label>
             <MajorSelect
               list={mainMajorList}
-              defaultMajor={user.MainMajor.name}
+              defaultMajor={user.FirstMajor.name}
               onChange={MainMajorChange}
             />
           </div>
@@ -294,7 +294,7 @@ function UserInfo(props) {
             <label>이중/부전공</label>
             <SecondMajorSelect
               list={doubleMajorList}
-              defaultSecondMajor={user.DoubleMajor.name}
+              defaultSecondMajor={user.SecondMajor.name}
               onChange={DoubleMajorChange}
             />
           </div>
