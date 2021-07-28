@@ -9,7 +9,6 @@ import useResponsive from '../../hooks/useResponsive';
 import CalendarList from '../../components/calendar/CalendarList';
 function LandingPage(props) {
   const { Mobile, Default } = useResponsive();
-
   return (
     <>
       <Mobile>

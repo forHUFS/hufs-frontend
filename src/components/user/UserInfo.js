@@ -19,18 +19,29 @@ function UserInfo(props) {
     firstMajorId: user.FirstMajor.id,
     doubleMajorId: user.SecondMajor.id,
   });
+  console.log(change);
   const [webMailInput, setWebMailInput] = useState('');
   const { isMobile, Mobile, Default } = useResponsive();
   let isLoading = props.isLoading;
   useEffect(async () => {
     await axios
       .all([
-        axios.get(`${PUBLIC_IP}/major`, { params: { type: 'first' } }),
-        axios.get(`${PUBLIC_IP}/major`, { params: { type: 'second' } }),
+        axios.get(`${PUBLIC_IP}/major`, {
+          params: { type: 'first', campusId: 1 },
+        }),
+        axios.get(`${PUBLIC_IP}/major`, {
+          params: { type: 'first', campusId: 2 },
+        }),
+        axios.get(`${PUBLIC_IP}/major`, {
+          params: { type: 'second', campusId: 1 },
+        }),
+        axios.get(`${PUBLIC_IP}/major`, {
+          params: { type: 'second', campusId: 2 },
+        }),
       ])
       .then((response) => {
-        setMainMajorList(response[0].data.data);
-        setDoubleMajorList(response[1].data.data);
+        setMainMajorList(response[0].data.data.concat(response[1].data.data));
+        setDoubleMajorList(response[2].data.data.concat(response[3].data.data));
       });
   }, []);
   // useEffect(() => {
@@ -243,21 +254,23 @@ function UserInfo(props) {
                   suffix={<>@hufs.ac.kr</>}
                 ></Input>
               ) : (
-                <Form style={{ width:'200px', display: 'flex'}}>
+                <Form style={{ width: '200px', display: 'flex' }}>
                   <Input
                     defaultValue={user.webMail}
                     value={webMailInput}
                     onChange={(e) => setWebMailInput(e.target.value)}
-                    style={{ width: '200px', height: '30px', }}
+                    style={{ width: '200px', height: '30px' }}
                     suffix={<>@hufs.ac.kr</>}
                   ></Input>
                   <Button
-                    size='small'
+                    size="small"
                     onClick={onAuth}
-                    style={{ 
-                      position: 'absolute', 
-                      marginLeft: '204px', 
-                      width:'66px', height: '30px', fontSize:'small',
+                    style={{
+                      position: 'absolute',
+                      marginLeft: '204px',
+                      width: '66px',
+                      height: '30px',
+                      fontSize: 'small',
                     }}
                   >
                     인증하기

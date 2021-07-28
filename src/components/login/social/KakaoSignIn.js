@@ -20,12 +20,6 @@ function KakaoSignIn() {
         Kakao.API.request({
           url: `/v2/user/me`,
           success: function (response) {
-            /*console.log(
-              'suc',
-              response,
-              're-email',
-              response.kakao_account.email,
-            );*/
             axios
               .post(`${PUBLIC_IP}/user/sign-in`, {
                 email: response.kakao_account.email,
