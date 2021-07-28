@@ -7,7 +7,7 @@ import { Input, Spin } from 'antd';
 import PostSub from '../../components/post/PostSub';
 
 function MajorList(props) {
-  const { mainMajor, isLoading } = useMainMajor();
+  const { firstMajor, isLoading } = useMainMajor();
   const { Mobile, Default } = useResponsive();
 
   const [campus, setCampus] = useState('서울캠퍼스'); // 1: seoul, 2: global, 3: 융합
@@ -39,7 +39,7 @@ function MajorList(props) {
   const yunghapMajor = majorCategory.filter(
     (category) => category.캠퍼스 === '융합전공',
   );
-  // const selectedCampus = mainMajor.filter((major) => major.campusId === campus);
+  // const selectedCampus = firstMajor.filter((major) => major.campusId === campus);
   return (
     <>
       <Mobile>
@@ -63,9 +63,12 @@ function MajorList(props) {
         </div>
       </Mobile>
       <Default>
-        <div className="community-main" style={{
-          height: '1000px'
-        }}>
+        <div
+          className="community-main"
+          style={{
+            height: '1000px',
+          }}
+        >
           <PostSub match={props.match} />
           <div
             style={{

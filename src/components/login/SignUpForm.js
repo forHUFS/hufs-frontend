@@ -10,10 +10,10 @@ import useDoubleMajor from '../../hooks/useDoubleMajor';
 
 function SignUpForm(props) {
   const { Option } = Select;
-  const { mainMajor, isLoading } = useMainMajor();
-  const { doubleMajor, isLoading_d }= useDoubleMajor();
+  const { firstMajor, isLoading } = useMainMajor();
+  const { doubleMajor, isLoading_d } = useDoubleMajor();
 
-  const [ submit, setSubmit ] = useState({
+  const [submit, setSubmit] = useState({
     email: props.location.state.email,
     provider: props.location.state.provider,
     nickname: '',
@@ -24,26 +24,30 @@ function SignUpForm(props) {
   });
 
   if (isLoading || isLoading_d) {
-    return <>Lodaing</>
+    return <>Lodaing</>;
   }
-  const majorSeoul = mainMajor.filter((major) => major.campusId === 1);
-  const majorGlobal = mainMajor.filter((major) => major.campusId === 2);
-  const doubleMajorSeoul = doubleMajor.filter((dMajor) => dMajor.campusId === 1);
-  const doubleMajorGlobal = doubleMajor.filter((dMajor) => dMajor.campusId === 2);
+  const majorSeoul = firstMajor.filter((major) => major.campusId === 1);
+  const majorGlobal = firstMajor.filter((major) => major.campusId === 2);
+  const doubleMajorSeoul = doubleMajor.filter(
+    (dMajor) => dMajor.campusId === 1,
+  );
+  const doubleMajorGlobal = doubleMajor.filter(
+    (dMajor) => dMajor.campusId === 2,
+  );
 
   const argCheck = { a: false, b: false };
 
   var inputAble = true;
   const isWebMail = (props) => {
-    var emailInfo = (submit.email).split('@');
+    var emailInfo = submit.email.split('@');
     if (emailInfo[1] === 'hufs.ac.kr') {
-      submit.webMail = ((submit.email).split('@')[0]);
-      return emailInfo[0]
+      submit.webMail = submit.email.split('@')[0];
+      return emailInfo[0];
     } else {
       inputAble = false;
-      return '@hufs.ac.kr 앞 부분까지만 입력해주세요'
+      return '@hufs.ac.kr 앞 부분까지만 입력해주세요';
     }
-  }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -91,17 +95,17 @@ function SignUpForm(props) {
   const tailLayout = {
     wrapperCol: { offset: 10, span: 16 },
   };
-  
+
   function filter(inputValue, path) {
-    return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+    return path.some(
+      (option) =>
+        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1,
+    );
   }
 
   return (
     <div className="ant-modal-body-revise">
-      <Form 
-        id="basic"
-        initialValue={{ remember: true }}
-      >
+      <Form id="basic" initialValue={{ remember: true }}>
         <Form.Item
           label="닉네임"
           name="nickname"
@@ -120,7 +124,7 @@ function SignUpForm(props) {
           label="&nbsp;&nbsp;&nbsp;웹메일"
           extra="위 웹메일로 학생 확인 인증 메일이 발송되며, 인증은 24시간이 지나면 만료됩니다 (회원 가입 후 별도로 My page에서도 가능합니다)"
           name="webMail"
-          onChange={(event) => 
+          onChange={(event) =>
             setSubmit({ ...submit, webMail: event.target.value })
           }
           style={{ width: '100%' }}
@@ -139,25 +143,28 @@ function SignUpForm(props) {
           rules={[{ required: true, message: '' }]}
         >
           <Cascader
-            showSearch={{filter}}
+            showSearch={{ filter }}
             style={{ width: '100%' }}
             onChange={(event) =>
               setSubmit({ ...submit, mainMajorId: +event[1] })
             }
             placeholder='주전공을 선택하세요. 없으면 "미정"을 눌러주세요'
-            options = {  [{
+            options={[
+              {
                 value: '서울캠퍼스',
-                  label: '서울캠퍼스',
-                  children: 
-                  majorSeoul.map((major) => { return ({value:major.id, label:major.name})})
-                },
-                {
-                  value: '글로벌캠퍼스',
-                  label: '글로벌캠퍼스',
-                  children: 
-                    majorGlobal.map((major) => { return ({value:major.id, label:major.name})})
-                }
-              ]}
+                label: '서울캠퍼스',
+                children: majorSeoul.map((major) => {
+                  return { value: major.id, label: major.name };
+                }),
+              },
+              {
+                value: '글로벌캠퍼스',
+                label: '글로벌캠퍼스',
+                children: majorGlobal.map((major) => {
+                  return { value: major.id, label: major.name };
+                }),
+              },
+            ]}
           />
         </Form.Item>
 
@@ -167,24 +174,27 @@ function SignUpForm(props) {
           rules={[{ required: true, message: '' }]}
         >
           <Cascader
-            showSearch={{filter}}
+            showSearch={{ filter }}
             style={{ width: '100%' }}
             onChange={(event) => {
               setSubmit({ ...submit, doubleMajorId: +event[1] });
             }}
             placeholder='이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요'
-            options = { [{
-              value: '서울캠퍼스',
+            options={[
+              {
+                value: '서울캠퍼스',
                 label: '서울캠퍼스',
-                children: 
-                doubleMajorSeoul.map((dMajor) => { return ({value:dMajor.id, label:dMajor.name})})
+                children: doubleMajorSeoul.map((dMajor) => {
+                  return { value: dMajor.id, label: dMajor.name };
+                }),
               },
               {
                 value: '글로벌캠퍼스',
                 label: '글로벌캠퍼스',
-                children: 
-                  doubleMajorGlobal.map((dMajor) => { return ({value:dMajor.id, label:dMajor.name})})
-              }
+                children: doubleMajorGlobal.map((dMajor) => {
+                  return { value: dMajor.id, label: dMajor.name };
+                }),
+              },
             ]}
           />
         </Form.Item>
@@ -253,4 +263,4 @@ function SignUpForm(props) {
   );
 }
 
-export default withRouter((SignUpForm));
+export default withRouter(SignUpForm);

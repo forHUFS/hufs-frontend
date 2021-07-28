@@ -12,13 +12,12 @@ export default function useMajorCheck(match) {
   const x = majorCategory
     .map((c) =>
       c.전공.filter((e) => {
-        if (e === user?.MainMajor.name || e === user?.DoubleMajor.name) {
+        if (e === user?.FirstMajor.name || e === user?.SecondMajor.name) {
           return c.단과대학;
         } else return;
       }),
     )
     .flat();
-
   return {
     notMyMajor: isMajorBoard === true && majorAuthenticated === false,
     isMajorBoard: isMajorBoard,

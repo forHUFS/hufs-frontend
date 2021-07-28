@@ -154,7 +154,7 @@ export function TableBody({ currentList, match, loading }) {
                               &nbsp;&nbsp;&nbsp;&nbsp;({record.repliesCount})
                             </span>
                           ) : null}
-                          { }
+                          {}
                         </>
                       }
                     />
