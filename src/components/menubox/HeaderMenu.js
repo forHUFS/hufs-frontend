@@ -47,7 +47,6 @@ function HeaderMenu(props) {
           공구 공간
         </Link>
       </Menu.Item>
-
     </Menu>
   );
   const menu2 = (
@@ -88,9 +87,7 @@ function HeaderMenu(props) {
         </Link>
       </Menu.Item>
       <Menu.Item>
-
         <Link to="/취창업공간" onClick={onClose}>
-
           취/창업 공간
         </Link>
       </Menu.Item>
@@ -202,17 +199,18 @@ function HeaderMenu(props) {
             </Link>
           </div>
 
-          <span className="loginbar">
-            <span>{!isError ? <Logout /> : <SignUp />}</span>
-            <span>
-              {!isError ? (
-                <Button type="text">
-                  <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
-                    마이 페이지
-                  </Link>{' '}
-                </Button>
-              ) : null}
-            </span>
+          <span
+            className="loginbar"
+            style={{ display: 'flex', alignContent: 'space-between' }}
+          >
+            {!isError ? <Logout /> : <SignUp />}
+            {!isError ? (
+              <Button type="text">
+                <Link style={{ color: 'rgba(0, 0, 0, 0.85)' }} to="/mypage">
+                  마이 페이지
+                </Link>{' '}
+              </Button>
+            ) : null}
             {/* <Button type="text">언어 선택</Button> */}
           </span>
 

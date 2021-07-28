@@ -10,7 +10,10 @@ export default function useUserInfo(params) {
       })
       .then((response) => response.data.data);
 
-  const { data, error } = useSWR(`${PUBLIC_IP}/user`, fetcher);
+  const { data, error } = useSWR(`${PUBLIC_IP}/user`, fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
   return {
     user: data,
     isLoading: !error && !data,

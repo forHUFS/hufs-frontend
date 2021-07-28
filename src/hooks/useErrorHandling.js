@@ -57,6 +57,9 @@ export default function useErrorHandling() {
       case 'RESOURCE_NOT_FOUND':
         message.error('검색 결과가 존재하지 않습니다.');
         break;
+      case 'FORBIDDEN_MAJOR':
+        history.goBack();
+        return message.error('본인의 전공이 아닙니다.');
       default:
         message.error('알 수 없는 에러');
         break;

@@ -5,35 +5,43 @@ import { withRouter } from 'react-router';
 import { PUBLIC_IP } from '../../config';
 import { InformationModal2 } from '../rule/InformationModal';
 import { UseModal2 } from '../rule/UseModal';
-import useMainMajor from '../../hooks/useMainMajor';
-import useDoubleMajor from '../../hooks/useDoubleMajor';
-
+import useMajor from '../../hooks/useMajor';
 function SignUpForm(props) {
   const { Option } = Select;
-  const { firstMajor, isLoading } = useMainMajor();
-  const { doubleMajor, isLoading_d } = useDoubleMajor();
-
+  const {
+    seoulFirstMajor,
+    seoulSecondMajor,
+    globalFirstMajor,
+    globalSecondMajor,
+    isLoading,
+  } = useMajor();
   const [submit, setSubmit] = useState({
     email: props.location.state.email,
     provider: props.location.state.provider,
     nickname: '',
     webMail: '',
-    mainMajorId: 1,
-    doubleMajorId: 1,
+    firstMajorId: NaN,
+    secondMajorId: NaN,
     isAgreed: false,
   });
 
-  if (isLoading || isLoading_d) {
-    return <>Lodaing</>;
+  console.log(submit);
+  if (isLoading) {
+    return <>loading</>;
   }
-  const majorSeoul = firstMajor.filter((major) => major.campusId === 1);
-  const majorGlobal = firstMajor.filter((major) => major.campusId === 2);
-  const doubleMajorSeoul = doubleMajor.filter(
-    (dMajor) => dMajor.campusId === 1,
-  );
-  const doubleMajorGlobal = doubleMajor.filter(
-    (dMajor) => dMajor.campusId === 2,
-  );
+  // console.log(seoulMajor.map((e) => e.SecondMajors).flat());
+  const majorSeoul = seoulFirstMajor;
+  // .filter((major) => major.campusId === 1);
+  const majorGlobal = globalFirstMajor;
+  // .filter((major) => major.campusId === 2);
+  const doubleMajorSeoul = seoulSecondMajor;
+  // .filter(
+  //   (dMajor) => dMajor.campusId === 1,
+  // );
+  const doubleMajorGlobal = globalSecondMajor;
+  // .filter(
+  //   (dMajor) => dMajor.campusId === 2,
+  // );
 
   const argCheck = { a: false, b: false };
 
@@ -146,7 +154,7 @@ function SignUpForm(props) {
             showSearch={{ filter }}
             style={{ width: '100%' }}
             onChange={(event) =>
-              setSubmit({ ...submit, mainMajorId: +event[1] })
+              setSubmit({ ...submit, firstMajorId: +event[1] })
             }
             placeholder='주전공을 선택하세요. 없으면 "미정"을 눌러주세요'
             options={[
@@ -177,7 +185,7 @@ function SignUpForm(props) {
             showSearch={{ filter }}
             style={{ width: '100%' }}
             onChange={(event) => {
-              setSubmit({ ...submit, doubleMajorId: +event[1] });
+              setSubmit({ ...submit, secondMajorId: +event[1] });
             }}
             placeholder='이중/부전공을 선택하세요. 없으면 "미정"을 눌러주세요'
             options={[
