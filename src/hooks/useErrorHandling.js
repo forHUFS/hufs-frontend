@@ -22,7 +22,7 @@ export default function useErrorHandling() {
         return message.error('이메일 인증이 필요합니다');
         break;
       case 'FORBIDDEN': // 본인이 작성하지 않은 게시글, admin 계정은 허용
-        message.error('삭제 권한이 없는 사용자입니다.');
+        message.error('권한이 없는 사용자입니다.');
         break;
       case 'CONFLICT':
         message.error('이미 인증처리가 된 웹메일입니다.');

@@ -55,6 +55,11 @@ function PostEdit(props) {
         message.success('작성 완료');
       })
       .catch((error) => {
+        if (error.response?.data.message === 'RESOURCE_NOT_FOUND') {
+          return alert(
+            '아직 사용이 불가능한 기능이거나 존재하지 않는 게시판입니다.',
+          );
+        }
         errorHandling(error.response?.data.message);
       });
   };
